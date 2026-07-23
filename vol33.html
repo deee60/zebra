@@ -36,6 +36,9 @@ const ZEBRA = {
      같은 폴더에 이미지를 넣으세요. 지금은 이미지가 내장돼 있습니다. */
   graphic: "vol33.jpg",
 
+  /* 유튜브 임베드 영상 ID (비우면 영상 카드가 안 뜨) */
+  youtubeEmbed: "glscfhJyZHo",
+
   links: [
     { id: "apple",   name: "Apple Music",   url: "https://music.apple.com/us/song/who-knows/1839352411" },
     { id: "spotify", name: "Spotify",       url: "https://open.spotify.com/track/6DH13QYXK7lKkYHSU88N48" },
@@ -116,6 +119,18 @@ const ZEBRA = {
   .row:focus-visible{ outline:none; }
   .row:focus-visible .name{ text-decoration:underline; }
 
+  /* ③ 유튜브 임베드 카드 */
+  .watch{
+    margin-top:18px;
+    border-radius:18px; overflow:hidden;
+    box-shadow:0 14px 40px rgba(50,44,32,.10), 0 2px 8px rgba(50,44,32,.06);
+    position:relative; padding-top:56.25%;
+    background:#000;
+  }
+  .watch iframe{
+    position:absolute; inset:0; width:100%; height:100%; border:0;
+  }
+
   /* 하단 작은 마무리 */
   .foot{
     text-align:center; margin-top:22px;
@@ -133,10 +148,17 @@ const ZEBRA = {
       <ul class="rows" id="rows"></ul>
     </section>
 
+    <div class="watch" id="watch" hidden></div>
+
     <p class="foot" id="foot"></p>
   </main>
 
 <script>
+/* 카카오톡 인앱 브라우저 탈출 — 외부 브라우저로 열어야 앱 연결이 제대로 됩니다 */
+if (/KAKAOTALK/i.test(navigator.userAgent)) {
+  location.href = "kakaotalk://web/openExternal?url=" + encodeURIComponent(location.href);
+}
+
 /* ── 플랫폼 아이콘 (수정할 필요 없음) ── */
 const ICONS = {
   spotify: `<svg viewBox="0 0 38 38"><circle cx="19" cy="19" r="19" fill="#1ED760"/><path d="M10.4 15c5.8-1.8 12.5-1.1 17.2 1.7" stroke="#191414" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M11.2 19.7c4.9-1.4 10.4-.8 14.3 1.5" stroke="#191414" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M12 24.1c4-1.1 8.4-.6 11.5 1.3" stroke="#191414" stroke-width="1.7" fill="none" stroke-linecap="round"/></svg>`,
@@ -184,6 +206,12 @@ rows.innerHTML = ZEBRA.links.filter(l => l.url).map(l => `
     <span class="name">${l.name}</span>
     <span class="play">Play</span>
   </a></li>`).join("");
+
+/* 유튜브 임베드 플레이어 */
+if (ZEBRA.youtubeEmbed) {
+  watch.hidden = false;
+  watch.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${ZEBRA.youtubeEmbed}" title="YouTube" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+}
 </script>
 </body>
 </html>
