@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ═══════════════════════════════════════════════════════
+     ZEBRA 링크 페이지 템플릿 v2
+     · 맨 위 = 그래픽 자리 (매 볼륨 디자인이 달라져도 이미지만 교체)
+     · 아래 = song.link 스타일 플랫폼 리스트
+     새 볼륨: 아래 ZEBRA 설정의 graphic / 제목 / 링크만 바꾸면 됩니다.
+     ═══════════════════════════════════════════════════════ -->
+
+<title>Who Knows — Daniel Caesar | Zebra Vol.33</title>
+<meta name="description" content="Zebra Vol.33 — Apple Music, Spotify, YouTube Music, YouTube, TIDAL에서 듣기">
+
+<!-- 카카오톡/인스타 미리보기 카드 (호스팅 후 og:image에 실제 이미지 주소를 넣으세요) -->
+<meta property="og:title" content="Who Knows — Daniel Caesar">
+<meta property="og:description" content="Zebra Vol.33 · zebra beta movement 2.">
+<meta property="og:type" content="music.song">
+<!-- <meta property="og:image" content="https://내주소/ZEBRA_vol33.png"> -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script>
+/* ─────────── 여기만 수정하면 됩니다 ─────────── */
+const ZEBRA = {
+  /* 페이지 제목·미리보기용 정보 */
+  title:  "Who Knows",
+  artist: "Daniel Caesar",
+  volume: "Zebra Vol.33",
+
+  /* 맨 위 그래픽: 파일로 쓰려면 "vol33.png" 처럼 파일명을 적고
+     같은 폴더에 이미지를 넣으세요. 지금은 이미지가 내장돼 있습니다. */
+  graphic: "vol33.jpg",
+
+  links: [
+    { id: "apple",   name: "Apple Music",   url: "https://music.apple.com/us/song/who-knows/1839352411" },
+    { id: "spotify", name: "Spotify",       url: "https://open.spotify.com/track/6DH13QYXK7lKkYHSU88N48" },
+    { id: "ytmusic", name: "YouTube Music", url: "https://music.youtube.com/watch?v=Wzn4BLtE73o" },
+    { id: "youtube", name: "YouTube",       url: "https://www.youtube.com/watch?v=glscfhJyZHo" },
+    { id: "tidal",   name: "TIDAL",         url: "https://listen.tidal.com/track/468317921" }
+  ]
+};
+/* ───────────────────────────────────────────── */
+</script>
+
+<style>
+  :root{
+    --bg:    #F2F1EF;   /* 기본값 — 그래픽에서 색을 뽑아 자동으로 덮어씁니다 */
+    --card:  #FFFFFF;
+    --ink:   #1F2430;
+    --muted: #7A8090;
+    --line:  #EEECE7;
+    --pill:  #D9D5CB;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  body{
+    background:var(--bg);
+    transition:background .6s ease;
+    font-family:"Inter", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+    color:var(--ink);
+    display:flex; justify-content:center;
+    min-height:100dvh;
+    padding:clamp(16px,4vh,44px) 16px 56px;
+  }
+  .wrap{ width:100%; max-width:480px; animation:rise .7s cubic-bezier(.22,.7,.3,1) both; }
+  @keyframes rise{ from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:none;} }
+  @media (prefers-reduced-motion: reduce){ .wrap{ animation:none; } .row,.play{ transition:none !important; } }
+
+  /* ① 그래픽 자리 — 볼륨마다 이미지가 통째로 바뀌는 영역 */
+  .graphic{
+    border-radius:20px; overflow:hidden;
+    box-shadow:0 22px 60px rgba(50,44,32,.16), 0 4px 14px rgba(50,44,32,.08);
+    margin-bottom:18px;
+  }
+  .graphic img{ width:100%; display:block; }
+
+  /* ② song.link 스타일 리스트 카드 */
+  .listen{
+    background:var(--card);
+    border-radius:18px;
+    box-shadow:0 14px 40px rgba(50,44,32,.10), 0 2px 8px rgba(50,44,32,.06);
+    padding:22px 22px 8px;
+  }
+  .listen h2{
+    font-size:15px; font-weight:600; letter-spacing:.01em;
+    margin:0 2px 6px;
+  }
+  .rows{ list-style:none; }
+  .row{
+    display:flex; align-items:center; gap:14px;
+    padding:14px 2px;
+    border-bottom:1px solid var(--line);
+    text-decoration:none; color:inherit;
+    transition:background .2s ease;
+  }
+  .rows li:last-child .row{ border-bottom:0; }
+  .row .icon{ width:38px; height:38px; flex:0 0 38px; }
+  .row .icon svg{ width:100%; height:100%; display:block; }
+  .row .name{ flex:1; font-size:15.5px; font-weight:500; }
+  .play{
+    font-size:13px; font-weight:600; color:var(--muted);
+    border:1.5px solid var(--pill); border-radius:999px;
+    padding:7px 18px;
+    transition:color .2s ease, border-color .2s ease, background .2s ease;
+  }
+  .row:hover .play, .row:focus-visible .play{
+    color:var(--ink); border-color:var(--ink); background:#FAF9F6;
+  }
+  .row:focus-visible{ outline:none; }
+  .row:focus-visible .name{ text-decoration:underline; }
+
+  /* 하단 작은 마무리 */
+  .foot{
+    text-align:center; margin-top:22px;
+    font-size:12px; letter-spacing:.24em; text-indent:.24em;
+    color:#A9A395; font-family:Georgia, serif; font-style:italic;
+  }
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <figure class="graphic"><img id="graphic" alt=""></figure>
+
+    <section class="listen" aria-label="스트리밍 플랫폼">
+      <h2>Listen</h2>
+      <ul class="rows" id="rows"></ul>
+    </section>
+
+    <p class="foot" id="foot"></p>
+  </main>
+
+<script>
+/* ── 플랫폼 아이콘 (수정할 필요 없음) ── */
+const ICONS = {
+  spotify: `<svg viewBox="0 0 38 38"><circle cx="19" cy="19" r="19" fill="#1ED760"/><path d="M10.4 15c5.8-1.8 12.5-1.1 17.2 1.7" stroke="#191414" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M11.2 19.7c4.9-1.4 10.4-.8 14.3 1.5" stroke="#191414" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M12 24.1c4-1.1 8.4-.6 11.5 1.3" stroke="#191414" stroke-width="1.7" fill="none" stroke-linecap="round"/></svg>`,
+  apple: `<svg viewBox="0 0 38 38"><defs><linearGradient id="am2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FB5C74"/><stop offset="1" stop-color="#FA233B"/></linearGradient></defs><rect width="38" height="38" rx="9" fill="url(#am2)"/><path d="M26.3 9.6l-10.4 2.2c-.6.1-1 .6-1 1.2v9.1a3.8 3.8 0 1 0 2 3.3V15.2l7.9-1.7v5.9a3.8 3.8 0 1 0 2 3.3V10.6c0-.6-.6-1.1-1.2-1z" fill="#fff"/></svg>`,
+  ytmusic: `<svg viewBox="0 0 38 38"><circle cx="19" cy="19" r="19" fill="#FF0000"/><circle cx="19" cy="19" r="11" fill="none" stroke="#fff" stroke-width="2.1"/><path d="M16.2 14.7l7.6 4.3-7.6 4.3z" fill="#fff"/></svg>`,
+  youtube: `<svg viewBox="0 0 38 38"><rect x="1.5" y="7.5" width="35" height="23" rx="6.5" fill="#FF0000"/><path d="M15.6 13.6l9.1 5.4-9.1 5.4z" fill="#fff"/></svg>`,
+  tidal: `<svg viewBox="0 0 38 38"><rect width="38" height="38" rx="9" fill="#111"/><path d="M12.3 11.5l3.8 3.8-3.8 3.8-3.8-3.8zM19.9 11.5l3.8 3.8-3.8 3.8-3.8-3.8zM27.5 15.3l-3.8 3.8 3.8 3.8 3.8-3.8-3.8-3.8zM19.9 19.1l3.8 3.8-3.8 3.8-3.8-3.8z" fill="#fff" transform="translate(-2.4 1.8) scale(.95)"/></svg>`
+};
+
+document.title = `${ZEBRA.title} — ${ZEBRA.artist} | ${ZEBRA.volume}`;
+graphic.src = ZEBRA.graphic;
+graphic.alt = `${ZEBRA.volume} — ${ZEBRA.title}, ${ZEBRA.artist}`;
+foot.textContent = "Zebra Beta";
+
+/* 그래픽 가장자리 색을 뽑아 페이지 배경으로 (볼륨마다 자동으로 맞춰짐) */
+graphic.addEventListener("load", () => {
+  try{
+    const c = document.createElement("canvas"), s = 24;
+    c.width = s; c.height = s;
+    const ctx = c.getContext("2d");
+    ctx.drawImage(graphic, 0, 0, s, s);
+    const px = ctx.getImageData(0, 0, s, s).data;
+    let r=0,g=0,b=0,n=0;
+    // 테두리 픽셀만 평균
+    for(let y=0;y<s;y++) for(let x=0;x<s;x++){
+      if(x>2 && x<s-3 && y>2 && y<s-3) continue;
+      const i=(y*s+x)*4; r+=px[i]; g+=px[i+1]; b+=px[i+2]; n++;
+    }
+    r=Math.round(r/n); g=Math.round(g/n); b=Math.round(b/n);
+    document.documentElement.style.setProperty("--bg", `rgb(${r},${g},${b})`);
+    // 배경 밝기에 따라 푸터 글자색 조정
+    const lum = (0.299*r + 0.587*g + 0.114*b);
+    document.querySelector(".foot").style.color =
+      lum > 140 ? "rgba(60,55,45,.45)" : "rgba(255,255,255,.55)";
+  }catch(e){ /* 색 추출 실패 시 기본 배경 유지 */ }
+});
+if (graphic.complete) graphic.dispatchEvent(new Event("load"));
+
+rows.innerHTML = ZEBRA.links.filter(l => l.url).map(l => `
+  <li><a class="row" href="${l.url}" target="_blank" rel="noopener">
+    <span class="icon">${ICONS[l.id] || ""}</span>
+    <span class="name">${l.name}</span>
+    <span class="play">Play</span>
+  </a></li>`).join("");
+</script>
+</body>
+</html>
