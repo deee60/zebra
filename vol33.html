@@ -41,7 +41,10 @@ const ZEBRA = {
     { id: "spotify", name: "Spotify",       url: "https://open.spotify.com/track/6DH13QYXK7lKkYHSU88N48" },
     { id: "ytmusic", name: "YouTube Music", url: "https://music.youtube.com/watch?v=Wzn4BLtE73o" },
     { id: "youtube", name: "YouTube",       url: "https://www.youtube.com/watch?v=glscfhJyZHo" },
-    { id: "tidal",   name: "TIDAL",         url: "https://listen.tidal.com/track/468317921" }
+    { id: "tidal",   name: "TIDAL",         url: "https://listen.tidal.com/track/468317921" },
+    { id: "melon",   name: "멜론",          url: "https://www.melon.com/song/detail.htm?songId=600352868" },
+    { id: "genie",   name: "지니",          url: "https://www.genie.co.kr/detail/songInfo?xgnm=112355151" },
+    { id: "bugs",    name: "벅스",          url: "https://music.bugs.co.kr/track/128303682" }
   ]
 };
 /* ───────────────────────────────────────────── */
@@ -140,7 +143,10 @@ const ICONS = {
   apple: `<svg viewBox="0 0 38 38"><defs><linearGradient id="am2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FB5C74"/><stop offset="1" stop-color="#FA233B"/></linearGradient></defs><rect width="38" height="38" rx="9" fill="url(#am2)"/><path d="M26.3 9.6l-10.4 2.2c-.6.1-1 .6-1 1.2v9.1a3.8 3.8 0 1 0 2 3.3V15.2l7.9-1.7v5.9a3.8 3.8 0 1 0 2 3.3V10.6c0-.6-.6-1.1-1.2-1z" fill="#fff"/></svg>`,
   ytmusic: `<svg viewBox="0 0 38 38"><circle cx="19" cy="19" r="19" fill="#FF0000"/><circle cx="19" cy="19" r="11" fill="none" stroke="#fff" stroke-width="2.1"/><path d="M16.2 14.7l7.6 4.3-7.6 4.3z" fill="#fff"/></svg>`,
   youtube: `<svg viewBox="0 0 38 38"><rect x="1.5" y="7.5" width="35" height="23" rx="6.5" fill="#FF0000"/><path d="M15.6 13.6l9.1 5.4-9.1 5.4z" fill="#fff"/></svg>`,
-  tidal: `<svg viewBox="0 0 38 38"><rect width="38" height="38" rx="9" fill="#111"/><path d="M12.3 11.5l3.8 3.8-3.8 3.8-3.8-3.8zM19.9 11.5l3.8 3.8-3.8 3.8-3.8-3.8zM27.5 15.3l-3.8 3.8 3.8 3.8 3.8-3.8-3.8-3.8zM19.9 19.1l3.8 3.8-3.8 3.8-3.8-3.8z" fill="#fff" transform="translate(-2.4 1.8) scale(.95)"/></svg>`
+  tidal: `<svg viewBox="0 0 38 38"><rect width="38" height="38" rx="9" fill="#111"/><path d="M12.3 11.5l3.8 3.8-3.8 3.8-3.8-3.8zM19.9 11.5l3.8 3.8-3.8 3.8-3.8-3.8zM27.5 15.3l-3.8 3.8 3.8 3.8 3.8-3.8-3.8-3.8zM19.9 19.1l3.8 3.8-3.8 3.8-3.8-3.8z" fill="#fff" transform="translate(-2.4 1.8) scale(.95)"/></svg>`,
+  melon: `<svg viewBox="0 0 38 38"><circle cx="19" cy="19" r="19" fill="#00CD3C"/><path d="M23.5 9.5v11.2a4 4 0 1 0 2 3.4V13l-9 2v8.9a4 4 0 1 0 2 3.4V11.6z" fill="#fff" transform="translate(-2.2 -1.2) scale(.98)"/></svg>`,
+  genie: `<svg viewBox="0 0 38 38"><rect width="38" height="38" rx="9" fill="#1DB0EC"/><text x="19" y="26" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="bold" fill="#fff">ge</text></svg>`,
+  bugs: `<svg viewBox="0 0 38 38"><rect width="38" height="38" rx="9" fill="#F5323C"/><text x="19" y="26" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="bold" fill="#fff">b!</text></svg>`
 };
 
 document.title = `${ZEBRA.title} — ${ZEBRA.artist} | ${ZEBRA.volume}`;
