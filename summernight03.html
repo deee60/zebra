@@ -11,12 +11,12 @@
      새 볼륨: 아래 ZEBRA 설정의 graphic / 제목 / 링크만 바꾸면 됩니다.
      ═══════════════════════════════════════════════════════ -->
 
-<title>시 — Colde | 여름밤 03</title>
-<meta name="description" content="여름밤 03 — Apple Music, Spotify, YouTube Music, TIDAL, 멜론, 지니, 벅스에서 듣기">
+<title>여름밤 03 | Zebra Beta</title>
+<meta name="description" content="zebra beta movement 2.">
 
 <!-- 카카오톡/인스타 미리보기 카드 (호스팅 후 og:image에 실제 이미지 주소를 넣으세요) -->
-<meta property="og:title" content="시 — Colde">
-<meta property="og:description" content="여름밤 03 · zebra beta movement 2.">
+<meta property="og:title" content="여름밤 03">
+<meta property="og:description" content="zebra beta movement 2.">
 <meta property="og:type" content="music.song">
 <!-- <meta property="og:image" content="https://내주소/ZEBRA_vol33.png"> -->
 
@@ -254,11 +254,17 @@ if (ZEBRA.youtubeEmbed) {
   watch.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${ZEBRA.youtubeEmbed}" title="YouTube" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
 }
 
-/* 기한 만료 처리 */
-if ((ZEBRA.expires && Date.now() > new Date(ZEBRA.expires).getTime()) || location.search.includes("preview=expired")) {
-  document.querySelector(".listen").innerHTML = '<h2>Listen</h2><p style="padding:18px 2px 16px;color:var(--muted);font-size:15px;">이 큐레이션의 공개 기간이 종료되었습니다.</p>';
-  watch.hidden = true; watch.innerHTML = "";
-  document.querySelector(".actions").style.display = "none";
+/* 기한 만료 처리 — archive=1 열쇠가 있으면 열림 */
+const isExpired = (ZEBRA.expires && Date.now() > new Date(ZEBRA.expires).getTime()) || location.search.includes("preview=expired");
+const isArchive = location.search.includes("archive=1");
+if (isExpired && !isArchive) {
+  document.title = ZEBRA.volume + " | Zebra Beta";
+  document.querySelector(".wrap").innerHTML = `
+    <div class="listen" style="text-align:center;padding:46px 26px;">
+      <p style="font-family:Georgia,serif;font-style:italic;color:#A9A395;font-size:13px;letter-spacing:.26em;text-indent:.26em;margin-bottom:16px;">Zebra Beta</p>
+      <p style="font-size:17px;font-weight:600;margin-bottom:9px;">${ZEBRA.volume}의 링크가 만료되었습니다</p>
+      <p style="color:var(--muted);font-size:14px;">지브라의 큐레이션은 3일 뒤 사라집니다.</p>
+    </div>`;
 }
 </script>
 </body>
