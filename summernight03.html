@@ -39,6 +39,9 @@ const ZEBRA = {
   /* 유튜브 임베드 영상 ID (비우면 영상 카드가 안 뜨) */
   youtubeEmbed: "0AMJQsysRG4",
 
+  /* 만료일 — 이 시각이 지나면 링크가 닫힙니다 (비우면 무기한) */
+  expires: "2026-07-31T23:59:59+09:00",
+
   links: [
     { id: "apple",   name: "Apple Music",   url: "https://music.apple.com/kr/song/%EC%8B%9C/1781864894" },
     { id: "spotify", name: "Spotify",       url: "https://open.spotify.com/track/2dz4JC7WduddrM0Qt9iEQz" },
@@ -249,6 +252,13 @@ rows.innerHTML = ZEBRA.links.filter(l => l.url).map(l => `
 if (ZEBRA.youtubeEmbed) {
   watch.hidden = false;
   watch.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${ZEBRA.youtubeEmbed}" title="YouTube" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+}
+
+/* 기한 만료 처리 */
+if (ZEBRA.expires && Date.now() > new Date(ZEBRA.expires).getTime()) {
+  document.querySelector(".listen").innerHTML = '<h2>Listen</h2><p style="padding:18px 2px 16px;color:var(--muted);font-size:15px;">이 큐레이션의 공개 기간이 종료되었습니다.</p>';
+  watch.hidden = true; watch.innerHTML = "";
+  document.querySelector(".actions").style.display = "none";
 }
 </script>
 </body>
