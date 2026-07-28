@@ -255,7 +255,7 @@ if (ZEBRA.youtubeEmbed) {
 }
 
 /* 기한 만료 처리 */
-if (ZEBRA.expires && Date.now() > new Date(ZEBRA.expires).getTime()) {
+if ((ZEBRA.expires && Date.now() > new Date(ZEBRA.expires).getTime()) || location.search.includes("preview=expired")) {
   document.querySelector(".listen").innerHTML = '<h2>Listen</h2><p style="padding:18px 2px 16px;color:var(--muted);font-size:15px;">이 큐레이션의 공개 기간이 종료되었습니다.</p>';
   watch.hidden = true; watch.innerHTML = "";
   document.querySelector(".actions").style.display = "none";
