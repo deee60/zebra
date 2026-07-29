@@ -1,5 +1,129 @@
 <!DOCTYPE html>
-<meta charset=utf-8>
-<meta http-equiv=refresh content=0;url=summernight03.html>
-<title>Zebra Beta</title>
-<a href=summernight03.html>여름밤 03</a>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZEBRA BETA — coming soon</title>
+<meta name="description" content="지브라 베타 — 멈추지 않는 음악 큐레이션 무브먼트. 곧 문을 엽니다.">
+<meta property="og:title" content="ZEBRA BETA">
+<meta property="og:description" content="멈추지 않는 음악 큐레이션 무브먼트. 곧 만나요.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#efece4;
+    --paper:#f7f5ef;
+    --ink:#2b2a26;
+    --soft:#8b877c;
+    --gold:#b89a5a;
+    --line:#ddd8cc;
+  }
+  body{
+    font-family:'Noto Serif KR',serif;background:var(--bg);color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    min-height:100vh;padding:96px 24px 72px;text-align:center;
+  }
+  .wrap{max-width:520px;width:100%;display:flex;flex-direction:column;align-items:center}
+
+  .logo{
+    width:230px;height:230px;margin-bottom:52px;
+    animation:fadeUp 1s ease both;
+  }
+  .logo img{width:100%;height:100%;object-fit:contain;display:block}
+
+  .kicker{
+    font-family:'Cormorant Garamond',serif;letter-spacing:.52em;text-transform:uppercase;
+    font-size:13px;color:var(--gold);margin-bottom:56px;padding-left:.52em;
+    animation:fadeUp 1s ease .15s both;
+  }
+
+  h1{
+    font-weight:300;font-size:20px;line-height:2.1;letter-spacing:.02em;color:var(--ink);
+    margin-bottom:30px;animation:fadeUp 1s ease .3s both;
+  }
+  h1 b{font-weight:500}
+
+  .social{display:flex;gap:30px;margin-bottom:170px;animation:fadeUp 1s ease .45s both}
+  .social a{
+    font-family:'Cormorant Garamond',serif;letter-spacing:.16em;text-transform:uppercase;font-size:12px;
+    color:var(--soft);text-decoration:none;transition:color .2s;padding-bottom:3px;border-bottom:1px solid transparent;
+  }
+  .social a:hover{color:var(--ink);border-bottom-color:var(--gold)}
+
+  .notify{
+    width:100%;max-width:380px;margin-bottom:40px;animation:fadeUp 1s ease .6s both;
+  }
+  .notify .lbl{font-size:14px;color:var(--soft);margin-bottom:20px;letter-spacing:.02em}
+  .form{display:flex;gap:8px}
+  .form input{
+    flex:1;font-family:'Noto Serif KR',serif;font-size:15px;color:var(--ink);
+    background:var(--paper);border:1px solid var(--line);border-radius:2px;
+    padding:13px 16px;outline:none;transition:border-color .2s;
+  }
+  .form input:focus{border-color:var(--gold)}
+  .form input::placeholder{color:#b3aea2}
+  .form button{
+    font-family:'Cormorant Garamond',serif;letter-spacing:.1em;text-transform:uppercase;font-size:13px;
+    background:var(--ink);color:var(--paper);border:none;border-radius:2px;
+    padding:0 22px;cursor:pointer;transition:opacity .2s,transform .2s;white-space:nowrap;
+  }
+  .form button:hover{opacity:.85;transform:translateY(-1px)}
+  .msg{font-size:14px;color:var(--gold);margin-top:18px;min-height:20px;font-family:'Cormorant Garamond',serif;font-style:italic;letter-spacing:.02em}
+
+  footer{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    color:var(--soft);font-size:13px;letter-spacing:.1em;animation:fadeUp 1s ease .75s both;
+  }
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+  @media(max-width:480px){
+    .logo{width:180px;height:180px;margin-bottom:32px}
+    h1{font-size:17px}
+    .form{flex-direction:column}
+    .form button{padding:13px}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="logo"><img src="zebra-logo.png" alt="ZEBRA BETA"></div>
+
+    <div class="kicker">Zebra Beta</div>
+
+    <h1>당신의 하루에서 조용히 발견된 것들과<br>함께 머물 수 있는 음악을 담습니다.</h1>
+
+
+    <div class="social">
+      <a href="https://instagram.com/zebrabeta26" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://brunch.co.kr/@zebrabeta" target="_blank" rel="noopener">Brunch</a>
+    </div>
+
+    <div class="notify">
+      <div class="lbl">문을 열면 가장 먼저 알려드릴게요.</div>
+      <div class="form">
+        <input type="email" id="email" placeholder="이메일 주소" autocomplete="email">
+        <button id="btn">알림 받기</button>
+      </div>
+      <div class="msg" id="msg"></div>
+    </div>
+
+    <footer>zebra beta movement 2.</footer>
+  </div>
+
+<script>
+  const btn=document.getElementById('btn'), email=document.getElementById('email'), msg=document.getElementById('msg');
+  function submit(){
+    const v=email.value.trim();
+    if(!v || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){
+      msg.style.color='#b89a5a'; msg.textContent='올바른 이메일 주소를 입력해주세요.'; return;
+    }
+    try{ const list=JSON.parse(localStorage.getItem('zb_waitlist')||'[]'); list.push({e:v,t:Date.now()}); localStorage.setItem('zb_waitlist',JSON.stringify(list)); }catch(e){}
+    email.value=''; msg.textContent='고마워요. 문 이 열리면 이 주소로 소식을 보냼게요.';
+  }
+  btn.addEventListener('click',submit);
+  email.addEventListener('keydown',e=>{if(e.key==='Enter')submit();});
+</script>
+</body>
+</html>
