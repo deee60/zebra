@@ -56,19 +56,37 @@
   }
   .notify .lbl{font-size:14px;color:var(--soft);margin-bottom:20px;letter-spacing:.02em}
   .form{display:flex;gap:8px}
-  .form input{
+  .form input[type=email]{
     flex:1;font-family:'Noto Serif KR',serif;font-size:15px;color:var(--ink);
     background:var(--paper);border:1px solid var(--line);border-radius:2px;
-    padding:13px 16px;outline:none;transition:border-color .2s;
+    padding:13px 16px;outline:none;transition:border-color .2s;width:100%;
   }
-  .form input:focus{border-color:var(--gold)}
-  .form input::placeholder{color:#b3aea2}
+  .form input[type=email]:focus{border-color:var(--gold)}
+  .form input[type=email]::placeholder{color:#b3aea2}
   .form button{
     font-family:'Cormorant Garamond',serif;letter-spacing:.1em;text-transform:uppercase;font-size:13px;
     background:var(--ink);color:var(--paper);border:none;border-radius:2px;
     padding:0 22px;cursor:pointer;transition:opacity .2s,transform .2s;white-space:nowrap;
   }
   .form button:hover{opacity:.85;transform:translateY(-1px)}
+
+  .consent{
+    display:flex;align-items:flex-start;justify-content:center;gap:7px;
+    margin-top:16px;font-size:12px;color:var(--soft);line-height:1.6;
+    text-align:left;cursor:pointer;
+  }
+  .consent input{margin-top:3px;accent-color:var(--gold);flex-shrink:0;cursor:pointer}
+  .policy-btn{
+    background:none;border:none;padding:0;margin-top:7px;cursor:pointer;
+    font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:.06em;
+    color:var(--soft);text-decoration:underline;text-underline-offset:3px;
+  }
+  .policy-btn:hover{color:var(--ink)}
+  .policy-text{
+    font-size:12px;color:var(--soft);line-height:1.9;text-align:left;
+    margin-top:12px;padding:14px 16px;
+    background:var(--paper);border:1px solid var(--line);border-radius:2px;
+  }
   .msg{font-size:14px;color:var(--gold);margin-top:18px;min-height:20px;font-family:'Cormorant Garamond',serif;font-style:italic;letter-spacing:.02em}
 
   footer{
@@ -102,28 +120,57 @@
 
     <div class="notify">
       <div class="lbl">문을 열면 가장 먼저 알려드릴게요.</div>
-      <div class="form">
-        <input type="email" id="email" placeholder="이메일 주소" autocomplete="email">
-        <button id="btn">알림 받기</button>
-      </div>
+
+      <form class="form" id="stbForm" method="POST" accept-charset="utf-8" target="stb_sink"
+            action="https://stibee.com/api/v1.0/lists/53IjfGo-upQA18qA7V7HdsyCu3PIFw==/public/subscribers">
+        <input type="email" id="email" name="email" placeholder="이메일 주소" autocomplete="email">
+        <button type="submit" id="btn">알림 받기</button>
+      </form>
+
+      <label class="consent">
+        <input type="checkbox" id="agree">
+        <span>(필수) 개인정보 수집 및 이용에 동의합니다.</span>
+      </label>
+      <button type="button" class="policy-btn" id="policyBtn">내용 보기</button>
+      <div class="policy-text" id="policyText" hidden>뉴스레터 발송을 위한 최소한의 개인정보(이메일 주소)를 수집하고 이용합니다. 수집된 정보는 발송 외 다른 목적으로 이용되지 않으며, 서비스가 종료되거나 구독을 해지할 경우 즉시 파기됩니다.</div>
+
       <div class="msg" id="msg"></div>
     </div>
 
     <footer>zebra beta movement 2.</footer>
   </div>
 
+  <iframe name="stb_sink" title="subscribe" style="display:none" aria-hidden="true"></iframe>
+
 <script>
-  const btn=document.getElementById('btn'), email=document.getElementById('email'), msg=document.getElementById('msg');
-  function submit(){
-    const v=email.value.trim();
-    if(!v || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){
-      msg.style.color='#b89a5a'; msg.textContent='올바른 이메일 주소를 입력해주세요.'; return;
+  var f=document.getElementById('stbForm'),
+      email=document.getElementById('email'),
+      agree=document.getElementById('agree'),
+      msg=document.getElementById('msg'),
+      pBtn=document.getElementById('policyBtn'),
+      pText=document.getElementById('policyText');
+
+  pBtn.addEventListener('click',function(){
+    var open=!pText.hidden;
+    pText.hidden=open;
+    pBtn.textContent=open?'내용 보기':'닫기';
+  });
+
+  f.addEventListener('submit',function(e){
+    var v=email.value.trim();
+    if(!v||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){
+      e.preventDefault();
+      msg.textContent='올바른 이메일 주소를 입력해주세요.';
+      return;
     }
-    try{ const list=JSON.parse(localStorage.getItem('zb_waitlist')||'[]'); list.push({e:v,t:Date.now()}); localStorage.setItem('zb_waitlist',JSON.stringify(list)); }catch(e){}
-    email.value=''; msg.textContent='고마워요. 문 이 열리면 이 주소로 소식을 보냼게요.';
-  }
-  btn.addEventListener('click',submit);
-  email.addEventListener('keydown',e=>{if(e.key==='Enter')submit();});
+    if(!agree.checked){
+      e.preventDefault();
+      msg.textContent='개인정보 수집 및 이용에 동의해주세요.';
+      return;
+    }
+    msg.textContent='고마워요. 문이 열리면 이 주소로 소식을 보낼게요.';
+    setTimeout(function(){ email.value=''; agree.checked=false; },300);
+  });
 </script>
 </body>
 </html>
