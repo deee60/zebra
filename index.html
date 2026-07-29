@@ -87,7 +87,7 @@
     margin-top:12px;padding:14px 16px;
     background:var(--paper);border:1px solid var(--line);border-radius:2px;
   }
-  .msg{font-size:14px;color:var(--gold);margin-top:18px;min-height:20px;font-family:'Cormorant Garamond',serif;font-style:italic;letter-spacing:.02em}
+  .msg{font-size:14px;color:var(--gold);margin-top:18px;min-height:48px;line-height:1.7;font-family:'Cormorant Garamond',serif;font-style:italic;letter-spacing:.02em}
 
   footer{
     font-family:'Cormorant Garamond',serif;font-style:italic;
@@ -168,7 +168,7 @@
       msg.textContent='개인정보 수집 및 이용에 동의해주세요.';
       return;
     }
-    msg.textContent='확인 메일을 보내드렸습니다. 메일함에서 구독을 완료해 주세요.';
+    msg.innerHTML='확인 메일을 보내드렸습니다.<br>메일함에서 구독을 완료해 주세요.';
     setTimeout(function(){ email.value=''; agree.checked=false; },300);
   });
 </script>
