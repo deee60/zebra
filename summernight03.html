@@ -129,7 +129,14 @@ if (/KAKAOTALK/i.test(navigator.userAgent)) {
   .moved .series{ font-size:14px; font-weight:500; letter-spacing:.1em; color:var(--ink); }
   .moved .rule{ width:30px; height:1px; background:var(--faint); margin:26px auto; border:0; }
   .moved .line{ font-size:15.5px; color:var(--mid); letter-spacing:.05em; }
-  .moved .sub{ margin-top:14px; font-size:12.5px; color:var(--faint); letter-spacing:.08em; }
+  .moved .sub{ margin-top:28px; font-size:12.5px; color:var(--faint); letter-spacing:.06em; line-height:2.2; word-break:keep-all; }
+  .moved .home{ margin-top:44px; }
+  .moved .home a{
+    display:inline-block; border:0.5px solid rgba(184,154,90,.7); border-radius:2px;
+    padding:9px 19px; font-size:12px; letter-spacing:.04em;
+    color:#8A7440; text-decoration:none; transition:background .25s, color .25s;
+  }
+  .moved .home a:hover, .moved .home a:focus-visible{ background:#B89A5A; color:var(--paper); outline:none; }
 </style>
 </head>
 <body>
@@ -179,21 +186,21 @@ if (/KAKAOTALK/i.test(navigator.userAgent)) {
   </main>
 
 <script>
-/* 이관(만료) 처리 — archive=1 마스터키 / preview=expired 미리보기 */
+/* 이관(만료) 처리 — 표준 블록. 발행 시 EXPIRES만 발행시각+72시간으로 교체 */
 const EXPIRES = "2026-07-31T23:59:59+09:00";
 const isExpired = Date.now() > new Date(EXPIRES).getTime() || location.search.includes("preview=expired");
 const isArchive = location.search.includes("archive=1");
 if (isExpired && !isArchive) {
-  document.getElementById("sheet").innerHTML = `
+  document.getElementById("sheet").innerHTML = \`
     <div class="spacer"></div>
     <div class="moved">
-      <p class="series">여름밤 03</p>
       <hr class="rule">
-      <p class="line">이 지면은 아카이브로 이관되었습니다</p>
-      <p class="sub">지브라의 큐레이션은 3일 후 아카이브에 보관됩니다</p>
+      <p class="line">이 큐레이션은 아카이브로 이관되었습니다</p>
+      <p class="sub">지브라의 큐레이션은 발행 후 72시간 동안 열립니다.<br>이후 아카이브로 옮겨지며,<br>아카이브는 V1.0부터 회원에게 열립니다.</p>
+      <p class="home"><a href="https://zebrabeta.kr">지브라 베타</a></p>
     </div>
     <div class="spacer"></div>
-    <p class="colophon">zebra beta &nbsp;movement 2.</p>`;
+    <p class="colophon">zebra beta &nbsp;movement 2.</p>\`;
 }
 </script>
 </body>
