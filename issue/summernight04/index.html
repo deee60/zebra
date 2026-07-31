@@ -184,7 +184,7 @@ if (/KAKAOTALK/i.test(navigator.userAgent)) {
 
   <main class="sheet lay-b" id="sheet">
 
-    <p class="notice">이 지면은 8월 2일 자정에 아카이브로 이관됩니다</p>
+    <p class="notice">이 지면은 8월 3일 저녁에 아카이브로 이관됩니다</p>
 
     <div class="titles">
       <p class="series">여름밤 04</p>
@@ -230,7 +230,7 @@ if (/KAKAOTALK/i.test(navigator.userAgent)) {
 
 <script>
 /* 이관(만료) 처리 — 표준 블록. 발행 시 EXPIRES만 발행시각+72시간으로 교체 */
-const EXPIRES = "2026-08-02T23:59:59+09:00";
+const EXPIRES = "2026-08-03T19:00:00+09:00";
 const isExpired = Date.now() > new Date(EXPIRES).getTime() || location.search.includes("preview=expired");
 const isArchive = location.search.includes("archive=1");
 if (isExpired && !isArchive) {
