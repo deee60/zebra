@@ -191,7 +191,7 @@ const EXPIRES = "2026-07-31T23:59:59+09:00";
 const isExpired = Date.now() > new Date(EXPIRES).getTime() || location.search.includes("preview=expired");
 const isArchive = location.search.includes("archive=1");
 if (isExpired && !isArchive) {
-  document.getElementById("sheet").innerHTML = \`
+  document.getElementById("sheet").innerHTML = `
     <div class="spacer"></div>
     <div class="moved">
       <hr class="rule">
@@ -200,7 +200,7 @@ if (isExpired && !isArchive) {
       <p class="home"><a href="https://zebrabeta.kr">지브라 베타</a></p>
     </div>
     <div class="spacer"></div>
-    <p class="colophon">zebra beta &nbsp;movement 2.</p>\`;
+    <p class="colophon">zebra beta &nbsp;movement 2.</p>`;
 }
 </script>
 </body>
