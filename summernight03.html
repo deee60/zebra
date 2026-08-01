@@ -128,9 +128,13 @@ if (/KAKAOTALK/i.test(navigator.userAgent)) {
   .moved{ text-align:center; }
   .moved .series{ font-size:14px; font-weight:500; letter-spacing:.1em; color:var(--ink); }
   .moved .rule{ width:30px; height:1px; background:var(--faint); margin:26px auto; border:0; }
-  .moved .line{ font-size:15.5px; color:var(--mid); letter-spacing:.05em; }
-  .moved .sub{ margin-top:28px; font-size:12.5px; color:var(--faint); letter-spacing:.06em; line-height:2.2; word-break:keep-all; }
+  .moved .line{ font-size:15.5px; color:var(--mid); letter-spacing:.05em; word-break:keep-all; text-wrap:balance; }
+  .moved .sub{ margin-top:28px; font-size:12.5px; color:var(--faint); letter-spacing:.06em; line-height:2.2; word-break:keep-all; text-wrap:balance; }
   .moved .home{ margin-top:44px; }
+  @media (max-width:420px){
+    .moved .line{ font-size:14px; letter-spacing:.02em; }
+    .moved .sub{ font-size:12px; letter-spacing:.03em; }
+  }
   .moved .home a{
     display:inline-block; border:0.5px solid rgba(184,154,90,.7); border-radius:2px;
     padding:9px 19px; font-size:12px; letter-spacing:.04em;
@@ -196,7 +200,7 @@ if (isExpired && !isArchive) {
     <div class="moved">
       <hr class="rule">
       <p class="line">이 큐레이션은 아카이브로 이관되었습니다</p>
-      <p class="sub">지브라의 큐레이션은 발행 후 72시간 동안 열립니다.<br>이후 아카이브로 옮겨지며,<br>아카이브는 V1.0부터 회원에게 열립니다.</p>
+      <p class="sub">지브라의 큐레이션은<br>발행 후 72시간 동안 열립니다.<br>이후 아카이브로 옮겨지며,<br>아카이브는 V1.0부터 회원에게 열립니다.</p>
       <p class="home"><a href="https://zebrabeta.kr">지브라 베타</a></p>
     </div>
     <div class="spacer"></div>
