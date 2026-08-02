@@ -1,0 +1,90 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<title>지브라 베타 Vol.34 | Zebra Beta</title>
+<style>
+:root{ --bg:#D3D7D9; --paper:#F5F3ED; --ink:#26221C; --mid:#5A554C; --faint:#A9A297; --rule:#DDD7CB; --gold:#B09468; }
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ -webkit-text-size-adjust:100%; }
+body{ background:var(--bg); display:flex; justify-content:center; font-family:"Noto Serif KR",serif; color:var(--ink); }
+.sheet{ background:var(--paper); width:100%; max-width:720px; min-height:100vh;
+  display:flex; flex-direction:column; align-items:center; padding:0 30px;
+  box-shadow:0 0 60px rgba(70,60,45,.07); }
+
+/* notice — 여름밤 04 톤 */
+.notice{ margin-top:28px; max-width:340px; text-align:center; word-break:keep-all;
+  font-size:11px; letter-spacing:.13em; text-indent:.13em; line-height:1.95; color:var(--faint); }
+
+/* 인장 — 위계를 잡되 조용히. 넉넉한 상하 여백으로 독립 */
+.stamp{ margin-top:clamp(52px,9vh,84px); display:flex; flex-direction:column; align-items:center; }
+.stamp .sp-t{ font-family:"Cormorant Garamond",serif; font-style:italic; font-weight:500;
+  font-size:23px; color:#EFEDE6; letter-spacing:.05em; white-space:nowrap;
+  text-shadow:0 -1px 1px rgba(150,140,120,.5), 0 1px 0 rgba(255,255,255,.95); }
+.stamp .sp-line{ width:34px; height:1px; margin-top:9px; background:#EAE7E0; box-shadow:0 -1px 1px rgba(150,140,120,.4), 0 1px 0 rgba(255,255,255,.9); }
+
+/* 자켓 — 미니멀, 작게, 여백 우위 (에세이·여름밤 c 감각) */
+.plate{ margin-top:clamp(46px,8vh,76px); width:min(42%,220px); padding:4.5px;
+  background:transparent; border:1px solid var(--rule); box-shadow:0 2px 14px rgba(70,60,45,.10); }
+.plate img{ display:block; }
+.plate img{ width:100%; display:block; }
+
+/* 곡명 — 조용한 세리프, 부제는 더 작게 */
+.titles{ text-align:center; margin-top:clamp(44px,7vh,68px); }
+.titles h1{ font-size:24px; font-weight:400; letter-spacing:.04em; line-height:1.4; word-break:keep-all; }
+.titles h1 .sub{ font-size:0.6em; color:var(--faint); font-style:italic; font-family:"Cormorant Garamond",serif; letter-spacing:.02em; }
+.titles .artist{ margin-top:14px; font-family:"Cormorant Garamond",serif; font-style:italic; font-weight:500; font-size:15px; color:var(--mid); }
+
+/* 노트 — 넉넉한 여백, 편한 행간 (에세이 감각) */
+.void{ display:flex; align-items:center; justify-content:center; width:100%; padding:clamp(64px,10vh,110px) 0; }
+.note{ width:min(100%,430px); }
+.note p{ font-size:15.5px; line-height:2.15; color:#332F28; word-break:keep-all; }
+.note .aside{ margin-top:2.4em; font-size:11.5px; line-height:1.9; color:var(--faint); word-break:keep-all; text-align:left; letter-spacing:.01em; opacity:.9; }
+.note .credit{ margin-top:2.6em; padding-top:1.4em; border-top:1px solid var(--rule); font-size:12.5px; color:var(--faint); text-align:center; letter-spacing:.05em; }
+
+/* 스트리밍 — 여름밤 04 방식 */
+.listen{ text-align:center; padding-bottom:8px; }
+.listen-row{ display:flex; justify-content:center; align-items:center; flex-wrap:wrap; column-gap:26px; row-gap:9px; }
+.listen-row + .listen-row{ margin-top:14px; }
+.listen-row a{ color:var(--mid); font-family:"Cormorant Garamond",serif; font-size:13px; font-weight:500; letter-spacing:.12em; text-decoration:none; }
+.listen-row a.off{ color:#cfc7ba; }
+
+/* 유튜브 — 미니멀 액자 */
+.film{ width:min(100%,460px); margin:clamp(40px,7vh,60px) auto 0; }
+.film .mat{ background:#FCFBF8; border:1px solid var(--rule); padding:4.5px; box-shadow:0 2px 14px rgba(70,60,45,.10); }
+.film .frame{ position:relative; padding-top:56.25%; background:#111; }
+.film .frame iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+
+.colophon{ margin:clamp(44px,8vh,64px) 0; font-family:"Cormorant Garamond",serif; font-size:14px; letter-spacing:.18em; color:var(--faint); text-transform:lowercase; text-align:center; }
+</style></head><body>
+<div class="sheet">
+  <p class="notice">이 지면은 8월 5일 자정에 아카이브로 이관됩니다</p>
+
+  <div class="stamp"><span class="sp-t">Zebrabeta Vol.34</span><span class="sp-line"></span></div>
+
+  <figure class="plate"><img src="vol34.jpg" alt="앨범 커버"></figure>
+
+  <div class="titles">
+    <h1>Le vent, le cri <span class="sub">(Générique)</span></h1>
+    <p class="artist">Ennio Morricone</p>
+  </div>
+
+  <div class="void"><div class="note">
+    <p>장 폴 벨몽도 주연의 프렌치 누아르 &lsquo;르 프로페셔널(Le Professionnel)&rsquo;의 메인 테마 &lsquo;Le Vent, Le Cri(바람, 외침)&rsquo;는 영화 음악의 거장 엔니오 모리코네가 작곡한 곡입니다. 쓸쓸한 바람처럼 시작해 점차 강렬하게 울려 퍼지는 오케스트라의 서정적이면서도 비장한 선율이 깊은 여운을 남깁니다. 함께 삽입된 &lsquo;Chi Mai&rsquo;와 더불어 모리코네 최고의 프렌치 스코어 중 하나로 평가받으며, 발매 후 수십 년이 지난 지금도 시대를 초월한 명곡으로 사랑받고 있습니다.</p>
+    <div class="aside">이번 큐레이션에서 소개하는 제네리끄(Générique, 영화의 타이틀 시퀀스) 버전은 국내 음원 서비스에서 제공되지 않는 점 참고 부탁드립니다.</div>
+    <div class="credit">작곡 Ennio Morricone</div>
+  </div></div>
+
+  <div class="listen">
+    <div class="listen-row">
+      <a>Apple Music</a><a>Spotify</a><a>YouTube Music</a><a>TIDAL</a>
+    </div>
+    <div class="listen-row">
+      <a class="off">Melon</a><a class="off">genie</a><a class="off">Bugs</a>
+    </div>
+  </div>
+
+  <div class="film"><div class="mat"><div class="frame"><iframe src="https://www.youtube.com/embed/SVeGWaFyaY0" allowfullscreen></iframe></div></div></div>
+
+  <div class="colophon">zebra beta · movement 2.</div>
+</div>
+</body></html>
