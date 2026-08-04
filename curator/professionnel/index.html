@@ -43,10 +43,22 @@ figcaption{margin-top:14px;text-align:center;font-family:"Cormorant Garamond",se
 .coda .song{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:16px;color:var(--mid);}
 .coda .artist{margin-top:7px;font-size:12.5px;color:var(--faint);}
 .colophon{text-align:center;padding:64px 0;font-family:"Cormorant Garamond",serif;font-style:italic;font-size:12px;color:var(--faint);letter-spacing:.18em;}
+
+  .notice{ margin-top:26px; max-width:340px; margin-left:auto; margin-right:auto; text-align:center; word-break:keep-all; font-size:11px; letter-spacing:.13em; text-indent:.13em; line-height:1.95; color:var(--faint); }
+  .moved{ text-align:center; }
+  .moved .rule{ width:30px; height:1px; background:var(--faint); margin:26px auto; border:0; }
+  .moved .line{ font-size:15.5px; color:var(--mid); letter-spacing:.05em; word-break:keep-all; }
+  .moved .sub{ margin-top:28px; font-size:12.5px; color:var(--faint); letter-spacing:.06em; line-height:2.2; word-break:keep-all; }
+  .moved .home{ margin-top:44px; }
+  .moved .home a{ color:var(--gold); text-decoration:none; letter-spacing:.05em; }
+  .moved .mcolophon{ margin-top:48px; font-family:"Cormorant Garamond", serif; font-style:italic; font-size:12.5px; color:var(--faint); letter-spacing:.18em; text-indent:.18em; }
+  .spacer{ height:60px; }
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="wrap" id="sheet">
+
+  <p class="notice">이 글은 8월 9일 자정에 아카이브로 이관됩니다</p>
 
   <header class="masthead"><p class="kicker">큐레이터 데스크</p></header>
 
@@ -84,5 +96,21 @@ figcaption{margin-top:14px;text-align:center;font-family:"Cormorant Garamond",se
   <p class="colophon">zebra beta · movement 2.</p>
 
 </div>
+<script>
+const EXPIRES = "2026-08-09T23:59:59+09:00";
+const isExpired = Date.now() > new Date(EXPIRES).getTime() || location.search.includes("preview=expired");
+const isArchive = location.search.includes("archive=1");
+if (isExpired && !isArchive) {
+  document.getElementById("sheet").innerHTML = `
+    <div class="spacer"></div>
+    <div class="moved">
+      <hr class="rule">
+      <p class="line">이 글은 아카이브로 이관되었습니다</p>
+      <p class="sub">지브라의 큰레이터 데스크는 발행 후 72시간 동안 열립니다.<br>이후 아카이브로 옮겨지며,<br>아카이브는 V1.0부터 회원에게 열립니다.</p>
+      <p class="home"><a href="https://zebrabeta.kr">지브라 베타</a></p>
+    </div>
+    <p class="mcolophon">zebra beta · movement 2.</p>`;
+}
+</script>
 </body>
 </html>
