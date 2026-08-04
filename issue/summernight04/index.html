@@ -182,6 +182,9 @@ if (/KAKAOTALK/i.test(navigator.userAgent)) {
     color:#8A7440; text-decoration:none; transition:background .25s, color .25s;
   }
   .moved .home a:hover, .moved .home a:focus-visible{ background:#B89A5A; color:var(--paper); outline:none; }
+
+  html,body{ -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; -webkit-touch-callout:none; }
+  a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
 </style>
 </head>
 <body>
@@ -251,5 +254,14 @@ if (isExpired && !isArchive) {
 }
 </script>
 
+<script>
+(function(){
+  var block=function(e){ e.preventDefault(); return false; };
+  document.addEventListener("contextmenu", block);
+  document.addEventListener("copy", block);
+  document.addEventListener("cut", block);
+  document.addEventListener("dragstart", block);
+})();
+</script>
 </body>
 </html>
