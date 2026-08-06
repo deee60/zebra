@@ -1,0 +1,18 @@
+[
+  {
+    "slug": "summernight04",
+    "kind": "music",
+    "series": "여름밤 04",
+    "title": "A都市の秋",
+    "romaji": "a toshi no aki",
+    "artist": "Lamp",
+    "path": "issue/summernight04/",
+    "cover": "issue/summernight04/summernight04.jpg",
+    "published": "2026-07-30",
+    "expires": "2026-08-02T23:59:59+09:00",
+    "layout": "lay-b",
+    "hue": 172,
+    "bg": "#B8C1C0",
+    "season": "summer"
+  }
+]
