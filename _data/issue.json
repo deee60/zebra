@@ -1,5 +1,19 @@
 [
   {
+    "slug": "summernight03",
+    "kind": "music",
+    "series": "여름밤 03",
+    "title": "시",
+    "romaji": "",
+    "artist": "Colde",
+    "path": "issue/summernight03/",
+    "cover": "issue/summernight03/summernight03.jpg",
+    "published": "2026-07-25",
+    "expires": "2026-07-28T23:59:59+09:00",
+    "layout": "lay-b",
+    "bg": "#AECBC7"
+  },
+  {
     "slug": "summernight04",
     "kind": "music",
     "series": "여름밤 04",
@@ -12,5 +26,47 @@
     "expires": "2026-08-03T19:00:00+09:00",
     "layout": "lay-b",
     "bg": "#B8C1C0"
+  },
+  {
+    "slug": "vol34",
+    "kind": "music",
+    "series": "지브라 베타 Vol.34",
+    "title": "Le vent, le cri",
+    "romaji": "",
+    "artist": "Ennio Morricone",
+    "path": "issue/vol34/",
+    "cover": "issue/vol34/vol34.jpg",
+    "published": "2026-08-04",
+    "expires": "2026-08-07T23:59:59+09:00",
+    "layout": "lay-a",
+    "bg": "#D3D8D9"
+  },
+  {
+    "slug": "summernight05",
+    "kind": "music",
+    "series": "여름밤 05",
+    "title": "좋겠어",
+    "romaji": "wishful thoughts",
+    "artist": "John OFA Rhee",
+    "path": "issue/summernight05/",
+    "cover": "issue/summernight05/summernight05.jpg",
+    "published": "2026-08-07",
+    "expires": "2026-08-10T23:59:59+09:00",
+    "layout": "lay-c",
+    "bg": "#C5CDD3"
+  },
+  {
+    "slug": "summernight06",
+    "kind": "music",
+    "series": "여름밤 06",
+    "title": "Vineyard",
+    "romaji": "빈야드",
+    "artist": "우효",
+    "path": "issue/summernight06/",
+    "cover": "issue/summernight06/summernight06.jpg",
+    "published": "2026-08-11",
+    "expires": "2026-08-14T23:59:59+09:00",
+    "layout": "lay-a",
+    "bg": "#C8D0CF"
   }
 ]
