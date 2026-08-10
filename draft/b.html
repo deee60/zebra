@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZEBRA BETA — coming soon</title>
+<meta name="description" content="당신의 하루에 함께 머물 수 있는 순간. V1.0이 곧 찾아갑니다.">
+<meta property="og:title" content="당신의 하루와 함께 머무는 순간.">
+<meta property="og:description" content="V 1.0 이 곧 찾아갑니다.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://zebrabeta.kr/">
+<meta property="og:image" content="https://zebrabeta.kr/zebra-og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#efece4;
+    --paper:#f7f5ef;
+    --ink:#2b2a26;
+    --soft:#8b877c;
+    --gold:#b89a5a;
+    --line:#ddd8cc;
+  }
+  body{
+    font-family:'Noto Serif KR',serif;background:var(--bg);color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    min-height:100vh;padding:96px 24px 72px;text-align:center;
+  }
+  .wrap{max-width:520px;width:100%;display:flex;flex-direction:column;align-items:center}
+
+  .logo{
+    width:230px;height:230px;margin-bottom:52px;
+    animation:fadeUp 1s ease both;
+  }
+  .logo img{width:100%;height:100%;object-fit:contain;display:block}
+
+  .kicker{
+    font-family:'Cormorant Garamond',serif;letter-spacing:.52em;text-transform:uppercase;
+    font-size:13px;color:var(--gold);margin-bottom:56px;padding-left:.52em;
+    animation:fadeUp 1s ease .15s both;
+  }
+
+
+  h1{
+    font-weight:300;font-size:20px;line-height:2.1;letter-spacing:.02em;color:var(--ink);
+    margin-bottom:30px;animation:fadeUp 1s ease .3s both;
+  }
+  h1 b{font-weight:500}
+
+  .social{display:flex;gap:30px;margin-bottom:36px;animation:fadeUp 1s ease .45s both}
+
+  .latest{margin-bottom:110px;animation:fadeUp 1s ease .55s both}
+  .latest a{
+    display:inline-block;border:0.5px solid rgba(184,154,90,.7);color:#8a7440;border-radius:2px;
+    padding:9px 19px;font-size:12px;letter-spacing:.04em;text-decoration:none;
+    transition:background .25s,color .25s;
+  }
+  .latest a:hover{background:var(--gold);color:var(--paper)}
+  .social a{
+    font-family:'Cormorant Garamond',serif;letter-spacing:.16em;text-transform:uppercase;font-size:12px;
+    color:var(--soft);text-decoration:none;transition:color .2s;padding-bottom:3px;border-bottom:1px solid transparent;
+  }
+  .social a:hover{color:var(--ink);border-bottom-color:var(--gold)}
+
+  .notify{
+    width:100%;max-width:380px;margin-bottom:40px;animation:fadeUp 1s ease .6s both;
+  }
+  .notify .lbl{font-size:14px;color:var(--soft);margin-bottom:20px;letter-spacing:.02em}
+  .form{display:flex;gap:8px}
+  .form input[type=email]{
+    flex:1;font-family:'Noto Serif KR',serif;font-size:15px;color:var(--ink);
+    background:var(--paper);border:1px solid var(--line);border-radius:2px;
+    padding:13px 16px;outline:none;transition:border-color .2s;width:100%;
+  }
+  .form input[type=email]:focus{border-color:var(--gold)}
+  .form input[type=email]::placeholder{color:#b3aea2}
+  .form button{
+    font-family:'Cormorant Garamond',serif;letter-spacing:.1em;text-transform:uppercase;font-size:13px;
+    background:var(--ink);color:var(--paper);border:none;border-radius:2px;
+    padding:0 22px;cursor:pointer;transition:opacity .2s,transform .2s;white-space:nowrap;
+  }
+  .form button:hover{opacity:.85;transform:translateY(-1px)}
+
+  .consent{
+    display:flex;align-items:flex-start;justify-content:center;gap:7px;
+    margin-top:16px;font-size:12px;color:var(--soft);line-height:1.6;
+    text-align:left;cursor:pointer;
+  }
+  .consent input{margin-top:3px;accent-color:var(--gold);flex-shrink:0;cursor:pointer}
+  .policy-btn{
+    background:none;border:none;padding:0;margin-top:7px;cursor:pointer;
+    font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:.06em;
+    color:var(--soft);text-decoration:underline;text-underline-offset:3px;
+  }
+  .policy-btn:hover{color:var(--ink)}
+  .policy-text{
+    font-size:12px;color:var(--soft);line-height:1.9;text-align:left;
+    margin-top:12px;padding:14px 16px;
+    background:var(--paper);border:1px solid var(--line);border-radius:2px;
+  }
+  .msg{font-size:13px;color:var(--gold);margin-top:18px;min-height:24px;line-height:1.7;font-family:'Cormorant Garamond',serif;font-style:italic;letter-spacing:.02em}
+
+  footer{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    color:var(--soft);font-size:13px;letter-spacing:.1em;animation:fadeUp 1s ease .75s both;
+  }
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+  @media(max-width:480px){
+    .logo{width:180px;height:180px;margin-bottom:32px}
+    h1{font-size:17px}
+    .form{flex-direction:column}
+    .form button{padding:13px}
+  }
+
+  .cta-note{font-size:14px;color:var(--soft);margin-bottom:20px;letter-spacing:.02em}
+  .cta-main{margin-bottom:56px}
+  .cta-gold a{
+    display:inline-block;background:none;color:#8a7440;border:0.5px solid rgba(184,154,90,.7);
+    border-radius:2px;padding:12px 30px;font-size:13.5px;letter-spacing:.06em;text-decoration:none;
+    transition:background .25s,color .25s;
+  }
+  .cta-gold a:hover{background:var(--gold);color:var(--paper)}
+  .cta-ink a{
+    display:inline-block;background:var(--ink);color:var(--paper);border-radius:2px;
+    padding:13px 34px;font-size:13.5px;letter-spacing:.06em;text-decoration:none;
+    transition:opacity .2s,transform .2s;
+  }
+  .cta-ink a:hover{opacity:.85;transform:translateY(-1px)}
+  .form button.ghost{
+    background:var(--paper);color:var(--soft);border:1px solid var(--line);
+  }
+  .form button.ghost:hover{color:var(--ink);border-color:var(--gold);opacity:1;transform:none}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="logo"><img src="/zebra-logo.png" alt="ZEBRA BETA"></div>
+
+    <div class="kicker">Zebra Beta</div>
+
+    <h1>당신의 하루에<br>함께 머물 수 있는 순간을 담습니다.</h1>
+
+
+    <div class="social">
+      <a href="https://instagram.com/zebrabeta26" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://brunch.co.kr/@zebrabeta" target="_blank" rel="noopener">Brunch</a>
+    </div>
+
+    <div class="latest"><a href="/issue/summernight05/">최근 발행물 보기</a></div>
+
+    <div class="notify">
+      <div class="cta-note">지금 함께 하고 싶어요</div>
+      <div class="cta-main cta-gold"><a href="https://docs.google.com/forms/d/17WrrQ1Z_4hKa-RkaZa5csEyJKrP-257UTAvm8od-TBM/viewform" target="_blank" rel="noopener">참여 신청</a></div>
+
+      <div class="lbl">V1.0이 오픈하면 알려주세요</div>
+
+      <form class="form" id="stbForm" method="POST" accept-charset="utf-8" target="stb_sink"
+            action="https://stibee.com/api/v1.0/lists/53IjfGo-upQA18qA7V7HdsyCu3PIFw==/public/subscribers">
+        <input type="email" id="email" name="email" placeholder="이메일 주소" autocomplete="email">
+        <button type="submit" id="btn">알림 받기</button>
+      </form>
+
+      <label class="consent">
+        <input type="checkbox" id="agree">
+        <span>(필수) 개인정보 수집 및 이용에 동의합니다.</span>
+      </label>
+      <button type="button" class="policy-btn" id="policyBtn">내용 보기</button>
+      <div class="policy-text" id="policyText" hidden>뉴스레터 발송을 위한 최소한의 개인정보(이메일 주소)를 수집하고 이용합니다. 수집된 정보는 발송 외 다른 목적으로 이용되지 않으며, 서비스가 종료되거나 구독을 해지할 경우 즉시 파기됩니다.</div>
+
+      <div class="msg" id="msg"></div>
+    </div>
+
+    <footer>zebra beta movement 2.</footer>
+  </div>
+
+  <iframe name="stb_sink" title="subscribe" style="display:none" aria-hidden="true"></iframe>
+
+<script>
+  var f=document.getElementById('stbForm'),
+      email=document.getElementById('email'),
+      agree=document.getElementById('agree'),
+      msg=document.getElementById('msg'),
+      pBtn=document.getElementById('policyBtn'),
+      pText=document.getElementById('policyText');
+
+  pBtn.addEventListener('click',function(){
+    var open=!pText.hidden;
+    pText.hidden=open;
+    pBtn.textContent=open?'내용 보기':'닫기';
+  });
+
+  f.addEventListener('submit',function(e){
+    var v=email.value.trim();
+    if(!v||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){
+      e.preventDefault();
+      msg.textContent='올바른 이메일 주소를 입력해주세요.';
+      return;
+    }
+    if(!agree.checked){
+      e.preventDefault();
+      msg.textContent='개인정보 수집 및 이용에 동의해주세요.';
+      return;
+    }
+    msg.textContent='감사합니다. 문이 열리면 알려드리겠습니다.';
+    setTimeout(function(){ email.value=''; agree.checked=false; },300);
+  });
+</script>
+</body>
+</html>
