@@ -6,7 +6,7 @@
 <title>ZEBRA BETA — coming soon</title>
 <meta name="description" content="당신의 하루에 함께 머물 수 있는 순간. V1.0이 곧 찾아갑니다.">
 <meta property="og:title" content="당신의 하루와 함께 머무는 순간.">
-<meta property="og:description" content="V 1.0 이 곧 찾아갑니다.">
+<meta property="og:description" content="V1.0이 곧 찾아갑니다.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://zebrabeta.kr/">
 <meta property="og:image" content="https://zebrabeta.kr/zebra-og.png">
@@ -117,6 +117,20 @@
     .form{flex-direction:column}
     .form button{padding:13px}
   }
+
+  .cta-note{font-size:14px;color:var(--soft);margin-bottom:12px;letter-spacing:.02em}
+  .cta-main{margin-bottom:56px}
+  .cta-main a{
+    display:inline-block;background:var(--ink);color:var(--paper);border-radius:2px;
+    padding:13px 34px;font-size:13.5px;letter-spacing:.06em;text-decoration:none;
+    transition:opacity .2s,transform .2s;
+  }
+  .cta-main a:hover{opacity:.85;transform:translateY(-1px)}
+  .notify .lbl{margin-bottom:12px}
+  .form button.ghost{
+    background:var(--paper);color:var(--soft);border:1px solid var(--line);
+  }
+  .form button.ghost:hover{color:var(--ink);border-color:var(--gold);opacity:1;transform:none}
 </style>
 </head>
 <body>
@@ -136,12 +150,15 @@
     <div class="latest"><a href="issue/summernight05/">최근 발행물 보기</a></div>
 
     <div class="notify">
-      <div class="lbl">문을 열면 가장 먼저 알려드릴게요.</div>
+      <div class="cta-note">지금 함께 하고 싶어요</div>
+      <div class="cta-main"><a href="https://docs.google.com/forms/d/17WrrQ1Z_4hKa-RkaZa5csEyJKrP-257UTAvm8od-TBM/viewform" target="_blank" rel="noopener">참여 신청</a></div>
+
+      <div class="lbl">V1.0이 오픈하면 알려주세요</div>
 
       <form class="form" id="stbForm" method="POST" accept-charset="utf-8" target="stb_sink"
             action="https://stibee.com/api/v1.0/lists/53IjfGo-upQA18qA7V7HdsyCu3PIFw==/public/subscribers">
         <input type="email" id="email" name="email" placeholder="이메일 주소" autocomplete="email">
-        <button type="submit" id="btn">알림 받기</button>
+        <button type="submit" id="btn" class="ghost">알림 받기</button>
       </form>
 
       <label class="consent">
@@ -185,7 +202,7 @@
       msg.textContent='개인정보 수집 및 이용에 동의해주세요.';
       return;
     }
-    msg.textContent='감사합니다. 문이 열리면 알려드리겠습니다.';
+    msg.textContent='감사합니다. V1.0이 오픈하면 알려드리겠습니다.';
     setTimeout(function(){ email.value=''; agree.checked=false; },300);
   });
 </script>
