@@ -53,13 +53,19 @@
 
   .social{display:flex;gap:30px;margin-bottom:36px;animation:fadeUp 1s ease .45s both}
 
-  .latest{margin-bottom:110px;animation:fadeUp 1s ease .55s both}
-  .latest a{
+  .latest{margin-bottom:110px;animation:fadeUp 1s ease .55s both;text-align:center}
+  .latest .pick{
     display:inline-block;border:0.5px solid rgba(184,154,90,.7);color:#8a7440;border-radius:2px;
-    padding:9px 19px;font-size:12px;letter-spacing:.04em;text-decoration:none;
+    padding:6px 19px;font-size:12px;letter-spacing:.04em;text-decoration:none;
     transition:background .25s,color .25s;
   }
-  .latest a:hover{background:var(--gold);color:var(--paper)}
+  .latest .pick:hover{background:var(--gold);color:var(--paper)}
+  .latest .recent{
+    display:block;margin-top:26px;font-family:'Cormorant Garamond',serif;
+    color:var(--soft);font-size:11px;letter-spacing:.14em;text-decoration:none;
+    transition:color .25s;
+  }
+  .latest .recent:hover{color:var(--gold)}
   .social a{
     font-family:'Cormorant Garamond',serif;letter-spacing:.16em;text-transform:uppercase;font-size:12px;
     color:var(--soft);text-decoration:none;transition:color .2s;padding-bottom:3px;border-bottom:1px solid transparent;
@@ -146,7 +152,10 @@
       <a href="https://brunch.co.kr/@zebrabeta" target="_blank" rel="noopener">Brunch</a>
     </div>
 
-    <div class="latest"><a href="issue/summernight06/">최근 발행물 보기</a></div>
+    <div class="latest">
+      <a class="pick" href="curator/ilpostino/">큐레이터 추천</a>
+      <a class="recent" href="issue/summernight06/">최근 발행물 보기</a>
+    </div>
 
     <div class="notify">
       <div class="cta-note">지금 함께 하고 싶어요</div>
