@@ -68,5 +68,19 @@
     "expires": "2026-08-14T23:59:59+09:00",
     "layout": "lay-a",
     "bg": "#C8D0CF"
+  },
+  {
+    "slug": "vol35",
+    "kind": "music",
+    "series": "지브라 베타 Vol.35",
+    "title": "Sicilienne",
+    "romaji": "Pelléas et Mélisande, Op.80",
+    "artist": "장한나",
+    "path": "issue/vol35/",
+    "cover": "issue/vol35/vol35.jpg",
+    "published": "2026-08-13",
+    "expires": "2026-08-16T23:59:59+09:00",
+    "layout": "lay-b",
+    "bg": "#CDDCDF"
   }
 ]
