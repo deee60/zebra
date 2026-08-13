@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ZEBRA BETA 지면 · build.py 자동 생성 · 직접 수정하지 말고 issues/*.json 을 고칠 것 -->
+<title>지브라 베타 Vol.35 | Zebra Beta</title>
+<meta name="description" content="zebra beta movement 2.">
+<meta property="og:title" content="Sicilienne — 장한나">
+<meta property="og:description" content="zebra beta movement 2.">
+<meta property="og:image" content="https://zebrabeta.kr/zebra-og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<script>
+/* 카카오톡 인앱 브라우저 탈출 */
+if (/KAKAOTALK/i.test(navigator.userAgent)) {
+  location.href = "kakaotalk://web/openExternal?url=" + encodeURIComponent(location.href);
+}
+</script>
+<style>
+
+  :root{ --bg:#CDDCDF; --paper:#F5F3ED; --ink:#26221C; --mid:#6E6A61; --faint:#A9A297; --rule:#DFDAD0; }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{ background:var(--bg); display:flex; justify-content:center;
+        font-family:"Noto Serif KR", serif; color:var(--ink); }
+  .sheet{
+    background:var(--paper); width:100%; max-width:720px; min-height:100dvh;
+    display:flex; flex-direction:column; align-items:center;
+    padding:0 30px;
+    box-shadow:0 0 60px rgba(70,60,45,.07);
+    animation:settle 1.2s ease both;
+  }
+  @keyframes settle{ from{opacity:0;} to{opacity:1;} }
+  @media (prefers-reduced-motion: reduce){ .sheet{ animation:none; } }
+
+  .notice{
+    margin-top:26px;
+    max-width:340px;
+    text-align:center;
+    word-break:keep-all;
+    font-size:11px; letter-spacing:.13em; text-indent:.13em;
+    line-height:1.95;
+    color:var(--faint);
+  }
+
+  .plate{ margin-top:clamp(56px, 10vh, 96px); width:min(46%, 258px); }
+  .plate img{ width:100%; display:block; }
+
+  .titles{ text-align:center; margin-top:clamp(48px, 8vh, 76px); }
+  .titles .series{ font-size:14px; font-weight:500; color:var(--ink); letter-spacing:.1em; }
+  /* letterpress 인장 (본편 Vol. 전용 — stamp:true). series 자리에 같은 크기로.
+     골드 금박 압인: 브랜드 골드를 종이에 눌러 각인. 위 어두운그림자(눌림)+아래 밝은골드하이라이트(가장자리 빛). */
+  .stamp{ display:flex; flex-direction:column; align-items:center; margin-bottom:6px; }
+  .stamp .sp-t{ font-family:"Noto Serif KR",serif; font-weight:500;
+    font-size:14px; color:#D4BC8A; letter-spacing:.1em; text-indent:.1em; white-space:nowrap;
+    text-shadow:0 -0.6px 0.5px rgba(74,50,16,.98), 0 0.8px 0.4px rgba(255,253,242,1), 0 0 0.7px rgba(120,90,40,.4); }
+  .stamp .sp-line{ width:22px; height:1px; margin-top:7px; background:#D4BC8A;
+    box-shadow:0 -0.6px 0.5px rgba(74,50,16,.9), 0 0.8px 0.4px rgba(255,253,242,1); }
+  /* 곡명 부제 축소 — (Générique) 같은 괄호 부분 */
+  .titles h1 .sub{ font-size:0.62em; color:var(--faint); font-style:italic;
+    font-family:"Cormorant Garamond",serif; letter-spacing:.02em; }
+  .titles h1{
+    margin-top:22px;
+    font-size:var(--song-size);
+    font-weight:400; letter-spacing:.08em; line-height:1.25;
+  }
+  .titles .artist{
+    margin-top:10px;
+    font-family:"Cormorant Garamond", serif; font-style:italic; font-weight:500;
+    font-size:19px; color:var(--mid); letter-spacing:.05em;
+  }
+
+  .titles .romaji{
+    margin-top:9px;
+    font-family:"Cormorant Garamond", serif;
+    font-size:15px; color:var(--faint); letter-spacing:.05em;
+  }
+  .titles .romaji:empty{ display:none; }
+
+  /* 상단 배치 변형 — 문법은 동일, 순서와 크기만 다름 */
+  .lay-a{ --song-size:26px; }
+  .lay-b{ --song-size:28px; }
+  .lay-c{ --song-size:24px; }
+  .lay-c .plate{ width:min(34%, 190px); }
+  .lay-b .titles{ margin-top:clamp(56px, 9vh, 88px); }
+  .lay-b .plate{ margin-top:clamp(30px, 5vh, 46px); }
+  .lay-c .void{ min-height:clamp(360px, 50vh, 540px); }
+
+  .void{
+    flex:1;
+    display:flex; align-items:center; justify-content:center;
+    width:100%;
+    min-height:clamp(300px, 42vh, 460px);
+    padding:clamp(64px, 10vh, 110px) 0;
+  }
+  .note{
+    width:min(100%, 420px);
+    font-size:15.5px; line-height:2.15; color:#332F28; word-break:keep-all;
+  }
+  .note p + p{ margin-top:1.6em; text-indent:1em; }
+  .note:empty{ display:none; }
+  .note .credit{
+    margin-top:2.8em; text-indent:0;
+    font-size:12.5px; line-height:2.05; color:var(--faint);
+    letter-spacing:.04em; word-break:keep-all;
+  }
+  .note .credit::before{
+    content:""; display:block; width:24px; height:1px;
+    background:var(--rule); margin-bottom:1.5em;
+  }
+  .note .aside{
+    margin-top:2.2em; text-indent:0;
+    font-size:11px; line-height:1.85; color:var(--faint);
+    letter-spacing:.02em; word-break:keep-all; opacity:.85;
+  }
+
+  .listen{ text-align:center; padding-bottom:8px; }
+  .listen-row{
+    display:flex; justify-content:center; align-items:center;
+    flex-wrap:wrap; column-gap:24px; row-gap:8px;
+  }
+  .listen-row + .listen-row{ margin-top:13px; }
+  .listen-row a{
+    display:inline-flex; align-items:center; gap:6px;
+    text-decoration:none; color:var(--mid);
+    font-size:12px; font-weight:500; letter-spacing:.12em;
+    padding:4px 0;
+  }
+  .listen-row a.latin{
+    font-family:"Cormorant Garamond", serif;
+    font-size:14px; letter-spacing:.08em;
+  }
+  .listen-row a:hover, .listen-row a:focus-visible{
+    color:var(--ink); text-decoration:underline;
+    text-underline-offset:5px; text-decoration-thickness:1px;
+  }
+  .listen-row a:focus-visible{ outline:none; }
+  .listen-row svg{ width:13.5px; height:13.5px; flex:0 0 13.5px; }
+  .listen-row .off{
+    display:inline-flex; align-items:center; gap:6px;
+    color:#C6C0B4; cursor:default;
+    font-size:12px; font-weight:500; letter-spacing:.12em;
+    padding:4px 0;
+  }
+  .listen-row .off.latin{
+    font-family:"Cormorant Garamond", serif;
+    font-size:14px; letter-spacing:.08em;
+  }
+  .listen-row .off svg{ opacity:.35; }
+  .listen-row .off::after{
+    content:attr(data-off);
+    position:absolute; left:50%; transform:translate(-50%, -168%);
+    white-space:nowrap; pointer-events:none;
+    background:var(--ink); color:var(--paper);
+    font-family:"Noto Serif KR", serif; font-style:normal; font-weight:400;
+    font-size:10.5px; letter-spacing:.06em;
+    padding:5px 9px; border-radius:2px;
+    opacity:0; transition:opacity .2s;
+  }
+  .listen-row .off{ position:relative; }
+  .listen-row .off:hover::after{ opacity:.94; }
+
+  /* 권리 만료 등으로 재생이 안 되는 서비스 — 표시는 하되 눌러 보이지 않게 */
+  .listen-row a.na{ color:var(--faint); }
+  .listen-row a.na svg{ opacity:.42; }
+  .listen-row a.na:hover, .listen-row a.na:focus-visible{
+    color:var(--faint); text-decoration:none;
+  }
+
+  .film{ width:min(100%, 460px); margin:clamp(44px, 7vh, 64px) auto 0; }
+  .film .mat{ background:#FCFBF8; border:1px solid var(--rule); padding:4.5px; }
+  .film .frame{ position:relative; padding-top:56.25%; background:#111; }
+  .film iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+  .film figcaption{
+    margin-top:11px; text-align:center;
+    font-family:"Cormorant Garamond", serif; font-style:italic;
+    font-size:13.5px; color:var(--faint); letter-spacing:.06em;
+  }
+
+  .colophon{
+    margin-top:clamp(40px, 7vh, 64px);
+    padding-bottom:34px;
+    font-family:"Cormorant Garamond", serif; font-style:italic;
+    font-size:12.5px; color:var(--faint);
+    letter-spacing:.18em; text-indent:.18em;
+  }
+
+  /* 만료 화면 */
+  .spacer{ flex:1; }
+  .moved{ text-align:center; }
+  .moved .series{ font-size:14px; font-weight:500; letter-spacing:.1em; color:var(--ink); }
+  .moved .rule{ width:30px; height:1px; background:var(--faint); margin:26px auto; border:0; }
+  .moved .line{ font-size:15.5px; color:var(--mid); letter-spacing:.05em; }
+  .moved .sub{ margin-top:28px; font-size:12.5px; color:var(--faint); letter-spacing:.06em; line-height:2.2; word-break:keep-all; }
+  .moved .home{ margin-top:44px; }
+  .moved .home a{
+    display:inline-block; border:0.5px solid rgba(184,154,90,.7); border-radius:2px;
+    padding:9px 19px; font-size:12px; letter-spacing:.04em;
+    color:#8A7440; text-decoration:none; transition:background .25s, color .25s;
+  }
+  .moved .home a:hover, .moved .home a:focus-visible{ background:#B89A5A; color:var(--paper); outline:none; }
+
+/* 복사 방지 — 드래그 선택 차단 (우클릭·복사는 _template.html 의 JS) */
+html,body{ -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; -webkit-touch-callout:none; }
+a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
+
+</style>
+</head>
+<body>
+
+  <main class="sheet lay-b" id="sheet">
+
+    <p class="notice">이 지면은 8월 16일 자정에 아카이브로 이관됩니다</p>
+
+    <div class="titles">
+      <div class="stamp"><span class="sp-t">지브라 베타 Vol.35</span><span class="sp-line"></span></div>
+      <h1>Sicilienne</h1>
+      <p class="romaji">Pelléas et Mélisande, Op.80</p>
+      <p class="artist">장한나</p>
+    </div>
+
+    <figure class="plate">
+      <img src="vol35.jpg" alt="앨범 커버">
+    </figure>
+
+    <div class="void">
+      <div class="note"><p>가브리엘 포레의 펠레아스와 멜리장드는 모리스 마테를링크의 동명 희곡을 위해 작곡된 음악입니다. 그중 Sicilienne(시실리엔느)는 '시칠리아풍의 춤곡'을 뜻하며, 느긋하게 흔들리는 리듬 위에 우아하고 서정적인 선율이 흐르는 곡입니다. 장한나의 버전에서는 첼로의 깊은 울림을 통해 포레의 서정성을 더욱 가까이 느낄 수 있습니다. 한낮의 햇빛이 조금씩 가늘어지고, 여름의 열기가 빠져 바람이 선선해진 오늘. 창문을 열어두고 들어보세요.</p><div class="credit">작곡 Gabriel Fauré · 첼로 장한나 · 지휘 Leonard Slatkin · 편곡 Chris Hazell</div></div>
+    </div>
+
+    <footer class="listen">
+      <nav class="listen-row" aria-label="해외 스트리밍">
+        <a class="latin" href="https://music.apple.com/kr/song/pelleas-et-melisande-op-80-sicilienne/696534529" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="var(--ink)"/><path d="M16.6 5.9 9.9 7.3c-.4.1-.6.4-.6.8v5.8a2 2 0 1 0 1.1 1.8V9.9l5.1-1.1v3.7a2 2 0 1 0 1.1 1.8V6.6c0-.4-.4-.8-.9-.7z" fill="var(--paper)"/></svg>Apple Music</a>
+        <a class="latin" href="https://open.spotify.com/track/15hL12Xj1CjP9qccQpxteR" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="var(--ink)"/><path d="M6.6 9.5c3.7-1.1 7.9-.7 10.9 1.1" stroke="var(--paper)" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M7.1 12.4c3.1-.9 6.6-.5 9.1 1" stroke="var(--paper)" stroke-width="1.3" fill="none" stroke-linecap="round"/><path d="M7.6 15.2c2.5-.7 5.3-.4 7.3.8" stroke="var(--paper)" stroke-width="1.1" fill="none" stroke-linecap="round"/></svg>Spotify</a>
+        <a class="latin" href="https://music.youtube.com/watch?v=wOwll8yqGpg" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="var(--ink)"/><circle cx="12" cy="12" r="6.8" fill="none" stroke="var(--paper)" stroke-width="1.3"/><path d="M10.3 9.4l4.7 2.6-4.7 2.6z" fill="var(--paper)"/></svg>YouTube Music</a>
+        <a class="latin" href="https://listen.tidal.com/track/1356812" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="var(--ink)"/><path d="M7.9 7.4l2.4 2.4-2.4 2.4-2.4-2.4zM12.7 7.4l2.4 2.4-2.4 2.4-2.4-2.4zM17.5 9.8l-2.4 2.4 2.4 2.4 2.4-2.4zM12.7 12.2l2.4 2.4-2.4 2.4-2.4-2.4z" fill="var(--paper)" transform="translate(-0.6 1)"/></svg>Tidal</a>
+      </nav>
+      <nav class="listen-row" aria-label="국내 스트리밍">
+        <a href="https://www.melon.com/song/detail.htm?songId=404357" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="var(--ink)"/><path d="M15 6.9v7a2.2 2.2 0 1 1-1.1-1.9V9l-4 .9v4.1a2.2 2.2 0 1 1-1.1-1.9V8.2z" fill="var(--paper)"/></svg>멜론</a>
+        <a href="https://www.genie.co.kr/detail/songInfo?xgnm=44469533" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="var(--ink)"/><text x="12" y="16.6" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="var(--paper)">g</text></svg>지니</a>
+        <a href="https://music.bugs.co.kr/track/404357" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="var(--ink)"/><text x="12" y="16.6" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="var(--paper)">b</text></svg>벅스</a>
+      </nav>
+    </footer>
+
+    <figure class="film">
+      <div class="mat">
+        <div class="frame">
+          <iframe src="https://www.youtube-nocookie.com/embed/wOwll8yqGpg" title="Sicilienne (Pelléas et Mélisande) — 장한나" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </div>
+      <figcaption>Sicilienne (Pelléas et Mélisande) — 장한나</figcaption>
+    </figure>
+
+    <p class="colophon">zebra beta · movement 2.</p>
+
+  </main>
+
+<script>
+/* 이관(만료) 처리 — 표준 블록. EXPIRES 는 build.py 가 발행시각+72시간으로 계산 */
+const EXPIRES = "2026-08-16T23:59:59+09:00";
+const isExpired = Date.now() > new Date(EXPIRES).getTime() || location.search.includes("preview=expired");
+const isArchive = location.search.includes("archive=1");
+if (isExpired && !isArchive) {
+  document.getElementById("sheet").innerHTML = `
+    <div class="spacer"></div>
+    <div class="moved">
+      <hr class="rule">
+      <p class="line">이 큐레이션은 아카이브로 이관되었습니다</p>
+      <p class="sub">지브라의 큐레이션은 발행 후 72시간 동안 열립니다.<br>이후 아카이브로 옮겨지며,<br>아카이브는 V1.0부터 회원에게 열립니다.</p>
+      <p class="home"><a href="https://zebrabeta.kr">지브라 베타</a></p>
+    </div>
+    <div class="spacer"></div>
+    <p class="colophon">zebra beta · movement 2.</p>`;
+}
+</script>
+
+<script>
+(function(){
+  var block=function(e){ e.preventDefault(); return false; };
+  document.addEventListener("contextmenu", block);
+  document.addEventListener("copy", block);
+  document.addEventListener("cut", block);
+  document.addEventListener("dragstart", block);
+})();
+</script>
+</body>
+</html>
