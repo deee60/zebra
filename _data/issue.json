@@ -73,14 +73,14 @@
     "slug": "vol35",
     "kind": "music",
     "series": "지브라 베타 Vol.35",
-    "title": "Sicilienne",
-    "romaji": "Pelléas et Mélisande, Op.80",
-    "artist": "장한나",
+    "title": "The Spruce",
+    "romaji": "Five Pieces, Op.75 \"The Trees\": No.5",
+    "artist": "Håvard Gimse",
     "path": "issue/vol35/",
     "cover": "issue/vol35/vol35.jpg",
     "published": "2026-08-13",
     "expires": "2026-08-16T23:59:59+09:00",
     "layout": "lay-b",
-    "bg": "#CDDCDF"
+    "bg": "#CDD9CE"
   }
 ]
