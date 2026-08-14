@@ -48,14 +48,14 @@ if (/KAKAOTALK/i.test(navigator.userAgent)) {
     color:var(--faint);
   }
 
-  .plate{ margin-top:clamp(56px, 10vh, 96px); width:min(52%, 300px); }
+  .plate{ margin-top:clamp(56px, 10vh, 96px); width:min(46%, 258px); }
   .plate img{ width:100%; display:block; }
 
   .titles{ text-align:center; margin-top:clamp(48px, 8vh, 76px); }
   .titles .series{ font-size:14px; font-weight:500; color:var(--ink); letter-spacing:.1em; }
   /* letterpress 인장 (본편 Vol. 전용 — stamp:true). series 자리에 같은 크기로.
      골드 금박 압인: 브랜드 골드를 종이에 눌러 각인. 위 어두운그림자(눌림)+아래 밝은골드하이라이트(가장자리 빛). */
-  .stamp{ display:flex; flex-direction:column; align-items:center; margin-bottom:6px; margin-top:clamp(48px, 8vh, 76px); }
+  .stamp{ display:flex; flex-direction:column; align-items:center; margin-bottom:6px; }
   .stamp .sp-t{ font-family:"Noto Serif KR",serif; font-weight:500;
     font-size:14px; color:#D4BC8A; letter-spacing:.1em; text-indent:.1em; white-space:nowrap;
     text-shadow:0 -0.6px 0.5px rgba(74,50,16,.98), 0 0.8px 0.4px rgba(255,253,242,1), 0 0 0.7px rgba(120,90,40,.4); }
@@ -84,9 +84,12 @@ if (/KAKAOTALK/i.test(navigator.userAgent)) {
 
   /* 상단 배치 변형 — 문법은 동일, 순서와 크기만 다름 */
   .lay-a{ --song-size:26px; }
-  .lay-b{ --song-size:22px; }
+  .lay-b{ --song-size:28px; }
   .lay-c{ --song-size:22px; }
   .lay-c .plate{ width:min(72%, 240px); }
+  .lay-c .stamp{ margin-top:clamp(48px, 8vh, 76px); }
+  .lay-c .plate{ margin-top:clamp(24px, 4vh, 36px); }
+  .lay-c .titles{ margin-top:clamp(28px, 5vh, 44px); }
   .lay-b .titles{ margin-top:clamp(56px, 9vh, 88px); }
   .lay-b .plate{ margin-top:clamp(30px, 5vh, 46px); }
   .lay-c .void{ min-height:clamp(360px, 50vh, 540px); }
@@ -215,12 +218,12 @@ a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
 
   <main class="sheet lay-c" id="sheet">
 
-    <p class="notice">이 지면은 8월 16일 자정에 아카이브로 이관됩니다</p>
+    <p class="notice">이 지면은 8월 18일 자정에 아카이브로 이관됩니다</p>
 
     <div class="stamp"><span class="sp-t">지브라 베타 Vol.35</span><span class="sp-line"></span></div>
 
     <figure class="plate">
-      <img src="vol35_1.jpg" alt="앨범 커버">
+      <img src="vol35.jpg" alt="앨범 커버">
     </figure>
 
     <div class="titles">
@@ -230,7 +233,7 @@ a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
     </div>
 
     <div class="void">
-      <div class="note"><p>시벨리우스의 '나무들(The Trees)'은 피아노 미니어처 모음집으로 다섯 곡 모두 나무를 소재로 하고 있습니다. 교향곡으로 널리 알려진 시벨리우스가 조국 핀란드의 자연을 섬세하게 담아낸 소품집으로, 마지막 곡 The Spruce는 안개가 걷히는 어느 북방의 숲이 그려지는 곡입니다.</p><p>여름의 열기가 한풀 꺾이고 공기가 달라지는 요즘. 창문을 열고 서늘한 숲의 소리를 감상해보세요.</p><div class="credit">작곡 Jean Sibelius · 피아노 Håvard Gimse</div></div>
+      <div class="note"><p>시벨리우스의 '나무들(The Trees)'은 피아노 미니어처 모음집으로 다섯 곡 모두 나무를 소재로 하고 있습니다. 교향곡으로 널리 알려진 시벨리우스가 조국 핀란드의 자연을 섬세하게 담아낸 소품집으로, 마지막 곡 The Spruce는 안개가 걷히는 어느 북방의 숲이 그려지는 곡입니다.</p><p>여름의 열기가 한풀 꺾이고 공기가 달라지는 요즘. 창문을 열고 서늘한 숲의 소리를 감상해보세요.</p><div class="credit">작곡 Jean Sibelius<br>피아노 Håvard Gimse</div></div>
     </div>
 
     <footer class="listen">
@@ -262,7 +265,7 @@ a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
 
 <script>
 /* 이관(만료) 처리 — 표준 블록. EXPIRES 는 build.py 가 발행시각+72시간으로 계산 */
-const EXPIRES = "2026-08-16T23:59:59+09:00";
+const EXPIRES = "2026-08-18T23:59:59+09:00";
 const isExpired = Date.now() > new Date(EXPIRES).getTime() || location.search.includes("preview=expired");
 const isArchive = location.search.includes("archive=1");
 if (isExpired && !isArchive) {
