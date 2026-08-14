@@ -55,7 +55,7 @@ if (/KAKAOTALK/i.test(navigator.userAgent)) {
   .titles .series{ font-size:14px; font-weight:500; color:var(--ink); letter-spacing:.1em; }
   /* letterpress 인장 (본편 Vol. 전용 — stamp:true). series 자리에 같은 크기로.
      골드 금박 압인: 브랜드 골드를 종이에 눌러 각인. 위 어두운그림자(눌림)+아래 밝은골드하이라이트(가장자리 빛). */
-  .stamp{ display:flex; flex-direction:column; align-items:center; margin-bottom:6px; }
+  .stamp{ display:flex; flex-direction:column; align-items:center; margin-bottom:6px; margin-top:clamp(48px, 8vh, 76px); }
   .stamp .sp-t{ font-family:"Noto Serif KR",serif; font-weight:500;
     font-size:14px; color:#D4BC8A; letter-spacing:.1em; text-indent:.1em; white-space:nowrap;
     text-shadow:0 -0.6px 0.5px rgba(74,50,16,.98), 0 0.8px 0.4px rgba(255,253,242,1), 0 0 0.7px rgba(120,90,40,.4); }
@@ -86,7 +86,7 @@ if (/KAKAOTALK/i.test(navigator.userAgent)) {
   .lay-a{ --song-size:26px; }
   .lay-b{ --song-size:22px; }
   .lay-c{ --song-size:22px; }
-  .lay-c .plate{ width:min(52%, 300px); }
+  .lay-c .plate{ width:min(42%, 240px); }
   .lay-b .titles{ margin-top:clamp(56px, 9vh, 88px); }
   .lay-b .plate{ margin-top:clamp(30px, 5vh, 46px); }
   .lay-c .void{ min-height:clamp(360px, 50vh, 540px); }
@@ -217,12 +217,13 @@ a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
 
     <p class="notice">이 지면은 8월 16일 자정에 아카이브로 이관됩니다</p>
 
+    <div class="stamp"><span class="sp-t">지브라 베타 Vol.35</span><span class="sp-line"></span></div>
+
     <figure class="plate">
       <img src="vol35_1.jpg" alt="앨범 커버">
     </figure>
 
     <div class="titles">
-      <div class="stamp"><span class="sp-t">지브라 베타 Vol.35</span><span class="sp-line"></span></div>
       <h1>The Spruce</h1>
       <p class="romaji">Five Pieces, Op.75 &quot;The Trees&quot;: No.5</p>
       <p class="artist">Håvard Gimse</p>
