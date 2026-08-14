@@ -53,7 +53,7 @@
 
   .social{display:flex;gap:30px;margin-bottom:36px;animation:fadeUp 1s ease .45s both}
 
-  .latest{margin-bottom:110px;animation:fadeUp 1s ease .55s both;text-align:center}
+  .latest{margin-bottom:0;animation:fadeUp 1s ease .55s both;text-align:center}
   .latest .pick{
     display:inline-block;border:0.5px solid rgba(184,154,90,.7);color:#8a7440;border-radius:2px;
     padding:6px 19px;font-size:12px;letter-spacing:.04em;text-decoration:none;
@@ -62,7 +62,7 @@
   .latest .pick:hover{background:var(--gold);color:var(--paper)}
   .latest .recent-row{
     margin-top:26px;display:flex;align-items:center;justify-content:center;
-    gap:14px;flex-wrap:wrap;
+    gap:22px;flex-wrap:wrap;
   }
   .latest .recent{
     font-family:'Cormorant Garamond',serif;
@@ -71,7 +71,12 @@
   }
   .latest .recent:hover{color:var(--gold)}
   .latest .dot{
-    font-family:'Cormorant Garamond',serif;color:var(--line);font-size:11px;
+    font-family:'Cormorant Garamond',serif;color:var(--soft);font-size:11px;
+  }
+
+  .divider{
+    width:9px;height:0;border-bottom:1px solid #cdc7b8;
+    margin:85px auto;animation:fadeUp 1s ease .55s both;
   }
   .social a{
     font-family:'Cormorant Garamond',serif;letter-spacing:.16em;text-transform:uppercase;font-size:12px;
@@ -80,34 +85,34 @@
   .social a:hover{color:var(--ink);border-bottom-color:var(--gold)}
 
   .notify{
-    width:100%;max-width:380px;margin-bottom:40px;animation:fadeUp 1s ease .6s both;
+    width:100%;max-width:340px;margin-bottom:40px;animation:fadeUp 1s ease .6s both;
   }
-  .notify .lbl{font-size:14px;color:var(--soft);margin-bottom:20px;letter-spacing:.02em}
+  .notify .lbl{font-size:13px;color:var(--soft);margin-bottom:12px;letter-spacing:.02em}
   .form{display:flex;gap:8px}
   .form input[type=email]{
     flex:1;font-family:'Cormorant Garamond','Noto Serif KR',serif;font-size:12px;letter-spacing:.02em;color:var(--ink);
     background:var(--paper);border:1px solid var(--line);border-radius:2px;
-    padding:10px 16px;text-align:center;outline:none;transition:border-color .2s;width:100%;
+    padding:8px 16px;text-align:center;outline:none;transition:border-color .2s;width:100%;
   }
   .form input[type=email]:focus{border-color:var(--gold)}
   .form input[type=email]::placeholder{color:#b3aea2}
   .form button{
-    font-family:'Cormorant Garamond',serif;letter-spacing:.1em;text-transform:uppercase;font-size:13px;
+    font-family:'Cormorant Garamond',serif;letter-spacing:.1em;text-transform:uppercase;font-size:12px;
     background:var(--ink);color:var(--paper);border:none;border-radius:2px;
-    padding:0 22px;cursor:pointer;transition:opacity .2s,transform .2s;white-space:nowrap;
+    padding:0 20px;cursor:pointer;transition:opacity .2s,transform .2s;white-space:nowrap;
   }
   .form button:hover{opacity:.85;transform:translateY(-1px)}
 
   .consent{
     display:flex;align-items:flex-start;justify-content:center;gap:7px;
-    margin-top:16px;font-size:12px;color:var(--soft);line-height:1.6;
+    margin-top:16px;font-size:11px;color:#b3aea2;line-height:1.6;
     text-align:left;cursor:pointer;
   }
   .consent input{margin-top:3px;accent-color:var(--gold);flex-shrink:0;cursor:pointer}
   .policy-btn{
     background:none;border:none;padding:0;margin-top:7px;cursor:pointer;
-    font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:.06em;
-    color:var(--soft);text-decoration:underline;text-underline-offset:3px;
+    font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:.06em;
+    color:#b3aea2;text-decoration:underline;text-underline-offset:3px;
   }
   .policy-btn:hover{color:var(--ink)}
   .policy-text{
@@ -130,15 +135,15 @@
     .form button{padding:0 16px}
   }
 
-  .cta-note{font-size:14px;color:var(--soft);margin-bottom:12px;letter-spacing:.02em}
-  .cta-main{margin-bottom:56px}
+  .cta-note{font-size:13px;color:var(--soft);margin-bottom:12px;letter-spacing:.02em}
+  .cta-main{margin-bottom:18px}
   .cta-main a{
     display:inline-block;background:var(--ink);color:var(--paper);border-radius:2px;
-    padding:13px 34px;font-size:13.5px;letter-spacing:.06em;text-decoration:none;
+    padding:7px 22px;font-size:12px;letter-spacing:.06em;text-decoration:none;
     transition:opacity .2s,transform .2s;
   }
   .cta-main a:hover{opacity:.85;transform:translateY(-1px)}
-  .notify .lbl{margin-bottom:12px}
+  .notify .lbl{margin-bottom:12px;margin-top:14px;font-size:13px;color:var(--soft)}
   .form button.ghost{
     background:var(--paper);color:var(--soft);border:1px solid var(--line);
   }
@@ -163,10 +168,11 @@
       <a class="pick" href="curator/ilpostino/">큐레이터 추천</a>
       <div class="recent-row">
         <a class="recent" href="issue/summernight06/">최근 발행물 보기</a>
-        <span class="dot" aria-hidden="true">·</span>
         <a class="recent" href="https://docs.google.com/forms/d/e/1FAIpQLSd1QNkACgZKkzzzqdDL5StQrgHiXEiaIU1elF3JoKsjO_5TYQ/viewform" target="_blank" rel="noopener">모두의 큐레이션</a>
       </div>
     </div>
+
+    <div class="divider" aria-hidden="true"></div>
 
     <div class="notify">
       <div class="cta-note">지금 함께 하고 싶어요</div>
