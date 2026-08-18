@@ -18,7 +18,7 @@
 <script>
 /* 카카오톡 인앱 브라우저 탈출 */
 if (/KAKAOTALK/i.test(navigator.userAgent)) {
-  location.href = "kakaotalk://web/openExternal?url=" + encodeURIComponent(location.href);
+  location.replace("kakaotalk://web/openExternal?url=" + encodeURIComponent(location.href));
 }
 </script>
 <style>
