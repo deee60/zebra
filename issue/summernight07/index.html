@@ -18,10 +18,9 @@
 <script>
 /* 카카오톡 인앱 브라우저 탈출 */
 if (/KAKAOTALK/i.test(navigator.userAgent)) {
-  var _m = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:serif;color:#8b877c;font-size:14px;letter-spacing:.04em;text-align:center;line-height:1.8">외부 브라우저로 열렸습니다.<br>이 창을 닫아주세요.</div>';
-  document.body.innerHTML = _m;
-  window.addEventListener("pageshow", function(){ document.body.innerHTML = _m; });
-  setTimeout(function(){ location.replace("kakaotalk://web/openExternal?url=" + encodeURIComponent(location.href)); }, 100);
+  document.write('<html><body><div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:serif;color:#8b877c;font-size:14px;letter-spacing:.04em;text-align:center;line-height:1.8">외부 브라우저로 열렸습니다.<br>이 창을 닫아주세요.</div></body></html>');
+  document.close();
+  setTimeout(function(){ location.replace("kakaotalk://web/openExternal?url=" + encodeURIComponent(location.href)); }, 200);
 }
 </script>
 <style>
