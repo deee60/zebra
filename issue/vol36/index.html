@@ -24,7 +24,7 @@ if (/KAKAOTALK/i.test(navigator.userAgent)) {
 </script>
 <style>
 
-  :root{ --bg:#B8C0C1; --paper:#F5F3ED; --ink:#26221C; --mid:#6E6A61; --faint:#A9A297; --rule:#DFDAD0; }
+  :root{ --bg:#B8BDC1; --paper:#F5F3ED; --ink:#26221C; --mid:#6E6A61; --faint:#A9A297; --rule:#DFDAD0; }
   *{ margin:0; padding:0; box-sizing:border-box; }
   html{ -webkit-text-size-adjust:100%; }
   body{ background:var(--bg); display:flex; justify-content:center;
@@ -60,8 +60,6 @@ if (/KAKAOTALK/i.test(navigator.userAgent)) {
   .stamp .sp-t{ font-family:"Noto Serif KR",serif; font-weight:500;
     font-size:14px; color:#D4BC8A; letter-spacing:.1em; text-indent:.1em; white-space:nowrap;
     text-shadow:0 -0.6px 0.5px rgba(74,50,16,.98), 0 0.8px 0.4px rgba(255,253,242,1), 0 0 0.7px rgba(120,90,40,.4); }
-  .stamp .sp-line{ width:22px; height:1px; margin-top:7px; background:#D4BC8A;
-    box-shadow:0 -0.6px 0.5px rgba(74,50,16,.9), 0 0.8px 0.4px rgba(255,253,242,1); }
   /* 곡명 부제 축소 — (Générique) 같은 괄호 부분 */
   .titles h1 .sub{ font-size:0.62em; color:var(--faint); font-style:italic;
     font-family:"Cormorant Garamond",serif; letter-spacing:.02em; }
@@ -205,7 +203,7 @@ if (/KAKAOTALK/i.test(navigator.userAgent)) {
   }
 
   /* 지면 하단 HOME — 콜로폰 아래. 기존 지면 원본 스펙 그대로 */
-  .homenav{ margin-top:30px; padding-bottom:34px; text-align:center; }
+  .homenav{ margin-top:8px; padding-bottom:34px; text-align:center; }
   .homenav a{ font-family:"Cormorant Garamond", serif; font-size:12px; letter-spacing:.16em; text-indent:.16em; color:var(--faint); text-decoration:none; transition:color .25s; }
   .homenav a:hover{ color:#B89A5A; }
 
@@ -236,7 +234,7 @@ a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
 
     <p class="notice">이 지면은 8월 24일 자정에 아카이브로 이관됩니다</p>
 
-    <div class="stamp"><span class="sp-t">지브라 베타 Vol.36</span><span class="sp-line"></span></div>
+    <div class="stamp"><span class="sp-t">지브라 베타 Vol.36</span></div>
 
     <figure class="plate">
       <img src="vol36.jpg" alt="앨범 커버">
