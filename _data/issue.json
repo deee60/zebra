@@ -82,5 +82,19 @@
     "expires": "2026-08-18T23:59:59+09:00",
     "layout": "lay-b",
     "bg": "#CDD9CE"
-  }
+  },
+    {
+          "slug": "vol36",
+          "kind": "music",
+          "series": "지브라 베타 Vol.36",
+          "title": "Let 'Em In",
+          "romaji": "",
+          "artist": "Paul McCartney & Wings",
+          "path": "issue/vol36/",
+          "cover": "issue/vol36/vol36.jpg",
+          "published": "2026-08-21",
+          "expires": "2026-08-24T23:59:59+09:00",
+          "layout": "lay-c",
+          "bg": "#B8C1C0"
+    }
 ]
