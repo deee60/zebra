@@ -133,6 +133,13 @@
     font-family:var(--serif); font-weight:300; font-size:11px;
     line-height:1.95; color:var(--grey); text-align:center;
   }
+  .tile--blank{ pointer-events:none; }
+  .tile--blank .frame{
+    background:var(--card);
+    box-shadow:none;
+    border:1px solid var(--line);
+    opacity:0.5;
+  }
 
   /* ── 링크 ── */
   .links{ text-align:center; margin-top:80px; }
@@ -158,11 +165,7 @@
 
     <div id="feature"></div>
 
-    <div class="strip" id="strip">
-      <div class="tile tile--note">
-        <div class="frame"><p>당신의 추천을<br>함께 합니다</p></div>
-      </div>
-    </div>
+    <div class="strip" id="strip"></div>
 
     <div class="links"><a href="https://docs.google.com/forms/d/e/1FAIpQLSd1QNkACgZKkzzzqdDL5StQrgHiXEiaIU1elF3JoKsjO_5TYQ/viewform" target="_blank" rel="noopener">추천하기</a></div>
     <div class="colophon">zebra beta &middot; movement 2.</div>
@@ -210,9 +213,24 @@
 
     function renderStrip(){
       var strip=document.getElementById('strip');
-      strip.querySelectorAll('.tile:not(.tile--note)').forEach(function(n){ n.remove(); });
-      DATA.forEach(function(item, idx){
-        if(idx===current) return;
+      strip.innerHTML='';
+      var others=[];
+      DATA.forEach(function(item, idx){ if(idx!==current) others.push(idx); });
+
+      function noteTile(){
+        var n=document.createElement('div');
+        n.className='tile tile--note';
+        n.innerHTML='<div class="frame"><p>당신의 추천을<br>함께 합니다</p></div>';
+        return n;
+      }
+      function blankTile(){
+        var b=document.createElement('div');
+        b.className='tile tile--blank';
+        b.innerHTML='<div class="frame"></div>';
+        return b;
+      }
+      function songTile(idx){
+        var item=DATA[idx];
         var a=document.createElement('a');
         a.className='tile';
         a.href='javascript:void(0)';
@@ -221,13 +239,20 @@
           '<div class="t-song">'+esc(item.title)+'</div>'+
           (item.by ? '<div class="t-by">'+esc(item.by)+'</div>' : '');
         a.addEventListener('click', function(){
-          current = idx;
-          renderFeature(DATA[current]);
-          renderStrip();
+          current=idx; renderFeature(DATA[current]); renderStrip();
           window.scrollTo({ top:0, behavior:'smooth' });
         });
-        strip.appendChild(a);
-      });
+        return a;
+      }
+
+      if(others.length===0){
+        strip.appendChild(noteTile());
+        strip.appendChild(blankTile());
+        strip.appendChild(blankTile());
+      } else {
+        strip.appendChild(noteTile());
+        others.forEach(function(idx){ strip.appendChild(songTile(idx)); });
+      }
     }
 
     fetch('everyone.json', {cache:'no-cache'})
