@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>모두의 큐레이션 | Zebra Beta</title>
+<meta name="description" content="청자들이 고른 곡. 지브라가 함께 듣습니다.">
+<meta property="og:title" content="모두의 큐레이션">
+<meta property="og:description" content="청자들이 고른 곡. 지브라가 함께 듣습니다.">
+<meta property="og:image" content="https://zebrabeta.kr/zebra-og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://zebrabeta.kr/everyone/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Serif+KR:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F3ED;
+    --card:#FBFAF6;
+    --ink:#26221C;
+    --ink-soft:#332F28;
+    --grey:#5A554C;
+    --faint:#A9A297;
+    --line:#e3ded3;
+    --gold:#b0975a;
+    --serif:'Noto Serif KR', serif;
+    --latin:'Cormorant Garamond', serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--serif);
+    font-weight:300;
+    line-height:1.9;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  .wrap{
+    max-width:600px;
+    margin:0 auto;
+    padding:92px 0 88px;
+  }
+  h1{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:16px;
+    letter-spacing:0.23em;
+    text-align:center;
+    color:var(--grey);
+  }
+
+  /* ── 최신 (대형 카드, 고정) ── */
+  .feature{
+    margin:66px auto 0;
+    max-width:400px;
+    background:var(--card);
+    border-radius:4px;
+    padding:30px 28px 46px;
+    box-shadow:0 1px 2px rgba(70,64,54,0.04), 0 6px 16px rgba(70,64,54,0.05);
+  }
+  .player{
+    position:relative; width:100%; aspect-ratio:1;
+    background:#d8d2c6 center/cover no-repeat;
+    cursor:pointer; overflow:hidden; border-radius:2px;
+  }
+  .player .play{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
+  .player .play::before{
+    content:""; width:50px; height:50px; border-radius:50%;
+    background:rgba(20,18,15,0.42); position:absolute; transition:background .3s ease;
+  }
+  .player:hover .play::before{ background:rgba(20,18,15,0.58); }
+  .player .play::after{
+    content:""; position:relative; margin-left:4px;
+    border-style:solid; border-width:8px 0 8px 14px;
+    border-color:transparent transparent transparent #f6f3ec;
+  }
+  .player iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; display:block; }
+
+  .feature .song{ font-family:var(--latin); font-weight:400; font-size:22px; text-align:center; margin-top:40px; color:var(--ink); line-height:1.3; }
+  .feature .artist{ font-family:var(--latin); font-style:italic; font-weight:300; font-size:15px; text-align:center; color:var(--grey); margin-top:6px; }
+  .feature .note-label{ font-family:var(--serif); font-weight:300; font-size:11px; letter-spacing:0.02em; text-align:center; color:var(--faint); margin-top:48px; }
+  .feature .quote{ font-family:var(--serif); font-weight:300; font-size:14.5px; line-height:2.3; color:var(--ink-soft); text-align:center; margin-top:15px; }
+  .feature .by{ font-family:var(--latin); font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; text-align:center; color:var(--gold); margin-top:46px; }
+
+  /* ── 지난 곡 (가로 스크롤 썸네일) ── */
+  .strip{
+    margin-top:76px;
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    overflow-x:auto;
+    padding:6px 30px 16px;
+    scroll-snap-type:x proximity;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .strip::-webkit-scrollbar{ display:none; }
+  .tile{
+    flex:0 0 auto;
+    width:122px;
+    scroll-snap-align:start;
+    text-decoration:none;
+    color:inherit;
+  }
+  .tile .frame{
+    width:122px; height:122px;
+    background:#d8d2c6 center/cover no-repeat;
+    border-radius:2px;
+    box-shadow:0 1px 2px rgba(70,64,54,0.04), 0 3px 9px rgba(70,64,54,0.05);
+    transition:opacity .35s ease;
+  }
+  .tile:hover .frame{ opacity:.82; }
+  .tile .t-song{
+    font-family:var(--latin); font-weight:400; font-size:13px;
+    text-align:center; color:var(--ink-soft); margin-top:11px; line-height:1.3;
+  }
+  .tile .t-by{
+    font-family:var(--latin); font-size:8.5px; letter-spacing:0.14em;
+    text-transform:uppercase; text-align:center; color:var(--faint); margin-top:3px;
+  }
+  .tile--note{ cursor:default; }
+  .tile--note .frame{
+    background:var(--card);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:none; border:1px solid var(--line);
+  }
+  .tile--note .frame p{
+    font-family:var(--serif); font-weight:300; font-size:11px;
+    line-height:1.95; color:var(--grey); text-align:center;
+  }
+
+  /* ── 링크 ── */
+  .links{ text-align:center; margin-top:80px; }
+  .links a{ font-family:var(--latin); font-size:13px; letter-spacing:0.16em; color:var(--faint); text-decoration:none; transition:color .3s ease; }
+  .links a:hover{ color:var(--gold); }
+  .colophon{ text-align:center; margin-top:70px; font-family:var(--latin); font-style:italic; font-weight:300; font-size:12px; letter-spacing:0.18em; color:var(--faint); }
+  .homenav{ text-align:center; margin-top:16px; }
+  .homenav a{ font-family:var(--latin); font-size:12px; letter-spacing:0.16em; color:var(--faint); text-decoration:none; transition:color .3s ease; }
+  .homenav a:hover{ color:var(--gold); }
+
+  @media (max-width:480px){
+    .wrap{ padding:64px 0 64px; }
+    .feature{ margin-top:50px; padding:24px 22px 38px; max-width:none; margin-left:22px; margin-right:22px; }
+    .feature .song{ font-size:20px; }
+    .strip{ padding:6px 22px 16px; gap:18px; }
+  }
+</style>
+</head>
+<body>
+  <main class="wrap">
+
+    <h1>모 두 의 &nbsp;큐 레 이 션</h1>
+
+    <div id="feature"></div>
+
+    <div class="strip" id="strip">
+      <div class="tile tile--note">
+        <div class="frame"><p>당신의 추천을<br>함께 합니다</p></div>
+      </div>
+    </div>
+
+    <div class="links"><a href="https://docs.google.com/forms/d/e/1FAIpQLSd1QNkACgZKkzzzqdDL5StQrgHiXEiaIU1elF3JoKsjO_5TYQ/viewform" target="_blank" rel="noopener">추천하기</a></div>
+    <div class="colophon">zebra beta &middot; movement 2.</div>
+    <div class="homenav"><a href="https://zebrabeta.kr">HOME</a></div>
+
+  </main>
+
+  <script>
+  (function(){
+    function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+    function nl2br(s){ return esc(s).replace(/\n/g,'<br>'); }
+
+    var DATA = [];
+    var current = 0;
+
+    function bindPlayer(p, title){
+      if(!p) return;
+      p.addEventListener('click', function(){
+        if(p.dataset.played) return; p.dataset.played='1';
+        var f=document.createElement('iframe');
+        f.setAttribute('src', p.getAttribute('data-embed'));
+        f.setAttribute('title', title||'');
+        f.setAttribute('allow','accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+        f.setAttribute('allowfullscreen','');
+        p.innerHTML=''; p.appendChild(f); p.style.cursor='default';
+      });
+    }
+
+    function renderFeature(item){
+      var wrap=document.getElementById('feature');
+      wrap.innerHTML='';
+      var card=document.createElement('div');
+      card.className='feature';
+      card.innerHTML=
+        '<div class="player" data-embed="https://www.youtube.com/embed/'+esc(item.youtube)+'?autoplay=1" style="background-image:url(\''+esc(item.cover)+'\');">'+
+          '<div class="play" aria-hidden="true"></div>'+
+        '</div>'+
+        '<div class="song">'+esc(item.title)+'</div>'+
+        '<div class="artist">'+esc(item.artist)+'</div>'+
+        (item.note ? '<div class="note-label">한줄 소개</div><div class="quote">&ldquo;'+nl2br(item.note)+'&rdquo;</div>' : '')+
+        (item.by ? '<div class="by">Curated by '+esc(item.by)+'</div>' : '');
+      wrap.appendChild(card);
+      bindPlayer(card.querySelector('.player'), item.title);
+    }
+
+    function renderStrip(){
+      var strip=document.getElementById('strip');
+      strip.querySelectorAll('.tile:not(.tile--note)').forEach(function(n){ n.remove(); });
+      DATA.forEach(function(item, idx){
+        if(idx===current) return;
+        var a=document.createElement('a');
+        a.className='tile';
+        a.href='javascript:void(0)';
+        a.innerHTML=
+          '<div class="frame" style="background-image:url(\''+esc(item.cover)+'\');"></div>'+
+          '<div class="t-song">'+esc(item.title)+'</div>'+
+          (item.by ? '<div class="t-by">'+esc(item.by)+'</div>' : '');
+        a.addEventListener('click', function(){
+          current = idx;
+          renderFeature(DATA[current]);
+          renderStrip();
+          window.scrollTo({ top:0, behavior:'smooth' });
+        });
+        strip.appendChild(a);
+      });
+    }
+
+    fetch('everyone.json', {cache:'no-cache'})
+      .then(function(r){ return r.json(); })
+      .then(function(list){
+        if(!Array.isArray(list) || list.length===0) return;
+        DATA = list;
+        current = 0;
+        renderFeature(DATA[0]);
+        renderStrip();
+      })
+      .catch(function(e){ console.error('everyone.json load failed', e); });
+  })();
+  </script>
+</body>
+</html>
