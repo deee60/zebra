@@ -48,8 +48,8 @@
   h1{
     font-family:var(--serif);
     font-weight:400;
-    font-size:16px;
-    letter-spacing:0.23em;
+    font-size:14px;
+    letter-spacing:0.24em;
     text-align:center;
     color:var(--grey);
   }
@@ -151,10 +151,17 @@
   .homenav a:hover{ color:var(--gold); }
 
   @media (max-width:480px){
-    .wrap{ padding:64px 0 64px; }
-    .feature{ margin-top:50px; padding:24px 22px 38px; max-width:none; margin-left:22px; margin-right:22px; }
+    .wrap{ padding:60px 0 64px; }
+    h1{ font-size:14px; letter-spacing:0.2em; }
+    .feature{ margin-top:46px; padding:22px 20px 34px; max-width:none; margin-left:28px; margin-right:28px; }
     .feature .song{ font-size:20px; }
-    .strip{ padding:6px 22px 16px; gap:18px; }
+    .strip{
+      justify-content:flex-start;
+      padding:6px 28px 16px;
+      gap:16px;
+    }
+    .tile{ width:104px; }
+    .tile .frame{ width:104px; height:104px; }
   }
 </style>
 </head>
