@@ -98,19 +98,17 @@
   .strip{
     margin-top:76px;
     display:flex;
+    flex-wrap:wrap;
     justify-content:center;
     gap:30px;
-    overflow-x:auto;
     padding:6px 30px 16px;
-    scroll-snap-type:x proximity;
-    -webkit-overflow-scrolling:touch;
-    scrollbar-width:none;
+    max-width:436px;
+    margin-left:auto;
+    margin-right:auto;
   }
-  .strip::-webkit-scrollbar{ display:none; }
   .tile{
-    flex:0 0 auto;
+    flex:0 0 122px;
     width:122px;
-    scroll-snap-align:start;
     text-decoration:none;
     color:inherit;
   }
@@ -163,11 +161,12 @@
     .feature{ margin-top:46px; padding:22px 20px 34px; max-width:none; margin-left:32px; margin-right:32px; }
     .feature .song{ font-size:20px; }
     .strip{
-      justify-content:flex-start;
-      padding:6px 32px 16px;
+      justify-content:center;
+      padding:6px 20px 16px;
       gap:14px;
+      max-width:312px;
     }
-    .tile{ width:88px; }
+    .tile{ flex:0 0 88px; width:88px; }
     .tile .frame{ width:88px; height:88px; }
     .tile--note .frame p{ font-size:10px; line-height:1.8; }
   }
