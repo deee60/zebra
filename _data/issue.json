@@ -96,5 +96,19 @@
           "expires": "2026-08-24T23:59:59+09:00",
           "layout": "lay-c",
           "bg": "#B8C1C0"
+    },
+    {
+          "slug": "summernight08",
+          "kind": "music",
+          "series": "여름밤 08",
+          "title": "Boston",
+          "romaji": "",
+          "artist": "Stella Lefty",
+          "path": "issue/summernight08/",
+          "cover": "issue/summernight08/summernight08.jpg",
+          "published": "2026-08-25",
+          "expires": "2026-08-28T23:59:59+09:00",
+          "layout": "lay-a",
+          "bg": "#CDD8DF"
     }
 ]
