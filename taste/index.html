@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B0TNF05GFQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-B0TNF05GFQ');
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>취향의 발견 | Zebra Beta</title>
+<meta name="description" content="당신의 취향이라면 그림, 글, 사진, 장소, 소품, 영화 그 무엇이든">
+<meta property="og:title" content="취향의 발견">
+<meta property="og:description" content="당신의 취향이라면 그림, 글, 사진, 장소, 소품, 영화 그 무엇이든">
+<meta property="og:image" content="https://zebrabeta.kr/zebra-og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://zebrabeta.kr/taste/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Serif+KR:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F3ED; --card:#FBFAF6; --ink:#26221C; --ink-soft:#332F28;
+    --grey:#5A554C; --faint:#A9A297; --line:#e3ded3; --gold:#b0975a;
+    --serif:'Noto Serif KR', serif; --latin:'Cormorant Garamond', serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:var(--serif); font-weight:300; line-height:1.9;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  }
+  .wrap{ max-width:600px; margin:0 auto; padding:92px 0 88px; }
+  h1{
+    font-family:var(--serif); font-weight:400; font-size:14px;
+    letter-spacing:0.24em; text-align:center; color:var(--grey);
+  }
+  .sub{
+    font-family:var(--serif); font-weight:300; font-size:12.5px;
+    text-align:center; color:var(--faint); margin-top:16px; letter-spacing:0.02em;
+  }
+  .sub .mbr{ display:none; }
+
+  /* ── 카드 리스트 ── */
+  .list{ margin:64px auto 0; padding:0 30px; }
+  .card{
+    display:flex; gap:22px; padding:30px 4px;
+    border-bottom:1px solid var(--line); align-items:flex-start;
+    text-align:left; cursor:pointer;
+  }
+  .card:first-child{ border-top:1px solid var(--line); }
+  .card .thumb{
+    flex-shrink:0; width:100px; height:100px;
+    background:#d8d2c6 center/cover no-repeat; border-radius:3px;
+  }
+  .card .body{ flex:1; min-width:0; }
+  .card .kind{
+    font-family:var(--latin); font-size:10px; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:8px;
+  }
+  .card .ttl{
+    font-family:var(--serif); font-weight:400; font-size:16.5px;
+    color:var(--ink); line-height:1.5; margin-bottom:10px;
+  }
+  .card .ttl.q{ font-style:italic; font-weight:300; }
+  .card .prev{
+    font-size:13px; line-height:2; color:var(--grey);
+  }
+  .card .prev-w{
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  .card .prev-m{ display:none; }
+  .card .by{
+    font-family:var(--latin); font-size:10.5px; letter-spacing:0.16em;
+    text-transform:uppercase; color:var(--gold); margin-top:14px;
+  }
+
+  /* ── 전면 오버레이 (읽기 화면) ── */
+  .reader{
+    position:fixed; inset:0; z-index:100; background:var(--paper);
+    overflow-y:auto; opacity:0; visibility:hidden; transition:opacity .4s ease;
+  }
+  .reader.open{ opacity:1; visibility:visible; }
+  .reader-inner{ max-width:640px; margin:0 auto; padding:76px 32px 100px; }
+  .r-close{
+    position:fixed; top:22px; left:50%; margin-left:300px; z-index:110;
+    font-family:var(--latin); font-size:24px; line-height:1;
+    color:var(--faint); background:none; border:none; cursor:pointer; transition:color .3s ease;
+  }
+  .r-close:hover{ color:var(--gold); }
+  .r-kind{
+    font-family:var(--latin); font-size:10.5px; letter-spacing:0.2em;
+    text-transform:uppercase; color:var(--gold); text-align:center; margin-bottom:16px;
+  }
+  .r-ttl{
+    font-family:var(--serif); font-weight:400; font-size:21px;
+    text-align:center; color:var(--ink); line-height:1.5; margin-bottom:10px;
+  }
+  .r-by{
+    font-family:var(--latin); font-size:11px; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--gold); text-align:center; margin-bottom:44px;
+  }
+  .r-body{ font-size:14.5px; line-height:2.2; color:var(--ink-soft); }
+  .r-body .r-photo{ float:left; width:44%; margin:6px 26px 14px 0; }
+  .r-body .r-photo img{ width:100%; display:block; border-radius:2px; }
+  .r-body .r-photo figcaption{
+    font-family:var(--latin); font-size:10px; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--faint); text-align:center; margin-top:7px;
+  }
+  .r-body p{ margin-bottom:1.5em; }
+  .r-body p:first-of-type{ margin-top:0; }
+  .r-body .clear{ clear:both; }
+  .r-quote{
+    font-family:var(--serif); font-style:italic; font-size:16.5px;
+    line-height:2.1; color:var(--ink); text-align:center;
+    margin:34px auto; max-width:440px; clear:both;
+  }
+
+  /* ── 링크 ── */
+  .links{ text-align:center; margin-top:80px; }
+  .links a{ font-family:var(--latin); font-size:13px; letter-spacing:0.16em; color:var(--faint); text-decoration:none; transition:color .3s ease; }
+  .links a:hover{ color:var(--gold); }
+  .colophon{ text-align:center; margin-top:70px; font-family:var(--latin); font-style:italic; font-weight:300; font-size:12px; letter-spacing:0.18em; color:var(--faint); }
+  .homenav{ text-align:center; margin-top:16px; }
+  .homenav a{ font-family:var(--latin); font-size:12px; letter-spacing:0.16em; color:var(--faint); text-decoration:none; transition:color .3s ease; }
+  .homenav a:hover{ color:var(--gold); }
+  .intro{ text-align:center; color:var(--faint); font-size:12.5px; line-height:2.1; margin:64px auto 0; max-width:360px; }
+
+  @media (max-width:480px){
+    .wrap{ padding:60px 0 64px; }
+    h1{ font-size:14px; letter-spacing:0.2em; }
+    .sub .mbr{ display:inline; }
+    .list{ padding:0 22px; }
+    .card{ gap:16px; padding:24px 2px; }
+    .card .thumb{ width:72px; height:72px; }
+    .card .ttl{ font-size:15.5px; }
+    .card .prev{ font-size:12.5px; }
+    /* 폰: 제목 끝에 짧은 미리보기가 바로 이어지게 */
+    .card .body{ display:inline; }
+    .card .ttl{ display:inline; margin-bottom:0; }
+    .card .ttl::after{ content:" "; }
+    .card .prev-w{ display:none; }
+    .card .prev-m{ display:inline; }
+    .card .by{ display:block; margin-top:12px; }
+    .reader-inner{ padding:64px 24px 80px; }
+    .r-ttl{ font-size:19px; }
+    .r-body{ font-size:14px; line-height:2.1; }
+    .r-body .r-photo{ width:42%; margin:4px 16px 0 0; }
+    .r-close{ left:auto; right:18px; margin-left:0; }
+  }
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <h1>취 향 의 &nbsp;발 견</h1>
+    <div class="sub">당신의 취향이라면 사람, 글, 그림, 사진, 장소, 소품 등<br class="mbr"> 그 무엇이든…</div>
+    <div class="list" id="list"></div>
+    <div class="links"><a href="https://docs.google.com/forms/d/e/1FAIpQLScSNZ8J9OJFp7MQCd75B28de4aiFH4F203NFzELTnjHxjuGIw/viewform" target="_blank" rel="noopener">취향 나누기</a></div>
+    <div class="colophon">zebra beta &middot; movement 2.</div>
+    <div class="homenav"><a href="https://zebrabeta.kr">HOME</a></div>
+  </main>
+
+  <div class="reader" id="reader" aria-hidden="true">
+    <button class="r-close" id="rClose" type="button" aria-label="닫기">&times;</button>
+    <div class="reader-inner" id="readerInner"></div>
+  </div>
+
+  <script>
+  (function(){
+    function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+    function paras(body){
+      return String(body||'').split(/\n\s*\n/).map(function(p){
+        return '<p>'+esc(p).replace(/\n/g,'<br>')+'</p>';
+      }).join('');
+    }
+    var reader=document.getElementById('reader');
+    var inner=document.getElementById('readerInner');
+    var rClose=document.getElementById('rClose');
+
+    function openReader(item){
+      var isQuote=(item.kind==='quote'||item.kind==='문장');
+      var img=item.cover_full||item.cover;
+      var photo=img?'<figure class="r-photo"><img src="'+esc(img)+'" alt="">'+(item.photo_by?'<figcaption>사진 · '+esc(item.photo_by)+'</figcaption>':'')+'</figure>':'';
+      var by=item.by?'<div class="r-by">'+esc(item.by)+'</div>':'';
+      var bodyHtml;
+      if(isQuote){
+        bodyHtml='<div class="r-quote">'+esc(item.body||item.title)+'</div>';
+      } else {
+        bodyHtml='<div class="r-body">'+photo+paras(item.body)+'<div class="clear"></div></div>';
+      }
+      inner.innerHTML='<div class="r-ttl">'+esc(item.title)+'</div>'+by+bodyHtml;
+      reader.classList.add('open');
+      document.body.style.overflow='hidden';
+      reader.scrollTop=0;
+    }
+    function closeReader(){
+      reader.classList.remove('open');
+      document.body.style.overflow='';
+    }
+    rClose.addEventListener('click', closeReader);
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeReader(); });
+
+    function makeCard(item){
+      var isQuote=(item.kind==='quote'||item.kind==='문장');
+      var hasImg=!!item.cover;
+      var card=document.createElement('div');
+      card.className='card';
+      var thumb=hasImg?'<div class="thumb" style="background-image:url(\''+esc(item.cover)+'\');"></div>':'';
+      var titleClass=isQuote?'ttl q':'ttl';
+      var prev=item.preview?'<span class="prev prev-w">'+esc(item.preview)+'</span>':'';
+      var prevM=item.preview_m?'<span class="prev prev-m">'+esc(item.preview_m)+'</span>':'';
+      var by=item.by?'<div class="by">'+esc(item.by)+'</div>':'';
+      card.innerHTML=thumb+'<div class="body">'+'<div class="'+titleClass+'">'+esc(item.title)+'</div>'+prev+prevM+by+'</div>';
+      card.addEventListener('click', function(){ openReader(item); });
+      return card;
+    }
+
+    fetch('taste.json', {cache:'no-cache'})
+      .then(function(r){ return r.json(); })
+      .then(function(list){
+        var box=document.getElementById('list');
+        if(!Array.isArray(list)||list.length===0){
+          box.innerHTML='<div class="intro">아직 조용합니다.<br>당신이 좋아하는 것을 처음으로 들려주세요.</div>';
+          return;
+        }
+        list.forEach(function(item){ box.appendChild(makeCard(item)); });
+      })
+      .catch(function(e){
+        console.error('taste.json load failed', e);
+        document.getElementById('list').innerHTML='<div class="intro">아직 조용합니다.</div>';
+      });
+  })();
+  </script>
+</body>
+</html>
