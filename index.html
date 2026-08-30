@@ -42,20 +42,25 @@
   body{
     font-family:'Noto Serif KR',serif;background:var(--bg);color:var(--ink);
     -webkit-font-smoothing:antialiased;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    min-height:100vh;padding:96px 24px 72px;text-align:center;
+    display:flex;flex-direction:column;align-items:center;
+    padding:0 24px 72px;text-align:center;
   }
   .wrap{max-width:520px;width:100%;display:flex;flex-direction:column;align-items:center}
+  .hero{
+    min-height:calc(100vh - 90px);width:100%;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:0 0 36px;
+  }
 
   .logo{
-    width:230px;height:230px;margin-bottom:52px;
+    width:190px;height:190px;margin-bottom:52px;
     animation:fadeUp 1s ease both;
   }
   .logo img{width:100%;height:100%;object-fit:contain;display:block}
 
   .kicker{
     font-family:'Cormorant Garamond',serif;letter-spacing:.52em;text-transform:uppercase;
-    font-size:13px;color:var(--gold);margin-bottom:56px;padding-left:.52em;
+    font-size:13px;color:var(--gold);margin-bottom:92px;padding-left:.52em;
     animation:fadeUp 1s ease .15s both;
   }
 
@@ -66,7 +71,7 @@
   }
   h1 b{font-weight:500}
 
-  .social{display:flex;gap:30px;margin-bottom:36px;animation:fadeUp 1s ease .45s both}
+  .social{display:flex;gap:30px;margin-bottom:48px;animation:fadeUp 1s ease .45s both}
 
   .latest{margin-bottom:0;animation:fadeUp 1s ease .55s both;text-align:center}
   .latest .pick{
@@ -75,23 +80,23 @@
     transition:background .25s,color .25s;
   }
   .latest .pick:hover{background:var(--gold);color:var(--paper)}
-  .latest .recent-row{
-    margin-top:26px;display:flex;align-items:center;justify-content:center;
-    gap:22px;flex-wrap:wrap;
+  .recent-row{
+    margin-top:100px;margin-bottom:0;display:flex;align-items:center;justify-content:center;
+    gap:22px;flex-wrap:wrap;animation:fadeUp 1s ease .1s both;
   }
-  .latest .recent{
+  .recent{
     font-family:'Cormorant Garamond',serif;
-    color:var(--soft);font-size:11px;letter-spacing:.14em;text-decoration:none;
+    color:var(--soft);font-size:12px;letter-spacing:.14em;text-decoration:none;
     transition:color .25s;
   }
-  .latest .recent:hover{color:var(--gold)}
+  .recent:hover{color:var(--gold)}
   .latest .dot{
     font-family:'Cormorant Garamond',serif;color:var(--soft);font-size:11px;
   }
 
   .divider{
     width:9px;height:0;border-bottom:1px solid #cdc7b8;
-    margin:85px auto;animation:fadeUp 1s ease .55s both;
+    margin:43px auto 85px;animation:fadeUp 1s ease .55s both;
   }
   .social a{
     font-family:'Cormorant Garamond',serif;letter-spacing:.16em;text-transform:uppercase;font-size:12px;
@@ -155,14 +160,37 @@
 
   @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 
+  .scroll-hint{
+    position:fixed;left:50%;bottom:20px;transform:translateX(-50%);
+    z-index:20;opacity:0;pointer-events:none;
+    animation:hintIn 1.2s ease 1.8s forwards;transition:opacity .5s ease;
+  }
+  .scroll-hint .chev{
+    display:block;width:12px;height:12px;
+    border-right:1px solid #bcb6a6;border-bottom:1px solid #bcb6a6;
+    transform:rotate(45deg);animation:hintBob 2.2s ease-in-out infinite;
+  }
+  .scroll-hint.hidden{opacity:0 !important}
+  @keyframes hintIn{to{opacity:.55}}
+  @keyframes hintBob{
+    0%,100%{transform:rotate(45deg) translate(0,0)}
+    50%{transform:rotate(45deg) translate(2px,2px)}
+  }
+
   @media(max-width:480px){
-    .logo{width:180px;height:180px;margin-bottom:32px}
+    .logo{width:152px;height:152px;margin-bottom:32px}
+    .hero{padding:18px 0;justify-content:flex-start}
+    .recent-row{margin-top:50px;margin-bottom:52px}
+    .kicker{margin-bottom:68px}
+    .divider{margin-top:3.3px}
+    .recent{font-size:11px}
+    .misc{display:none}
     h1{font-size:17px}
     .form button{padding:0 16px}
   }
 
   .cta-note{font-size:13px;color:var(--soft);margin-bottom:12px;letter-spacing:.02em}
-  .cta-main{margin-bottom:18px}
+  .cta-main{margin-bottom:46px}
   .cta-main a{
     display:inline-block;background:var(--ink);color:var(--paper);border-radius:2px;
     padding:7px 22px;font-size:12px;letter-spacing:.06em;text-decoration:none;
@@ -179,6 +207,13 @@
 </head>
 <body>
   <div class="wrap">
+    <div class="recent-row">
+      <a class="recent" href="issue/vol37/">최근 발행물 보기</a>
+      <a class="recent" href="everyone/">모두의 큐레이션</a>
+      <a class="recent" href="taste/">취향의 발견<span class="misc"> (미셀러니)</span></a>
+    </div>
+
+    <div class="hero">
     <div class="logo"><img src="zebra-logo.png" alt="ZEBRA BETA"></div>
 
     <div class="kicker">Zebra Beta</div>
@@ -193,10 +228,7 @@
 
     <div class="latest">
       <a class="pick" href="curator/ilpostino/">큐레이터 추천</a>
-      <div class="recent-row">
-        <a class="recent" href="issue/vol37/">최근 발행물 보기</a>
-        <a class="recent" href="everyone/">모두의 큐레이션</a>
-      </div>
+    </div>
     </div>
 
     <div class="divider" aria-hidden="true"></div>
@@ -228,6 +260,8 @@
 
   <iframe name="stb_sink" title="subscribe" style="display:none" aria-hidden="true"></iframe>
 
+  <div class="scroll-hint" id="scrollHint" aria-hidden="true"><span class="chev"></span></div>
+
 <script>
   var f=document.getElementById('stbForm'),
       email=document.getElementById('email'),
@@ -241,6 +275,14 @@
     pText.hidden=open;
     pBtn.textContent=open?'내용 보기':'닫기';
   });
+
+  var hint=document.getElementById('scrollHint');
+  if(hint){
+    window.addEventListener('scroll',function(){
+      if(window.scrollY>40) hint.classList.add('hidden');
+      else hint.classList.remove('hidden');
+    },{passive:true});
+  }
 
   f.addEventListener('submit',function(e){
     var v=email.value.trim();
