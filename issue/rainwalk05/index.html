@@ -256,6 +256,10 @@ a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
 .lay-photo .titles{ display:none; }
 .lay-photo .void{ display:none; }
 .lay-photo .film{ display:none; }
+/* 폰에서 폴라로이드 크게 (작은 폰에서 모서리가 살짝 잘려도 자연스럽게 둔다) */
+@media (max-width:520px){
+  .lay-photo .plate{ width:92%; }
+}
 
 </style>
 </head>
