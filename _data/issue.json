@@ -83,32 +83,60 @@
     "layout": "lay-b",
     "bg": "#CDD9CE"
   },
-    {
-          "slug": "vol36",
-          "kind": "music",
-          "series": "지브라 베타 Vol.36",
-          "title": "Let 'Em In",
-          "romaji": "",
-          "artist": "Paul McCartney & Wings",
-          "path": "issue/vol36/",
-          "cover": "issue/vol36/vol36.jpg",
-          "published": "2026-08-21",
-          "expires": "2026-08-24T23:59:59+09:00",
-          "layout": "lay-c",
-          "bg": "#B8C1C0"
-    },
-    {
-          "slug": "summernight08",
-          "kind": "music",
-          "series": "여름밤 08",
-          "title": "Boston",
-          "romaji": "",
-          "artist": "Stella Lefty",
-          "path": "issue/summernight08/",
-          "cover": "issue/summernight08/summernight08.jpg",
-          "published": "2026-08-25",
-          "expires": "2026-08-28T23:59:59+09:00",
-          "layout": "lay-a",
-          "bg": "#CDD8DF"
-    }
+  {
+    "slug": "vol36",
+    "kind": "music",
+    "series": "지브라 베타 Vol.36",
+    "title": "Let 'Em In",
+    "romaji": "",
+    "artist": "Paul McCartney & Wings",
+    "path": "issue/vol36/",
+    "cover": "issue/vol36/vol36.jpg",
+    "published": "2026-08-21",
+    "expires": "2026-08-24T23:59:59+09:00",
+    "layout": "lay-c",
+    "bg": "#B8C1C0"
+  },
+  {
+    "slug": "summernight08",
+    "kind": "music",
+    "series": "여름밤 08",
+    "title": "Boston",
+    "romaji": "",
+    "artist": "Stella Lefty",
+    "path": "issue/summernight08/",
+    "cover": "issue/summernight08/summernight08.jpg",
+    "published": "2026-08-25",
+    "expires": "2026-08-28T23:59:59+09:00",
+    "layout": "lay-a",
+    "bg": "#CDD8DF"
+  },
+  {
+    "slug": "vol37",
+    "kind": "music",
+    "series": "지브라 베타 Vol.37",
+    "title": "Oh My Love",
+    "romaji": "",
+    "artist": "Jacky Terrasson feat. Cécile McLorin Salvant",
+    "path": "issue/vol37/",
+    "cover": "issue/vol37/vol37.jpg",
+    "published": "2026-08-27",
+    "expires": "2026-08-30T23:59:59+09:00",
+    "layout": "lay-b",
+    "bg": "#CDDFDD"
+  },
+  {
+    "slug": "rainwalk05",
+    "kind": "music",
+    "series": "우중산책 05",
+    "title": "Howl's Moving Castle",
+    "romaji": "",
+    "artist": "Giovanni Mirabassi",
+    "path": "issue/rainwalk05/",
+    "cover": "issue/rainwalk05/rainwalk05.jpg",
+    "published": "2026-09-01",
+    "expires": "2026-09-04T23:59:59+09:00",
+    "layout": "lay-photo",
+    "bg": "#E4E1DA"
+  }
 ]
