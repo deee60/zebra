@@ -138,5 +138,19 @@
     "expires": "2026-09-04T23:59:59+09:00",
     "layout": "lay-photo",
     "bg": "#E4E1DA"
+  },
+  {
+    "slug": "vol38",
+    "kind": "music",
+    "series": "지브라 베타 Vol.38",
+    "title": "Hold the Line",
+    "romaji": "",
+    "artist": "Toto",
+    "path": "issue/vol38/",
+    "cover": "issue/vol38/vol38.jpg",
+    "published": "2026-09-04",
+    "expires": "2026-09-07T23:59:59+09:00",
+    "layout": "lay-c",
+    "bg": "#D0DADC"
   }
 ]
