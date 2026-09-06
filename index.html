@@ -47,9 +47,9 @@
   }
   .wrap{max-width:520px;width:100%;display:flex;flex-direction:column;align-items:center}
   .hero{
-    min-height:100vh;width:100%;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    padding:40px 0 36px;
+    min-height:auto;width:100%;
+    display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+    padding:0 0 36px;
   }
 
   .logo{
@@ -81,7 +81,7 @@
   }
   .latest .pick:hover{background:var(--gold);color:var(--paper)}
   .recent-row{
-    margin-top:0;margin-bottom:48px;display:flex;align-items:center;justify-content:center;
+    margin-top:clamp(56px, 8vh, 120px);margin-bottom:48px;display:flex;align-items:center;justify-content:center;
     gap:22px;flex-wrap:wrap;animation:fadeUp 1s ease .1s both;
   }
   .recent{
