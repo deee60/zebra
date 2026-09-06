@@ -1,5 +1,15 @@
 [
   {
+    "slug": "springbelieve",
+    "title": "You Must Believe in Spring",
+    "artist": "Bill Evans",
+    "cover": "springbelieve.jpg",
+    "youtube": "koSoQRfG3wI",
+    "note": "삶의 쓸쓸함이 배어있는 아름다운 곡",
+    "by": "박준규",
+    "date": "2026-08-31"
+  },
+  {
     "slug": "goldenmask",
     "title": "황금가면",
     "artist": "김동률",
