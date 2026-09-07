@@ -152,5 +152,19 @@
     "expires": "2026-09-07T23:59:59+09:00",
     "layout": "lay-c",
     "bg": "#D0DADC"
+  },
+  {
+    "slug": "gayo01",
+    "kind": "music",
+    "series": "대한민국 대중가요 클래식 100",
+    "title": "가을편지",
+    "romaji": "",
+    "artist": "김민기",
+    "path": "issue/gayo01/",
+    "cover": "issue/gayo01/gayo01.jpg",
+    "published": "2026-09-07",
+    "expires": "2026-09-10T23:59:59+09:00",
+    "layout": "lay-canon",
+    "bg": "#E4DCC9"
   }
 ]
