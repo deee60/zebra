@@ -1,0 +1,73 @@
+name: archive-expired
+
+# 만료된 지면을 archive/{series_id}/{번호}/ 에 사본으로 복사한다.
+# issue/ 원본은 절대 건드리지 않는다 (URL 유지).
+# 매일 새벽 3시(KST) 자동 + 수동 실행 가능.
+
+on:
+  schedule:
+    - cron: "0 18 * * *"   # UTC 18:00 = KST 03:00
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Copy expired issues to archive/
+        run: |
+          python3 - <<'PY'
+          import json, os, re, shutil
+          from datetime import datetime, timezone, timedelta
+
+          KST = timezone(timedelta(hours=9))
+          now = datetime.now(KST)
+
+          items = json.load(open("_data/issue.json", encoding="utf-8"))
+          copied = []
+          for e in items:
+              exp = e.get("expires")
+              if not exp:
+                  continue
+              try:
+                  t = datetime.fromisoformat(exp)
+              except Exception:
+                  continue
+              if t.tzinfo is None:
+                  t = t.replace(tzinfo=KST)
+              if t > now:
+                  continue                       # 아직 공개 중 → 건너뜀
+
+              slug = e["slug"]
+              sid = e.get("series_id") or re.match(r"[a-z]+", slug).group(0)
+              num = re.sub(r"^[a-z]+", "", slug) or slug
+              src = f"issue/{slug}"
+              dst = f"archive/{sid}/{num}"
+              if not os.path.isdir(src):
+                  continue
+              if os.path.isdir(dst) and os.listdir(dst):
+                  continue                       # 이미 사본 있음
+              os.makedirs(dst, exist_ok=True)
+              for f in os.listdir(src):
+                  shutil.copy2(os.path.join(src, f), os.path.join(dst, f))
+              copied.append(f"{slug} -> {dst}")
+
+          print("copied:", copied if copied else "nothing new")
+          open("/tmp/copied.txt", "w").write("\n".join(copied))
+          PY
+
+      - name: Commit
+        run: |
+          if [ -n "$(git status --porcelain archive)" ]; then
+            git config user.name  "zebra-bot"
+            git config user.email "bot@zebrabeta.kr"
+            git add archive
+            git commit -m "archive: $(tr '\n' ',' < /tmp/copied.txt)"
+            git push
+          else
+            echo "no changes"
+          fi
