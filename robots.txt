@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /archive/
+Disallow: /_queue/
 
 Sitemap: https://zebrabeta.kr/sitemap.xml
