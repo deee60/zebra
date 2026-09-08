@@ -1,0 +1,63 @@
+{
+  "_comment": "지브라 베타 시리즈 정의. 새 코너 추가 시 여기에 한 항목만 추가. slug 접두어로 issue/·archive/ 자동 분류.",
+  "series": [
+    {
+      "id": "vol",
+      "name": "지브라 베타 Vol.",
+      "prefix": "vol",
+      "kind": "main",
+      "archive_dir": "archive/vol",
+      "expires_hours": 72,
+      "note": "본편. 자켓 중심 lay-a/b/c 자동 배치. letterpress 골드 인장."
+    },
+    {
+      "id": "summernight",
+      "name": "여름밤",
+      "prefix": "summernight",
+      "kind": "seasonal",
+      "archive_dir": "archive/summernight",
+      "expires_hours": 72,
+      "note": "여름 계절 번외."
+    },
+    {
+      "id": "rainwalk",
+      "name": "우중산책",
+      "prefix": "rainwalk",
+      "kind": "seasonal",
+      "archive_dir": "archive/rainwalk",
+      "expires_hours": 72,
+      "note": "비 오는 날. lay-photo 폴라로이드 배치, 사진 클릭 재생."
+    },
+    {
+      "id": "gayo",
+      "name": "대한민국 대중가요 클래식 100",
+      "prefix": "gayo",
+      "kind": "canon",
+      "archive_dir": "archive/gayo",
+      "expires_hours": 72,
+      "total": 100,
+      "note": "정전 시리즈. lay-canon 배치(진한 아이보리·명조·괘선 번호). 시대 불문."
+    },
+    {
+      "id": "springrx",
+      "name": "봄비",
+      "prefix": "springrx",
+      "kind": "seasonal",
+      "archive_dir": "archive/springrx",
+      "expires_hours": 72,
+      "note": "미완성(springrx01 jpg만 존재). 정리 필요."
+    }
+  ],
+  "permanent": [
+    { "id": "everyone", "name": "모두의 큐레이션", "dir": "everyone", "note": "상시. 만료 없음." },
+    { "id": "taste", "name": "취향의 발견", "dir": "taste", "note": "상시. 만료 없음." },
+    { "id": "curator", "name": "큐레이터 추천", "dir": "curator", "note": "상시." }
+  ],
+  "dirs": {
+    "issue": "공개 지면 원본. 영구 불변, 절대 이동 금지 (URL 유지).",
+    "archive": "만료 지면 사본, 시리즈별. V1.0 유료 아카이브 소스.",
+    "_queue": "발행 대기 완성본 임시 보관. 링크 없어 비노출.",
+    "_data": "발행 목록·시리즈 정의.",
+    "assets": "아이콘·로고·OG 이미지."
+  }
+}
