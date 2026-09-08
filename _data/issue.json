@@ -11,7 +11,9 @@
     "published": "2026-07-25",
     "expires": "2026-07-28T23:59:59+09:00",
     "layout": "lay-b",
-    "bg": "#AECBC7"
+    "bg": "#AECBC7",
+    "series_id": "summernight",
+    "content_kind": "seasonal"
   },
   {
     "slug": "summernight04",
@@ -25,7 +27,9 @@
     "published": "2026-07-31",
     "expires": "2026-08-03T19:00:00+09:00",
     "layout": "lay-b",
-    "bg": "#B8C1C0"
+    "bg": "#B8C1C0",
+    "series_id": "summernight",
+    "content_kind": "seasonal"
   },
   {
     "slug": "vol34",
@@ -39,7 +43,9 @@
     "published": "2026-08-04",
     "expires": "2026-08-07T23:59:59+09:00",
     "layout": "lay-a",
-    "bg": "#D3D8D9"
+    "bg": "#D3D8D9",
+    "series_id": "vol",
+    "content_kind": "main"
   },
   {
     "slug": "summernight05",
@@ -53,7 +59,9 @@
     "published": "2026-08-07",
     "expires": "2026-08-10T23:59:59+09:00",
     "layout": "lay-c",
-    "bg": "#C5CDD3"
+    "bg": "#C5CDD3",
+    "series_id": "summernight",
+    "content_kind": "seasonal"
   },
   {
     "slug": "summernight06",
@@ -67,7 +75,9 @@
     "published": "2026-08-10",
     "expires": "2026-08-14T23:59:59+09:00",
     "layout": "lay-a",
-    "bg": "#C8D0CF"
+    "bg": "#C8D0CF",
+    "series_id": "summernight",
+    "content_kind": "seasonal"
   },
   {
     "slug": "vol35",
@@ -81,7 +91,9 @@
     "published": "2026-08-15T11:00:00+09:00",
     "expires": "2026-08-18T23:59:59+09:00",
     "layout": "lay-b",
-    "bg": "#CDD9CE"
+    "bg": "#CDD9CE",
+    "series_id": "vol",
+    "content_kind": "main"
   },
   {
     "slug": "vol36",
@@ -95,7 +107,9 @@
     "published": "2026-08-21",
     "expires": "2026-08-24T23:59:59+09:00",
     "layout": "lay-c",
-    "bg": "#B8C1C0"
+    "bg": "#B8C1C0",
+    "series_id": "vol",
+    "content_kind": "main"
   },
   {
     "slug": "summernight08",
@@ -109,7 +123,9 @@
     "published": "2026-08-25",
     "expires": "2026-08-28T23:59:59+09:00",
     "layout": "lay-a",
-    "bg": "#CDD8DF"
+    "bg": "#CDD8DF",
+    "series_id": "summernight",
+    "content_kind": "seasonal"
   },
   {
     "slug": "vol37",
@@ -123,7 +139,9 @@
     "published": "2026-08-27",
     "expires": "2026-08-30T23:59:59+09:00",
     "layout": "lay-b",
-    "bg": "#CDDFDD"
+    "bg": "#CDDFDD",
+    "series_id": "vol",
+    "content_kind": "main"
   },
   {
     "slug": "rainwalk05",
@@ -137,7 +155,9 @@
     "published": "2026-09-01",
     "expires": "2026-09-04T23:59:59+09:00",
     "layout": "lay-photo",
-    "bg": "#E4E1DA"
+    "bg": "#E4E1DA",
+    "series_id": "rainwalk",
+    "content_kind": "seasonal"
   },
   {
     "slug": "vol38",
@@ -151,7 +171,9 @@
     "published": "2026-09-04",
     "expires": "2026-09-07T23:59:59+09:00",
     "layout": "lay-c",
-    "bg": "#D0DADC"
+    "bg": "#D0DADC",
+    "series_id": "vol",
+    "content_kind": "main"
   },
   {
     "slug": "gayo01",
@@ -165,6 +187,8 @@
     "published": "2026-09-07",
     "expires": "2026-09-10T23:59:59+09:00",
     "layout": "lay-canon",
-    "bg": "#E4DCC9"
+    "bg": "#E4DCC9",
+    "series_id": "gayo",
+    "content_kind": "canon"
   }
 ]
