@@ -1,63 +1,103 @@
 {
-  "_comment": "지브라 베타 시리즈 정의. 새 코너 추가 시 여기에 한 항목만 추가. slug 접두어로 issue/·archive/ 자동 분류.",
-  "series": [
-    {
-      "id": "vol",
-      "name": "지브라 베타 Vol.",
-      "prefix": "vol",
-      "kind": "main",
-      "archive_dir": "archive/vol",
-      "expires_hours": 72,
-      "note": "본편. 자켓 중심 lay-a/b/c 자동 배치. letterpress 골드 인장."
-    },
-    {
-      "id": "summernight",
-      "name": "여름밤",
-      "prefix": "summernight",
-      "kind": "seasonal",
-      "archive_dir": "archive/summernight",
-      "expires_hours": 72,
-      "note": "여름 계절 번외."
-    },
-    {
-      "id": "rainwalk",
-      "name": "우중산책",
-      "prefix": "rainwalk",
-      "kind": "seasonal",
-      "archive_dir": "archive/rainwalk",
-      "expires_hours": 72,
-      "note": "비 오는 날. lay-photo 폴라로이드 배치, 사진 클릭 재생."
-    },
-    {
-      "id": "gayo",
-      "name": "대한민국 대중가요 클래식 100",
-      "prefix": "gayo",
-      "kind": "canon",
-      "archive_dir": "archive/gayo",
-      "expires_hours": 72,
-      "total": 100,
-      "note": "정전 시리즈. lay-canon 배치(진한 아이보리·명조·괘선 번호). 시대 불문."
-    },
-    {
-      "id": "springrx",
-      "name": "봄비",
-      "prefix": "springrx",
-      "kind": "seasonal",
-      "archive_dir": "archive/springrx",
-      "expires_hours": 72,
-      "note": "미완성(springrx01 jpg만 존재). 정리 필요."
-    }
-  ],
-  "permanent": [
-    { "id": "everyone", "name": "모두의 큐레이션", "dir": "everyone", "note": "상시. 만료 없음." },
-    { "id": "taste", "name": "취향의 발견", "dir": "taste", "note": "상시. 만료 없음." },
-    { "id": "curator", "name": "큐레이터 추천", "dir": "curator", "note": "상시." }
-  ],
+  "_comment": "지브라 베타 전체 코너 정의. 새 코너/시리즈 추가 시 여기에 한 항목만 추가. slug 접두어로 issue/·archive/ 자동 분류.",
+  "flow_series": {
+    "_comment": "72시간 공개 후 만료 → archive/ 자동 이관되는 흐름형 시리즈. issue/{slug}/ 에 발행.",
+    "items": [
+      {
+        "id": "vol",
+        "name": "지브라 베타 Vol.",
+        "prefix": "vol",
+        "kind": "main",
+        "archive_dir": "archive/vol",
+        "expires_hours": 72,
+        "note": "본편. 자켓 중심 lay-a/b/c 자동 배치. letterpress 골드 인장."
+      },
+      {
+        "id": "summernight",
+        "name": "여름밤",
+        "prefix": "summernight",
+        "kind": "seasonal",
+        "archive_dir": "archive/summernight",
+        "expires_hours": 72,
+        "note": "여름 계절 번외."
+      },
+      {
+        "id": "rainwalk",
+        "name": "우중산책",
+        "prefix": "rainwalk",
+        "kind": "seasonal",
+        "archive_dir": "archive/rainwalk",
+        "expires_hours": 72,
+        "note": "비 오는 날. lay-photo 폴라로이드 배치, 사진 클릭 재생."
+      },
+      {
+        "id": "gayo",
+        "name": "대한민국 대중가요 클래식 100",
+        "prefix": "gayo",
+        "kind": "canon",
+        "archive_dir": "archive/gayo",
+        "expires_hours": 72,
+        "total": 100,
+        "note": "정전 시리즈. lay-canon 배치(진한 아이보리·명조·괘선 번호). 시대 불문."
+      },
+      {
+        "id": "springrx",
+        "name": "봄비",
+        "prefix": "springrx",
+        "kind": "seasonal",
+        "archive_dir": "archive/springrx",
+        "expires_hours": 72,
+        "note": "미완성(springrx01 jpg만 존재). 정리 필요."
+      }
+    ]
+  },
+  "standing_corners": {
+    "_comment": "상시 코너. 만료 없음. 각자 독립된 중요 코너로, 고유 폴더·데이터·성격을 가진다.",
+    "items": [
+      {
+        "id": "curator",
+        "name": "큐레이터 데스크",
+        "dir": "curator",
+        "structure": "curator/{큐레이터ID}/index.html",
+        "members": [
+          "ilpostino",
+          "professionnel"
+        ],
+        "note": "지브라가 초빙한 객원 큐레이터의 상설 지면. 큐레이터별 폴더. 브랜드 격을 세우는 핵심 코너 — 남의 취향이 아니라 '선별된 감각'을 보여준다. 큐레이터 추가 시 폴더 신설."
+      },
+      {
+        "id": "everyone",
+        "name": "모두의 큐레이션",
+        "dir": "everyone",
+        "data": "everyone/everyone.json",
+        "structure": "everyone.json(곡 목록) + {slug}.jpg(자켓). index.html이 카드 렌더.",
+        "note": "회원이 추천한 '한 곡'을 전시. 맨 위=최신 큰 카드, 아래=썸네일. 자켓 클릭 재생. CURATED BY 닉네임. 참여의 사다리 입구."
+      },
+      {
+        "id": "taste",
+        "name": "취향의 발견",
+        "dir": "taste",
+        "data": "taste/taste.json",
+        "structure": "taste.json(항목 목록) + 이미지/인스타 임베드. index.html이 카드+읽기화면 렌더.",
+        "kinds": [
+          "essay",
+          "picture",
+          "photo",
+          "object",
+          "music-adjacent"
+        ],
+        "note": "음악 밖의 취향(글·그림·사진·물건)을 전시. kind 필드로 매체 구분. 인스타 임베드·항목별 링크 지원. V1.0 회원 프로필 레이어의 씨앗 데이터. 벽 밖의 진열창."
+      }
+    ]
+  },
   "dirs": {
-    "issue": "공개 지면 원본. 영구 불변, 절대 이동 금지 (URL 유지).",
-    "archive": "만료 지면 사본, 시리즈별. V1.0 유료 아카이브 소스.",
+    "issue": "공개 지면 원본(흐름형). 영구 불변, 절대 이동 금지 (URL 유지).",
+    "archive": "만료 지면 사본, 시리즈별. 매일 자동 복사. V1.0 유료 아카이브 소스.",
     "_queue": "발행 대기 완성본 임시 보관. 링크 없어 비노출.",
-    "_data": "발행 목록·시리즈 정의.",
+    "_data": "발행 목록(issue.json)·코너 정의(series.json).",
+    "curator": "큐레이터 데스크 — 객원 큐레이터별 폴더.",
+    "everyone": "모두의 큐레이션 — 회원 추천 곡.",
+    "taste": "취향의 발견 — 회원 취향(음악 밖).",
     "assets": "아이콘·로고·OG 이미지."
   }
 }
