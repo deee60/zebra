@@ -1,0 +1,6 @@
+# GitHub Pages 설정
+# archive/ 는 만료 지면 사본(V1.0 유료). Pages 공개에서 제외해 URL로 접근 못하게 한다.
+# 저장소 파일은 그대로 남으며, 자동 복사 워크플로도 영향 없다.
+exclude:
+  - archive
+  - _queue
