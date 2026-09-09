@@ -118,6 +118,17 @@
     margin:34px auto; max-width:440px; clear:both;
   }
 
+  .r-body .r-embed{ margin:0 auto 10px; max-width:400px; }
+  .r-body .r-embed iframe{ display:block; width:100%; height:520px; border:0; background:#fff; border-radius:2px; }
+  .r-body .r-cap{
+    font-family:var(--latin); font-size:10.5px; letter-spacing:0.12em;
+    color:var(--faint); text-align:center; margin:0 0 34px;
+  }
+  .r-links{ text-align:center; margin-top:40px; font-size:13px; }
+  .r-links a{ font-family:var(--serif); font-weight:300; color:var(--grey); text-decoration:none; border-bottom:1px solid var(--line); padding-bottom:1px; transition:color .3s ease,border-color .3s ease; }
+  .r-links a:hover{ color:var(--gold); border-color:var(--gold); }
+  .r-links .sep{ color:var(--faint); margin:0 10px; }
+
   /* ── 링크 ── */
   .links{ text-align:center; margin-top:80px; }
   .links a{ font-family:var(--latin); font-size:13px; letter-spacing:0.16em; color:var(--faint); text-decoration:none; transition:color .3s ease; }
@@ -148,6 +159,7 @@
     .r-ttl{ font-size:19px; }
     .r-body{ font-size:14px; line-height:2.1; }
     .r-body .r-photo{ width:42%; margin:4px 16px 0 0; }
+    .r-body .r-embed iframe{ height:480px; }
     .r-close{ left:auto; right:18px; margin-left:0; }
   }
 </style>
@@ -184,13 +196,22 @@
       var img=item.cover_full||item.cover;
       var photo=img?'<figure class="r-photo"><img src="'+esc(img)+'" alt="">'+(item.photo_by?'<figcaption>사진 · '+esc(item.photo_by)+'</figcaption>':'')+'</figure>':'';
       var by=item.by?'<div class="r-by">'+esc(item.by)+'</div>':'';
+      var embed='';
+      if(item.embed){
+        var m=String(item.embed).match(/instagram\.com\/(p|reel)\/([A-Za-z0-9_-]+)/);
+        if(m){ embed='<div class="r-embed"><iframe src="https://www.instagram.com/'+m[1]+'/'+m[2]+'/embed/" loading="lazy" scrolling="no" allowtransparency="true" title="'+esc(item.title)+'"></iframe></div>'+(item.caption?'<div class="r-cap">'+esc(item.caption)+'</div>':''); }
+      }
+      var links='';
+      if(Array.isArray(item.links)&&item.links.length){
+        links='<div class="r-links">'+item.links.map(function(l){ return '<a href="'+esc(l.url)+'" target="_blank" rel="noopener">'+esc(l.label)+'</a>'; }).join('<span class="sep">&middot;</span>')+'</div>';
+      }
       var bodyHtml;
       if(isQuote){
         bodyHtml='<div class="r-quote">'+esc(item.body||item.title)+'</div>';
       } else {
-        bodyHtml='<div class="r-body">'+photo+paras(item.body)+'<div class="clear"></div></div>';
+        bodyHtml='<div class="r-body">'+embed+(embed?'':photo)+paras(item.body)+'<div class="clear"></div></div>';
       }
-      inner.innerHTML='<div class="r-ttl">'+esc(item.title)+'</div>'+by+bodyHtml;
+      inner.innerHTML='<div class="r-ttl">'+esc(item.title)+'</div>'+by+bodyHtml+links;
       reader.classList.add('open');
       document.body.style.overflow='hidden';
       reader.scrollTop=0;
