@@ -32,7 +32,7 @@ if (/KAKAOTALK/i.test(navigator.userAgent)) {
 </script>
 <style>
 
-  :root{ --bg:#DFD4CD; --paper:#F5F3ED; --ink:#26221C; --mid:#6E6A61; --faint:#A9A297; --rule:#DFDAD0; }
+  :root{ --bg:#DFDCCD; --paper:#F5F3ED; --ink:#26221C; --mid:#6E6A61; --faint:#A9A297; --rule:#DFDAD0; }
   *{ margin:0; padding:0; box-sizing:border-box; }
   html{ -webkit-text-size-adjust:100%; }
   body{ background:var(--bg); display:flex; justify-content:center;
@@ -207,6 +207,20 @@ if (/KAKAOTALK/i.test(navigator.userAgent)) {
   .film .mat{ background:#FCFBF8; border:1px solid var(--rule); padding:4.5px; }
   .film .frame{ position:relative; padding-top:56.25%; background:#111; }
   .film iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+  /* 링크 모드 — 임베드 막힌 영상: 썸네일 + 재생버튼, 클릭 시 유튜브 이동 */
+  .film a.frame.film-link{ display:block; overflow:hidden; }
+  .film .film-thumb{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;
+    transition:transform .5s ease, filter .4s ease; }
+  .film .film-link:hover .film-thumb{ transform:scale(1.03); filter:brightness(.9); }
+  .film .film-play{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:56px; height:56px; border-radius:50%;
+    background:rgba(20,18,16,.62); backdrop-filter:blur(2px);
+    display:flex; align-items:center; justify-content:center;
+    transition:background .3s ease, transform .3s ease; }
+  .film .film-link:hover .film-play{ background:rgba(184,154,90,.9); transform:translate(-50%,-50%) scale(1.08); }
+  .film .film-play::after{ content:""; margin-left:3px;
+    border-style:solid; border-width:9px 0 9px 15px;
+    border-color:transparent transparent transparent #F5F3ED; }
   .film figcaption{
     margin-top:11px; text-align:center;
     font-family:"Cormorant Garamond", serif; font-style:italic;
@@ -249,9 +263,13 @@ a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
 </head>
 <body>
 
-  <main class="sheet lay-b" id="sheet">
+  <main class="sheet lay-a" id="sheet">
 
     <p class="notice">이 지면은 9월 16일 자정에 아카이브로 이관됩니다</p>
+
+    <figure class="plate">
+      <img src="vol40.jpg" alt="앨범 커버">
+    </figure>
 
     <div class="titles">
       <div class="stamp"><span class="sp-t">지브라 베타 Vol.40</span></div>
@@ -259,10 +277,6 @@ a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
       <p class="romaji"></p>
       <p class="artist">Mark Ronson &amp; RAYE</p>
     </div>
-
-    <figure class="plate">
-      <img src="vol40.jpg" alt="앨범 커버">
-    </figure>
 
     <div class="void">
       <div class="note"><p>마크 론슨(Mark Ronson)은 에이미 와인하우스의 명반 《Back to Black》을 공동 프로듀싱하고, 레트로하고 세련된 사운드로 이름을 알린 스타 프로듀서입니다. 레이(RAYE)는 활동 초기부터 에이미 와인하우스와 비교될 정도로 주목받아 온 싱어송라이터로, 2024년 브릿 어워드에서 여섯 개의 트로피를 거머쥐며 한 시상식 최다 수상 기록을 세운, 지금 영국에서 가장 주목받는 뮤지션이기도 합니다.</p><p>둘은 스위스 하이엔드 시계 브랜드 오데마 피게(1875년 창립)의 150주년을 맞아 2025년 진행된 'APxMusic' 프로젝트를 통해 첫 협업을 하게 됩니다. 레이는 처음 마크 론슨과의 작업이 자신과 에이미 와인하우스의 비교를 다시 불러올 수 있다는 점에서 망설였다고 밝혔으나 마크 론슨의 트랙을 듣자마자 몇 분 만에 직관적으로 'Suzanne'이라는 제목을 떠올렸다고 합니다.</p><p>이 버전은 런던의 처치 스튜디오(The Church Studios)에서 라이브로 녹음한 것입니다. 처치 스튜디오는 옛 교회를 개조한 스튜디오로, 현재까지도 수많은 뮤지션이 찾는 런던의 상징적인 녹음 공간입니다. 아델의 《25》를 비롯해 Eurythmics, U2, Radiohead, Bob Dylan 등의 음악이 이곳에서 녹음됐습니다.</p><div class="aside">처치 스튜디오에서의 라이브 무대를 유튜브 영상으로 꼭 감상해 보시길 권합니다.</div><div class="credit"><span class="cr-line"><span class="cr-label">노래</span><span class="cr-names"><span class="cr-name">RAYE</span></span></span><span class="cr-line"><span class="cr-label">작곡</span><span class="cr-names"><span class="cr-name">Mark Ronson</span><span class="cr-sep"> · </span><span class="cr-name">Rachel Keen</span><span class="cr-sep"> · </span><span class="cr-name">Tommy Brenneck</span><span class="cr-sep"> · </span><span class="cr-name">Eric Hagstrom</span></span></span><span class="cr-line"><span class="cr-label">프로듀서</span><span class="cr-names"><span class="cr-name">Mark Ronson</span><span class="cr-sep"> · </span><span class="cr-name">Tommy Brenneck</span></span></span><span class="cr-line"><span class="cr-label">앨범</span><span class="cr-names"><span class="cr-name">Suzanne (At The Church)</span><span class="cr-sep"> · </span><span class="cr-name">2025</span></span></span></div></div>
@@ -284,11 +298,12 @@ a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
 
     <figure class="film">
       <div class="mat">
-        <div class="frame">
-          <iframe src="https://www.youtube-nocookie.com/embed/UXhjTNwfRB0" title="Suzanne (At The Church) — Mark Ronson &amp; RAYE" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
-        </div>
+        <a class="frame film-link" href="https://www.youtube.com/watch?v=UXhjTNwfRB0" target="_blank" rel="noopener" aria-label="Suzanne (At The Church) — Mark Ronson &amp; RAYE — 유튜브에서 보기">
+          <img class="film-thumb" src="https://img.youtube.com/vi/UXhjTNwfRB0/maxresdefault.jpg" alt="Suzanne (At The Church) — Mark Ronson &amp; RAYE" loading="lazy">
+          <span class="film-play" aria-hidden="true"></span>
+        </a>
       </div>
-      <figcaption>Suzanne (At The Church) — Mark Ronson &amp; RAYE</figcaption>
+      <figcaption>▶ 유튜브에서 라이브 보기</figcaption>
     </figure>
 
     <p class="colophon">zebra beta · movement 2.</p>
