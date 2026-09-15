@@ -190,5 +190,37 @@
     "bg": "#E4DCC9",
     "series_id": "gayo",
     "content_kind": "canon"
+  },
+  {
+    "slug": "vol39",
+    "kind": "music",
+    "series": "지브라 베타 Vol.39",
+    "title": "A Downland Suite: III. Minuet",
+    "romaji": "",
+    "artist": "John Ireland",
+    "path": "issue/vol39/",
+    "cover": "issue/vol39/vol39.jpg",
+    "published": "2026-09-12",
+    "expires": "2026-09-15T23:59:59+09:00",
+    "layout": "lay-c",
+    "bg": "#D3CAC5",
+    "series_id": "vol",
+    "content_kind": "main"
+  },
+  {
+    "slug": "vol40",
+    "kind": "music",
+    "series": "지브라 베타 Vol.40",
+    "title": "Suzanne (At The Church)",
+    "romaji": "",
+    "artist": "Mark Ronson & RAYE",
+    "path": "issue/vol40/",
+    "cover": "issue/vol40/vol40.jpg",
+    "published": "2026-09-15",
+    "expires": "2026-09-18T23:59:59+09:00",
+    "layout": "lay-a",
+    "bg": "#DFDCCD",
+    "series_id": "vol",
+    "content_kind": "main"
   }
 ]
