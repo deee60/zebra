@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>위클리N — zebra beta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Cormorant+SC:wght@400;500&family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #EDE9DF;
+    --ink: #2B2A26;
+    --gray: #8b877c;
+    --faint: #b8b3a8;
+    --gold: #b89a5a;
+    --divider: #d4cfc5;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Noto Serif KR', serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 48px 24px 120px;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 72px;
+  }
+  .header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 18px;
+    letter-spacing: 1.68px;
+    color: rgb(139, 135, 124);
+    margin-bottom: 8px;
+  }
+  .header .updated {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 11px;
+    color: rgb(169, 162, 151);
+  }
+  .trend-list { list-style: none; }
+  .trend-item { border-bottom: 1px solid var(--divider); }
+  .trend-headline {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 18px 0;
+    cursor: pointer;
+    transition: color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .trend-headline:hover { color: var(--gold); }
+  .trend-category {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--faint);
+    flex-shrink: 0;
+    line-height: 1;
+    min-width: 32px;
+    padding-top: 3px;
+  }
+  .trend-title {
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 1.65;
+    flex: 1;
+  }
+  .trend-arrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    color: var(--faint);
+    flex-shrink: 0;
+    transition: transform 0.9s cubic-bezier(0.25, 0.1, 0.25, 1), color 0.6s ease;
+  }
+  .trend-item.open .trend-arrow {
+    transform: rotate(90deg);
+    color: var(--gold);
+  }
+  .trend-body {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 1s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 0.8s ease 0.15s, padding 1s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+  .trend-item.open .trend-body {
+    max-height: 600px;
+    opacity: 1;
+    padding-bottom: 20px;
+  }
+  .trend-summary {
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 300;
+    font-size: 13.5px;
+    line-height: 2;
+    color: var(--ink);
+    padding: 0 0 0 28px;
+    word-break: keep-all;
+  }
+  .trend-source {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--faint);
+    white-space: nowrap;
+  }
+  .footer {
+    margin-top: 88px;
+    text-align: center;
+  }
+  .footer .home-link {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    letter-spacing: 1.92px;
+    text-transform: uppercase;
+    color: rgb(169, 162, 151);
+    text-decoration: none;
+    transition: color 0.2s;
+    margin-bottom: 48px;
+  }
+  .footer .home-link:hover { color: var(--gold); }
+  .colophon {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    letter-spacing: 1.3px;
+    color: rgb(139, 135, 124);
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="header">
+    <h1 style="font-family:'Cormorant SC',serif; font-weight:500; font-size:16px; letter-spacing:2.5px; color:rgb(139,135,124);">B-SIDE</h1>
+    <p class="updated">updated Sep 17, 2026</p>
+  </header>
+  <ul class="trend-list">
+    <li class="trend-item">
+      <div class="trend-headline" onclick="toggle(this)">
+        <span class="trend-category">음악</span>
+        <span class="trend-title">아이유, 정규 6집 선공개 싱글 「이 별로부터」 발매</span>
+        <span class="trend-arrow">›</span>
+      </div>
+      <div class="trend-body">
+        <p class="trend-summary">아이유가 9월 10일 디지털 싱글 「이 별로부터」를 발매했다. 정규 6집에 수록될 더블 타이틀 곡 중 하나를 선공개한 것으로, 지난해 9월 싱글 「바이, 썸머」 이후 1년 만의 신곡이다. 발매 직후 주요 음원 차트 상위권에 올랐다. 함께 공개된 「디어 마이 크레이지 소울메이트」까지 두 곡 모두 차트에 안착했다. 정규 6집 전체 발매일은 아직 발표되지 않았으나 연내 출시가 예상된다. <span class="trend-source">(EDAM Entertainment)</span></p>
+      </div>
+    </li>
+    <li class="trend-item">
+      <div class="trend-headline" onclick="toggle(this)">
+        <span class="trend-category">글</span>
+        <span class="trend-title">무라카미 하루키 신작 장편 「가호」 한국어판 10월 출간 확정</span>
+        <span class="trend-arrow">›</span>
+      </div>
+      <div class="trend-body">
+        <p class="trend-summary">무라카미 하루키의 16번째 장편소설 「가호(KAHO)」 한국어판이 10월 문학동네에서 출간된다. 일본에서는 7월 3일 新潮社(신초샤)에서 발간돼 4일 만에 30만 부를 돌파했다. 하루키 소설 최초의 여성 단독 주인공으로, 26세 그림책 작가 가호가 도쿄 외곽 마을로 이사하며 겪는 기묘한 이야기를 담았다. 「도시와 그 불확실한 벽」 이후 3년 만의 신작이자, 문예지 「新潮(신초)」에 2024년부터 네 차례 연재한 작품을 개정·증보해 단행본으로 묶었다. 가을에 읽기 좋은 하루키가 돌아온다. <span class="trend-source">(文學동네)</span></p>
+      </div>
+    </li>
+    <li class="trend-item">
+      <div class="trend-headline" onclick="toggle(this)">
+        <span class="trend-category">전시</span>
+        <span class="trend-title">솔 르윗 개인전 «Open Structure» 개막</span>
+        <span class="trend-arrow">›</span>
+      </div>
+      <div class="trend-body">
+        <p class="trend-summary">아모레퍼시픽미술관이 9월 1일 미국 개념미술의 거장 솔 르윗의 대규모 개인전 «Sol LeWitt: Open Structure»를 개막했다. 2027년 2월까지 이어지는 이번 전시는 르윗의 열린 구조 조각과 벽면 드로잉을 중심으로 그의 작업 전반을 조명한다. 르윗은 "아이디어가 곧 작품"이라는 선언으로 현대미술의 방향을 바꾼 작가다. 미술관 건축과 르윗의 기하학적 구조가 만나는 공간 경험이 이번 전시의 핵심이다. 용산 아모레퍼시픽 본사 건물에서 관람할 수 있다. <span class="trend-source">(아모레퍼시픽미술관)</span></p>
+      </div>
+    </li>
+    <li class="trend-item">
+      <div class="trend-headline" onclick="toggle(this)">
+        <span class="trend-category">음악</span>
+        <span class="trend-title">블루노트 재즈클럽, 런던 코벤트가든에 첫 영국 지점 9월 23일 개관</span>
+        <span class="trend-arrow">›</span>
+      </div>
+      <div class="trend-body">
+        <p class="trend-summary">뉴욕의 전설적인 재즈클럽 블루노트가 런던 코벤트가든 세인트마틴스 레인에 첫 영국 지점을 연다. 개관일은 9월 23일 — 존 콜트레인 탄생 100주년 당일이다. 그래미 5회 수상의 로버트 글래스퍼가 오프닝 공연을 맡고, 에리카 바두, 제이미 컬럼, 누비아 가르시아, 유세프 데이즈, 코코로코가 시즌 라인업에 이름을 올렸다. 250석 메인홀에서 매일 밤 7시와 9시 30분 두 차례 공연이 열리고, 100석 규모의 두 번째 공간 'B-Side'는 연내 추가 개관하며 영국 신진 뮤지션에 집중한다. 1981년 그리니치빌리지에서 시작한 블루노트가 도쿄, 밀라노, 리우에 이어 런던까지 — 재즈클럽이 다시 도시 문화의 중심에 서고 있다. <span class="trend-source">(Billboard)</span></p>
+      </div>
+    </li>
+    <li class="trend-item">
+      <div class="trend-headline" onclick="toggle(this)">
+        <span class="trend-category">음악</span>
+        <span class="trend-title">Ezra Collective, 4집 「Here Because of Hope」 발매 — 머큐리상 재즈 밴드의 신보</span>
+        <span class="trend-arrow">›</span>
+      </div>
+      <div class="trend-body">
+        <p class="trend-summary">런던 재즈 5인조 Ezra Collective가 9월 11일 4집 「Here Because of Hope」를 파티잔 레코드에서 발매했다. 2023년 재즈 최초로 머큐리상을 수상한 밴드로, 지난해 브릿 어워드 그룹상 수상과 웸블리 아레나 헤드라이너까지 오르며 영국 재즈 신을 대표하는 그룹으로 자리 잡았다. 이번 앨범은 서아프리카에서 카리브해, 그리고 런던 거리로 이어지는 흑인 음악의 이동을 세 개의 악장으로 담았다. 「Only Love」에는 감비아계 래퍼 파 살리유가, 각 챕터 도입부에는 「블랙 팬서」의 레티티아 라이트가 스포큰워드로 참여했다. 프랑스 남부 미라발 스튜디오에서 일주일 만에 녹음된 앨범이다. 엘튼 존이 "영국 최고의 라이브 밴드"라 부른 이유가 이 앨범에 있다. <span class="trend-source">(Pitchfork)</span></p>
+      </div>
+    </li>
+  </ul>
+  <footer class="footer">
+    <a href="https://zebrabeta.kr" class="home-link">Home</a>
+    <p class="colophon">zebra beta movement 2.</p>
+  </footer>
+</div>
+<script>
+function toggle(el) {
+  var item = el.closest('.trend-item');
+  var wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.trend-item.open').forEach(function(i) {
+    i.classList.remove('open');
+  });
+  if (!wasOpen) item.classList.add('open');
+}
+</script>
+</body>
+</html>
