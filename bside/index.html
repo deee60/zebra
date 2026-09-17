@@ -117,25 +117,26 @@
     margin-top: 150px;
     text-align: center;
   }
-  .footer .home-link {
-    display: block;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 12px;
-    letter-spacing: 1.92px;
-    text-transform: uppercase;
-    color: rgb(169, 162, 151);
-    text-decoration: none;
-    transition: color 0.2s;
-    margin-bottom: 48px;
-  }
-  .footer .home-link:hover { color: var(--gold); }
   .colophon {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    font-size: 13px;
-    letter-spacing: 1.3px;
-    color: rgb(139, 135, 124);
+    font-weight: 300;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    color: rgb(169, 162, 151);
   }
+  .home-link-wrap {
+    margin-top: 16px;
+  }
+  .home-link-wrap a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    color: rgb(169, 162, 151);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .home-link-wrap a:hover { color: var(--gold); }
 </style>
 </head>
 <body>
@@ -197,8 +198,8 @@
     </li>
   </ul>
   <footer class="footer">
-    <a href="https://zebrabeta.kr" class="home-link">Home</a>
-    <p class="colophon">zebra beta movement 2.</p>
+    <p class="colophon">zebra beta &middot; movement 2.</p>
+    <div class="home-link-wrap"><a href="https://zebrabeta.kr">HOME</a></div>
   </footer>
 </div>
 <script>
