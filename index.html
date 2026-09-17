@@ -29,7 +29,7 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Cormorant+SC:wght@400;500&display=swap');
   *{box-sizing:border-box;margin:0;padding:0}
   :root{
     --bg:#efece4;
@@ -90,6 +90,12 @@
     transition:color .25s;
   }
   .recent:hover{color:var(--gold)}
+  .recent.bside{
+    font-family:'Cormorant SC',serif;font-weight:500;letter-spacing:.20em;
+  }
+  .latest-link{
+    display:block;margin-top:48px;margin-bottom:26px;
+  }
   .latest .dot{
     font-family:'Cormorant Garamond',serif;color:var(--soft);font-size:11px;
   }
@@ -208,8 +214,8 @@
 <body>
   <div class="wrap">
     <div class="recent-row">
-      <a class="recent" href="issue/vol40/">최근 발행물 보기</a>
       <a class="recent" href="everyone/">모두의 큐레이션</a>
+      <a class="recent bside" href="bside/">B-SIDE</a>
       <a class="recent" href="taste/">취향의 발견<span class="misc"> (미셀러니)</span></a>
     </div>
 
@@ -221,13 +227,9 @@
     <h1>당신의 하루에<br>함께 머물 수 있는 순간을 담습니다.</h1>
 
 
-    <div class="social">
-      <a href="https://instagram.com/zebrabeta26" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://brunch.co.kr/@zebrabeta" target="_blank" rel="noopener">Brunch</a>
-    </div>
-
     <div class="latest">
-      <a class="pick" href="curator/minorppong/">큐레이터 추천</a>
+      <a class="recent latest-link" href="issue/vol40/">최근 발행물 보기</a>
+      <a class="pick" href="curator/minorppong/">큐레이터 데스크</a>
     </div>
     </div>
 
