@@ -174,5 +174,21 @@
     "hue": 48,
     "bg": "#DFDCCD",
     "season": "autumn"
+  },
+  {
+    "slug": "dryadvisory01",
+    "kind": "music",
+    "series": "건조주의보 01.",
+    "title": "Mrs Magic",
+    "romaji": "",
+    "artist": "Strawberry Guy",
+    "path": "issue/dryadvisory01/",
+    "cover": "issue/dryadvisory01/dryadvisory01.jpg",
+    "published": "2026-09-18",
+    "expires": "2026-09-21T23:59:59+09:00",
+    "layout": "lay-b",
+    "hue": 35,
+    "bg": "#D7CEC1",
+    "season": "autumn"
   }
 ]
