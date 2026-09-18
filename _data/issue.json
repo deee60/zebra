@@ -11,9 +11,7 @@
     "published": "2026-07-25",
     "expires": "2026-07-28T23:59:59+09:00",
     "layout": "lay-b",
-    "bg": "#AECBC7",
-    "series_id": "summernight",
-    "content_kind": "seasonal"
+    "bg": "#AECBC7"
   },
   {
     "slug": "summernight04",
@@ -27,9 +25,7 @@
     "published": "2026-07-31",
     "expires": "2026-08-03T19:00:00+09:00",
     "layout": "lay-b",
-    "bg": "#B8C1C0",
-    "series_id": "summernight",
-    "content_kind": "seasonal"
+    "bg": "#B8C1C0"
   },
   {
     "slug": "vol34",
@@ -43,9 +39,7 @@
     "published": "2026-08-04",
     "expires": "2026-08-07T23:59:59+09:00",
     "layout": "lay-a",
-    "bg": "#D3D8D9",
-    "series_id": "vol",
-    "content_kind": "main"
+    "bg": "#D3D8D9"
   },
   {
     "slug": "summernight05",
@@ -59,9 +53,7 @@
     "published": "2026-08-07",
     "expires": "2026-08-10T23:59:59+09:00",
     "layout": "lay-c",
-    "bg": "#C5CDD3",
-    "series_id": "summernight",
-    "content_kind": "seasonal"
+    "bg": "#C5CDD3"
   },
   {
     "slug": "summernight06",
@@ -75,9 +67,7 @@
     "published": "2026-08-10",
     "expires": "2026-08-14T23:59:59+09:00",
     "layout": "lay-a",
-    "bg": "#C8D0CF",
-    "series_id": "summernight",
-    "content_kind": "seasonal"
+    "bg": "#C8D0CF"
   },
   {
     "slug": "vol35",
@@ -88,12 +78,10 @@
     "artist": "Håvard Gimse",
     "path": "issue/vol35/",
     "cover": "issue/vol35/vol35_1.jpg",
-    "published": "2026-08-15T11:00:00+09:00",
+    "published": "2026-08-15",
     "expires": "2026-08-18T23:59:59+09:00",
     "layout": "lay-b",
-    "bg": "#CDD9CE",
-    "series_id": "vol",
-    "content_kind": "main"
+    "bg": "#CDD9CE"
   },
   {
     "slug": "vol36",
@@ -107,9 +95,7 @@
     "published": "2026-08-21",
     "expires": "2026-08-24T23:59:59+09:00",
     "layout": "lay-c",
-    "bg": "#B8C1C0",
-    "series_id": "vol",
-    "content_kind": "main"
+    "bg": "#B8C1C0"
   },
   {
     "slug": "summernight08",
@@ -123,9 +109,7 @@
     "published": "2026-08-25",
     "expires": "2026-08-28T23:59:59+09:00",
     "layout": "lay-a",
-    "bg": "#CDD8DF",
-    "series_id": "summernight",
-    "content_kind": "seasonal"
+    "bg": "#CDD8DF"
   },
   {
     "slug": "vol37",
@@ -139,57 +123,7 @@
     "published": "2026-08-27",
     "expires": "2026-08-30T23:59:59+09:00",
     "layout": "lay-b",
-    "bg": "#CDDFDD",
-    "series_id": "vol",
-    "content_kind": "main"
-  },
-  {
-    "slug": "rainwalk05",
-    "kind": "music",
-    "series": "우중산책 05",
-    "title": "Howl's Moving Castle",
-    "romaji": "",
-    "artist": "Giovanni Mirabassi",
-    "path": "issue/rainwalk05/",
-    "cover": "issue/rainwalk05/rainwalk05.jpg",
-    "published": "2026-09-01",
-    "expires": "2026-09-04T23:59:59+09:00",
-    "layout": "lay-photo",
-    "bg": "#E4E1DA",
-    "series_id": "rainwalk",
-    "content_kind": "seasonal"
-  },
-  {
-    "slug": "vol38",
-    "kind": "music",
-    "series": "지브라 베타 Vol.38",
-    "title": "Hold the Line",
-    "romaji": "",
-    "artist": "Toto",
-    "path": "issue/vol38/",
-    "cover": "issue/vol38/vol38.jpg",
-    "published": "2026-09-04",
-    "expires": "2026-09-07T23:59:59+09:00",
-    "layout": "lay-c",
-    "bg": "#D0DADC",
-    "series_id": "vol",
-    "content_kind": "main"
-  },
-  {
-    "slug": "gayo01",
-    "kind": "music",
-    "series": "대한민국 대중가요 클래식 100",
-    "title": "가을편지",
-    "romaji": "",
-    "artist": "김민기",
-    "path": "issue/gayo01/",
-    "cover": "issue/gayo01/gayo01.jpg",
-    "published": "2026-09-07",
-    "expires": "2026-09-10T23:59:59+09:00",
-    "layout": "lay-canon",
-    "bg": "#E4DCC9",
-    "series_id": "gayo",
-    "content_kind": "canon"
+    "bg": "#CDDFDD"
   },
   {
     "slug": "vol39",
@@ -203,9 +137,7 @@
     "published": "2026-09-12",
     "expires": "2026-09-15T23:59:59+09:00",
     "layout": "lay-c",
-    "bg": "#D3CAC5",
-    "series_id": "vol",
-    "content_kind": "main"
+    "bg": "#D3CAC5"
   },
   {
     "slug": "vol40",
@@ -216,11 +148,23 @@
     "artist": "Mark Ronson & RAYE",
     "path": "issue/vol40/",
     "cover": "issue/vol40/vol40.jpg",
-    "published": "2026-09-15",
-    "expires": "2026-09-18T23:59:59+09:00",
+    "published": "2026-09-13",
+    "expires": "2026-09-16T23:59:59+09:00",
     "layout": "lay-a",
-    "bg": "#DFDCCD",
-    "series_id": "vol",
-    "content_kind": "main"
+    "bg": "#DFDCCD"
+  },
+  {
+    "slug": "dryadvisory01",
+    "kind": "music",
+    "series": "건조주의보 01.",
+    "title": "Mrs Magic",
+    "romaji": "",
+    "artist": "Strawberry Guy",
+    "path": "issue/dryadvisory01/",
+    "cover": "issue/dryadvisory01/dryadvisory01.jpg",
+    "published": "2026-09-18",
+    "expires": "2026-09-21T23:59:59+09:00",
+    "layout": "lay-b",
+    "bg": "#D7CEC1"
   }
 ]
