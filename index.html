@@ -71,7 +71,16 @@
   }
   h1 b{font-weight:500}
 
-  .social{display:flex;gap:30px;margin-bottom:48px;animation:fadeUp 1s ease .45s both}
+  .social{
+    text-align:center;margin-top:32px;margin-bottom:16px;
+    animation:fadeUp 1s ease .65s both;
+  }
+  .social a{
+    font-family:'Cormorant Garamond',serif;font-size:10px;letter-spacing:.2em;
+    color:#c9c4b8;text-decoration:none;text-transform:uppercase;transition:color .25s;
+  }
+  .social a:hover{color:var(--gold)}
+  .social .dot{color:#d4cfc5;margin:0 8px}
 
   .latest{margin-bottom:0;animation:fadeUp 1s ease .55s both;text-align:center}
   .latest .pick{
@@ -105,10 +114,10 @@
     margin:43px auto 85px;animation:fadeUp 1s ease .55s both;
   }
   .social a{
-    font-family:'Cormorant Garamond',serif;letter-spacing:.16em;text-transform:uppercase;font-size:12px;
-    color:var(--soft);text-decoration:none;transition:color .2s;padding-bottom:3px;border-bottom:1px solid transparent;
+    font-family:'Cormorant Garamond',serif;font-size:10px;letter-spacing:.2em;
+    color:#c9c4b8;text-decoration:none;text-transform:uppercase;transition:color .25s;
   }
-  .social a:hover{color:var(--ink);border-bottom-color:var(--gold)}
+  .social a:hover{color:var(--gold)}
 
   .notify{
     width:100%;max-width:340px;margin-bottom:40px;animation:fadeUp 1s ease .6s both;
@@ -255,6 +264,10 @@
       <div class="policy-text" id="policyText" hidden>뉴스레터 발송을 위한 최소한의 개인정보(이메일 주소)를 수집하고 이용합니다. 수집된 정보는 발송 외 다른 목적으로 이용되지 않으며, 서비스가 종료되거나 구독을 해지할 경우 즉시 파기됩니다.</div>
 
       <div class="msg" id="msg"></div>
+    </div>
+
+    <div class="social">
+      <a href="https://instagram.com/zebrabeta26" target="_blank" rel="noopener">Instagram</a><span class="dot">·</span><a href="https://brunch.co.kr/@zebrabeta" target="_blank" rel="noopener">Brunch</a>
     </div>
 
     <footer>zebra beta movement 2.</footer>
