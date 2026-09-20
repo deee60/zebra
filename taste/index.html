@@ -246,6 +246,8 @@
           box.innerHTML='<div class="intro">아직 조용합니다.<br>당신이 좋아하는 것을 처음으로 들려주세요.</div>';
           return;
         }
+        var isPreview = location.search.indexOf("preview") !== -1;
+        list = list.filter(function(x){ return isPreview || x.published !== false; });
         list.forEach(function(item){ box.appendChild(makeCard(item)); });
       })
       .catch(function(e){
