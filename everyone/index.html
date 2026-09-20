@@ -273,6 +273,9 @@
       .then(function(r){ return r.json(); })
       .then(function(list){
         if(!Array.isArray(list) || list.length===0) return;
+        var isPreview = location.search.indexOf("preview") !== -1;
+        list = list.filter(function(x){ return isPreview || x.published !== false; });
+        if(list.length===0) return;
         DATA = list;
         current = 0;
         renderFeature(DATA[0]);
