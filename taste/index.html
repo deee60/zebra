@@ -152,6 +152,7 @@
     /* 폰: 제목 끝에 짧은 미리보기가 바로 이어지게 */
     .card .body{ display:inline; }
     .card .ttl{ display:inline; margin-bottom:0; }
+    .card .ttl.tb{ display:block; }
     .card .ttl::after{ content:" "; }
     .card .prev-w{ display:none; }
     .card .prev-m{ display:inline; }
@@ -242,6 +243,15 @@
       return card;
     }
 
+    function fixTitles(){
+      var ts=document.querySelectorAll('.card .ttl');
+      for(var i=0;i<ts.length;i++){
+        var t=ts[i]; t.classList.remove('tb');
+        if(window.innerWidth<=480){ var lh=parseFloat(getComputedStyle(t).lineHeight)||22; if(t.getBoundingClientRect().height < lh*1.5){ t.classList.add('tb'); } }
+      }
+    }
+    window.addEventListener('resize', fixTitles);
+    if(document.fonts && document.fonts.ready){ document.fonts.ready.then(fixTitles); }
     fetch('taste.json', {cache:'no-cache'})
       .then(function(r){ return r.json(); })
       .then(function(list){
@@ -253,6 +263,7 @@
         var isPreview = location.search.indexOf("preview") !== -1;
         list = list.filter(function(x){ return isPreview || x.published !== false; });
         list.forEach(function(item){ box.appendChild(makeCard(item)); });
+        fixTitles();
       })
       .catch(function(e){
         console.error('taste.json load failed', e);
