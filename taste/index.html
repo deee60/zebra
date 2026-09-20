@@ -195,6 +195,7 @@
       var isQuote=(item.kind==='quote'||item.kind==='문장');
       var img=item.cover_full||item.cover;
       var photo=img?'<figure class="r-photo"><img src="'+esc(img)+'" alt="">'+(item.photo_by?'<figcaption>사진 · '+esc(item.photo_by)+'</figcaption>':'')+'</figure>':'';
+      var photo2=item.cover_2?'<figure class="r-photo r-photo-2"><img src="'+esc(item.cover_2)+'" alt="'+esc(item.cover_2_alt||'')+'"></figure>':'';
       var by=item.by?'<div class="r-by">'+esc(item.by)+'</div>':'';
       var embed='';
       if(item.embed){
@@ -209,7 +210,7 @@
       if(isQuote){
         bodyHtml='<div class="r-quote">'+esc(item.body||item.title)+'</div>';
       } else {
-        bodyHtml='<div class="r-body">'+embed+(embed?'':photo)+paras(item.body)+'<div class="clear"></div></div>';
+        bodyHtml='<div class="r-body">'+embed+(embed?'':photo)+paras(item.body)+photo2+'<div class="clear"></div></div>';
       }
       inner.innerHTML='<div class="r-ttl">'+esc(item.title)+'</div>'+by+bodyHtml+links;
       reader.classList.add('open');
