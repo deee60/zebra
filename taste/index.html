@@ -105,6 +105,7 @@
   .r-body{ font-size:14.5px; line-height:2.2; color:var(--ink-soft); }
   .r-body .r-photo{ float:left; width:44%; margin:6px 26px 14px 0; }
   .r-body .r-photo img{ width:100%; display:block; border-radius:2px; }
+  .r-body .r-photo-2{ float:none; clear:both; width:65%; margin:22px auto 8px; }
   .r-body .r-photo figcaption{
     font-family:var(--latin); font-size:10px; letter-spacing:0.14em;
     text-transform:uppercase; color:var(--faint); text-align:center; margin-top:7px;
@@ -195,7 +196,7 @@
       var isQuote=(item.kind==='quote'||item.kind==='문장');
       var img=item.cover_full||item.cover;
       var photo=img?'<figure class="r-photo"><img src="'+esc(img)+'" alt="">'+(item.photo_by?'<figcaption>사진 · '+esc(item.photo_by)+'</figcaption>':'')+'</figure>':'';
-      var photo2=item.cover_2?'<figure class="r-photo r-photo-2"><img src="'+esc(item.cover_2)+'" alt="'+esc(item.cover_2_alt||'')+'"></figure>':'';
+      var photo2=item.cover_2?'<figure class="r-photo r-photo-2"><img src="'+esc(item.cover_2)+'" alt="'+esc(item.cover_2_alt||'')+'">'+(item.photo_by?'<figcaption>사진 · '+esc(item.photo_by)+'</figcaption>':'')+'</figure>':'';
       var by=item.by?'<div class="r-by">'+esc(item.by)+'</div>':'';
       var embed='';
       if(item.embed){
