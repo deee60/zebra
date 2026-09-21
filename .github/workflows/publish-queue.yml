@@ -1,0 +1,119 @@
+name: publish-queue
+
+# _queue/{slug}/ 의 완성 지면을 issue/{slug}/ 로 그대로 옮겨 발행한다.
+# ★ 재빌드하지 않는다 — 프리뷰한 index.html 픽셀 그대로.
+#   날짜(EXPIRES 상수 · 상단 이관 예고 문구)만 "발행 시각 + 72h" 로 치환한다.
+# 수동 실행 전용. Actions 탭에서 slug 를 입력해 실행.
+# 카톡 게시와 랜딩 '최근 발행물' 교체는 이 워크플로가 하지 않는다(게시 후 별도).
+
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "발행할 큐 slug (예: dryadvisory02). 비우면 _queue 에 폴더가 하나뿐일 때 그것을 발행."
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Move queued issue to issue/ and stamp 72h (no rebuild)
+        env:
+          SLUG: ${{ inputs.slug }}
+        run: |
+          python3 - <<'PY'
+          import json, os, re, shutil, sys
+          from datetime import datetime, timezone, timedelta
+
+          KST = timezone(timedelta(hours=9))
+          WINDOW_HOURS = 72
+          now = datetime.now(KST)
+
+          slug = os.environ.get("SLUG", "").strip()
+          qroot = "_queue"
+          if not slug:
+              cand = [d for d in os.listdir(qroot) if os.path.isdir(os.path.join(qroot, d))]
+              if len(cand) == 1:
+                  slug = cand[0]
+              else:
+                  print("::error::slug를 지정하세요. 큐 폴더:", cand); sys.exit(1)
+
+          src = os.path.join(qroot, slug)
+          dst = os.path.join("issue", slug)
+          if not os.path.isdir(src):
+              print(f"::error::_queue/{slug} 없음"); sys.exit(1)
+          if os.path.isdir(dst) and os.listdir(dst):
+              print(f"::error::issue/{slug} 이미 있음 — 중복 발행 방지"); sys.exit(1)
+
+          meta_path = os.path.join(src, "meta.json")
+          if not os.path.isfile(meta_path):
+              print(f"::error::_queue/{slug}/meta.json 없음"); sys.exit(1)
+          meta = json.load(open(meta_path, encoding="utf-8"))
+
+          # 발행 시각 = 지금, 만료 = 지금 + 72h 그날 자정 직전 (build.py 와 동일 규칙)
+          published = now
+          expires = (published + timedelta(hours=WINDOW_HOURS)).replace(
+              hour=23, minute=59, second=59, microsecond=0)
+          exp_iso = expires.isoformat()
+          notice = f"이 지면은 {expires.month}월 {expires.day}일 자정에 아카이브로 이관됩니다"
+
+          # issue/{slug}/ 로 복사 — meta.json 은 제외, 나머지(index.html·자켓) 전부
+          os.makedirs(dst, exist_ok=True)
+          for f in os.listdir(src):
+              if f == "meta.json":
+                  continue
+              shutil.copy2(os.path.join(src, f), os.path.join(dst, f))
+
+          # index.html 의 날짜 2곳만 치환 (재빌드 없음 → 프리뷰 픽셀 유지)
+          idx = os.path.join(dst, "index.html")
+          html = open(idx, encoding="utf-8").read()
+          html, n1 = re.subn(r'const EXPIRES = "[^"]*";', f'const EXPIRES = "{exp_iso}";', html)
+          html, n2 = re.subn(r'이 지면은 \d+월 \d+일 자정에 아카이브로 이관됩니다', notice, html)
+          open(idx, "w", encoding="utf-8").write(html)
+          print(f"EXPIRES 치환 {n1}건 / 예고문구 치환 {n2}건")
+          if n1 != 1 or n2 != 1:
+              print("::error::날짜 치환 실패 (건수 비정상) — 발행 중단"); sys.exit(1)
+
+          # _data/issue.json 에 한 줄 추가
+          items = json.load(open("_data/issue.json", encoding="utf-8"))
+          if any(e.get("slug") == slug for e in items):
+              print(f"::error::issue.json 에 {slug} 이미 있음"); sys.exit(1)
+          entry = {
+              "slug": slug,
+              "kind": meta.get("kind", "music"),
+              "series": meta["series"],
+              "title": meta["title"],
+              "romaji": meta.get("romaji", ""),
+              "artist": meta["artist"],
+              "path": f"issue/{slug}/",
+              "cover": f"issue/{slug}/{slug}.jpg",
+              "published": published.date().isoformat(),
+              "expires": exp_iso,
+              "layout": meta.get("layout", ""),
+              "bg": meta.get("bg", ""),
+          }
+          items.append(entry)
+          items.sort(key=lambda e: e.get("published", ""))
+          json.dump(items, open("_data/issue.json", "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+          open("_data/issue.json", "a", encoding="utf-8").write("\n")
+          print("issue.json 갱신:", slug, published.date().isoformat(), "→ 만료", exp_iso)
+          open("/tmp/pub.txt", "w").write(f"{slug} {published.date().isoformat()}")
+          PY
+
+      - name: Commit
+        run: |
+          if [ -n "$(git status --porcelain issue _data/issue.json)" ]; then
+            git config user.name  "zebra-bot"
+            git config user.email "bot@zebrabeta.kr"
+            git add issue _data/issue.json
+            git commit -m "publish: $(cat /tmp/pub.txt)"
+            git push
+          else
+            echo "no changes"
+          fi
