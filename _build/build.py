@@ -102,7 +102,7 @@ def build_upper(cfg, layout):
     romaji = cfg.get("romaji", "").strip()
     # stamp 로 series 를 letterpress 인장 처리 (Vol 본편). 여름밤 등 번외는 일반 텍스트.
     # stamp 필드가 없으면 series 에 "지브라 베타 Vol" 이 있는지로 자동 판정.
-    # stamp:false 를 명시한면 Vol 이라도 강제로 일반 텍스트.
+    # stamp:false 를 명시하면 Vol 이라도 강제로 일반 텍스트.
     is_stamp = cfg.get("stamp")
     if is_stamp is None:
         is_stamp = "지브라 베타 Vol" in cfg.get("series", "")
