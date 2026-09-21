@@ -48,7 +48,7 @@
   .card{
     display:flex; gap:22px; padding:30px 4px;
     border-bottom:1px solid var(--line); align-items:flex-start;
-    text-align:left; cursor:pointer;
+    text-align:left; cursor:pointer; text-decoration:none; color:inherit;
   }
   .card:first-child{ border-top:1px solid var(--line); }
   .card .thumb{
@@ -231,15 +231,16 @@
     function makeCard(item){
       var isQuote=(item.kind==='quote'||item.kind==='문장');
       var hasImg=!!item.cover;
-      var card=document.createElement('div');
+      var card=document.createElement('a');
       card.className='card';
+      if(item.slug){ card.setAttribute('href','/taste/'+item.slug+'/'); }
       var thumb=hasImg?'<div class="thumb" style="background-image:url(\''+esc(item.cover)+'\');"></div>':'';
       var titleClass=isQuote?'ttl q':'ttl';
       var prev=item.preview?'<span class="prev prev-w">'+esc(item.preview)+'</span>':'';
       var prevM=item.preview_m?'<span class="prev prev-m">'+esc(item.preview_m)+'</span>':'';
       var by=item.by?'<div class="by">'+esc(item.by)+'</div>':'';
       card.innerHTML=thumb+'<div class="body"><div class="tp">'+'<div class="'+titleClass+'">'+esc(item.title)+'</div>'+prev+prevM+'</div>'+by+'</div>';
-      card.addEventListener('click', function(){ openReader(item); });
+      card.addEventListener('click', function(e){ e.preventDefault(); openReader(item); });
       return card;
     }
 
