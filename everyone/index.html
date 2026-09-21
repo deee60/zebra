@@ -93,6 +93,9 @@
   .feature .note-label{ font-family:var(--serif); font-weight:300; font-size:11px; letter-spacing:0.02em; text-align:center; color:var(--faint); margin-top:48px; }
   .feature .quote{ font-family:var(--serif); font-weight:300; font-size:13.5px; line-height:2.3; color:var(--ink-soft); text-align:center; margin-top:15px; }
   .feature .by{ font-family:var(--latin); font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; text-align:center; color:var(--gold); margin-top:46px; }
+  .feature .feat-link{ text-align:center; margin-top:24px; }
+  .feature .feat-link a{ font-family:var(--latin); font-size:11px; letter-spacing:0.14em; color:var(--faint); text-decoration:none; transition:color .3s ease; }
+  .feature .feat-link a:hover{ color:var(--gold); }
 
   /* ── 지난 곡 (가로 스크롤 썸네일) ── */
   .strip{
@@ -220,7 +223,8 @@
         '<div class="song">'+esc(item.title)+'</div>'+
         '<div class="artist">'+esc(item.artist)+'</div>'+
         (item.note ? '<div class="note-label">한줄 소개</div><div class="quote">&ldquo;'+nl2br(item.note)+'&rdquo;</div>' : '')+
-        (item.by ? '<div class="by">Curated by '+esc(item.by)+'</div>' : '');
+        (item.by ? '<div class="by">Curated by '+esc(item.by)+'</div>' : '')+
+        (item.slug ? '<div class="feat-link"><a href="/everyone/'+esc(item.slug)+'/">곡 페이지 ↗</a></div>' : '');
       wrap.appendChild(card);
       bindPlayer(card.querySelector('.player'), item.title);
     }
@@ -247,12 +251,13 @@
         var item=DATA[idx];
         var a=document.createElement('a');
         a.className='tile';
-        a.href='javascript:void(0)';
+        a.href = item.slug ? '/everyone/'+item.slug+'/' : 'javascript:void(0)';
         a.innerHTML=
           '<div class="frame" style="background-image:url(\''+esc(item.cover)+'\');"></div>'+
           '<div class="t-song">'+esc(item.title)+'</div>'+
           (item.by ? '<div class="t-by">'+esc(item.by)+'</div>' : '');
-        a.addEventListener('click', function(){
+        a.addEventListener('click', function(e){
+          e.preventDefault();
           current=idx; renderFeature(DATA[current]); renderStrip();
           window.scrollTo({ top:0, behavior:'smooth' });
         });
