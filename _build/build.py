@@ -102,7 +102,7 @@ def build_upper(cfg, layout):
     romaji = cfg.get("romaji", "").strip()
     # stamp 로 series 를 letterpress 인장 처리 (Vol 본편). 여름밤 등 번외는 일반 텍스트.
     # stamp 필드가 없으면 series 에 "지브라 베타 Vol" 이 있는지로 자동 판정.
-    # stamp:false 를 명시하면 Vol 이라도 강제로 일반 텍스트.
+    # stamp:false 를 명시한면 Vol 이라도 강제로 일반 텍스트.
     is_stamp = cfg.get("stamp")
     if is_stamp is None:
         is_stamp = "지브라 베타 Vol" in cfg.get("series", "")
@@ -350,6 +350,21 @@ def main(cfg_path):
     out = ROOT / "out" / "issue" / cfg["slug"] / "index.html"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(html, encoding="utf-8")
+
+    # 큐 발행 워크플로(publish-queue.yml)가 issue.json 한 줄을 만들 때 읽는 메타.
+    # 날짜(published/expires)는 발행 시각에 워크플로가 채우므로 여기서 넣지 않는다.
+    meta = {
+        "slug": cfg["slug"],
+        "kind": cfg.get("kind", "music"),
+        "series": cfg["series"],
+        "title": cfg["song"],
+        "romaji": cfg.get("romaji", ""),
+        "artist": cfg["artist"],
+        "layout": layout,
+        "bg": bg,
+    }
+    (out.parent / "meta.json").write_text(
+        json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
 
     hist = [h for h in hist if h.get("slug") != cfg["slug"]]
     hist.append({
