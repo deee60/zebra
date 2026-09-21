@@ -101,7 +101,7 @@ h1.ttl{{font-family:var(--serif);font-weight:400;font-size:21px;text-align:cente
 """
 
 FOOT = """
-<div class="foot"><a href="{corner}">← {corner_name}</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://zebrabeta.kr">HOME</a></div>
+<div class="foot"><a href="https://zebrabeta.kr">HOME</a></div>
 <div class="colophon">zebra beta · movement 2.</div>
 </main>
 </body>
