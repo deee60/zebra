@@ -2,7 +2,12 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-B0TNF05GFQ"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B0TNF05GFQ">
+function toggleWeek(el) {
+  var wk = el.closest('.week');
+  wk.classList.toggle('open');
+}
+</script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -154,6 +159,30 @@
     transition: color 0.3s ease;
   }
   .home-link-wrap a:hover { color: var(--gold); }
+
+  /* ── 주차 폴딩 (B-SIDE weekly) ── */
+  .week + .week { margin-top: 4px; }
+  .week-header {
+    display: flex; align-items: baseline; gap: 10px;
+    padding: 18px 0; cursor: pointer; border-bottom: 1px solid var(--divider);
+    -webkit-tap-highlight-color: transparent; transition: color 0.2s;
+  }
+  .week-header:hover { color: var(--gold); }
+  .week-date {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 12px; letter-spacing: 0.08em; color: var(--faint);
+  }
+  .week-arrow {
+    font-family: 'Cormorant Garamond', serif; font-size: 14px; color: var(--faint);
+    margin-left: auto; flex-shrink: 0;
+    transition: transform 0.9s cubic-bezier(0.25,0.1,0.25,1), color 0.6s ease;
+  }
+  .week.open > .week-header .week-arrow { transform: rotate(90deg); color: var(--gold); }
+  .week-items {
+    overflow: hidden; max-height: 0;
+    transition: max-height 1.1s cubic-bezier(0.25,0.1,0.25,1);
+  }
+  .week.open > .week-items { max-height: 6000px; }
 </style>
 </head>
 <body>
@@ -162,7 +191,8 @@
     <h1 style="font-family:'Cormorant SC',serif; font-weight:500; font-size:16px; letter-spacing:2.5px; color:rgb(139,135,124);">B-SIDE</h1>
     <p class="updated">updated Sep 17, 2026</p>
   </header>
-  <ul class="trend-list">
+    <section class="week open">
+    <ul class="trend-list week-items">
     <li class="trend-item">
       <div class="trend-headline" onclick="toggle(this)">
         <span class="trend-category">음악</span>
@@ -213,7 +243,8 @@
         <p class="trend-summary">런던 재즈 5인조 Ezra Collective가 9월 11일 4집 「Here Because of Hope」를 파티잔 레코드에서 발매했다. 2023년 재즈 최초로 머큐리상을 수상한 밴드로, 지난해 브릿 어워드 그룹상 수상과 웸블리 아레나 헤드라이너까지 오르며 영국 재즈 신을 대표하는 그룹으로 자리 잡았다. 이번 앨범은 서아프리카에서 카리브해, 그리고 런던 거리로 이어지는 흑인 음악의 이동을 세 개의 악장으로 담았다. 「Only Love」에는 감비아계 래퍼 파 살리유가, 각 챕터 도입부에는 「블랙 팬서」의 레티티아 라이트가 스포큰워드로 참여했다. 프랑스 남부 미라발 스튜디오에서 일주일 만에 녹음된 앨범이다. 엘튼 존이 "영국 최고의 라이브 밴드"라 부른 이유가 이 앨범에 있다. <span class="trend-source">(Pitchfork)</span></p>
       </div>
     </li>
-  </ul>
+    </ul>
+  </section>
   <footer class="footer">
     <p class="colophon">zebra beta &middot; movement 2.</p>
     <div class="home-link-wrap"><a href="https://zebrabeta.kr">HOME</a></div>
