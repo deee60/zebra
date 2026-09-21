@@ -1,0 +1,44 @@
+name: build_taste_everyone
+
+# taste.json 또는 everyone.json이 바뀌면
+# 취발·모큐 개별 페이지와 사이트맵을 자동 생성해서 커밋한다.
+# published:false 항목은 스크립트가 알아서 건너뛰므로 검색에 절대 노출되지 않는다.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "taste/taste.json"
+      - "everyone/everyone.json"
+      - "_build_taste_everyone/build_taste_everyone.py"
+  workflow_dispatch:   # 필요할 때 수동으로도 돌릴 수 있게
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build_taste_everyone
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # 봇이 자기 커밋 감지해서 무한루프 도는 것 방지
+    if: github.actor != 'zebra-bot' && !contains(github.event.head_commit.message, '[skip build]')
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run page generator
+        run: python3 _build_taste_everyone/build_taste_everyone.py
+
+      - name: Commit generated pages
+        run: |
+          git config user.name  "zebra-bot"
+          git config user.email "bot@zebrabeta.kr"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "no changes"
+          else
+            git commit -m "auto: taste/everyone pages + sitemap [skip build]"
+            git push
+          fi
