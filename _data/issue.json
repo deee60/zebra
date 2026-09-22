@@ -166,5 +166,19 @@
     "expires": "2026-09-21T23:59:59+09:00",
     "layout": "lay-b",
     "bg": "#D7CEC1"
+  },
+  {
+    "slug": "dryadvisory02",
+    "kind": "music",
+    "series": "건조주의보 02.",
+    "title": "한시 오분 (1:05)",
+    "romaji": "",
+    "artist": "검정치마",
+    "path": "issue/dryadvisory02/",
+    "cover": "issue/dryadvisory02/dryadvisory02.jpg",
+    "published": "2026-09-22",
+    "expires": "2026-09-25T23:59:59+09:00",
+    "layout": "lay-c",
+    "bg": "#D3D0C5"
   }
 ]
