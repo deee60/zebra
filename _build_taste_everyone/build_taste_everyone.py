@@ -266,6 +266,23 @@ def build_everyone(items):
         print(f"  everyone/{slug}/  ← {title} — {artist}")
     return urls
 
+def build_bside_urls():
+    """bside/bside.json 에서 slug 가 있는 공개 항목을 사이트맵 주소로."""
+    f = ROOT / "bside" / "bside.json"
+    if not f.exists():
+        return []
+    data = json.loads(f.read_text(encoding="utf-8"))
+    urls, seen = [], set()
+    for w in data.get("weeks", []):
+        for it in w.get("items", []):
+            slug = str(it.get("slug", "")).strip()
+            if not slug or it.get("published") is False or slug in seen:
+                continue
+            seen.add(slug)
+            urls.append((f"{SITE}/bside/{slug}/", "monthly", "0.6"))
+    print(f"  bside  ← {len(urls)} URLs")
+    return urls
+
 def build_sitemap(item_urls):
     fixed = [
         (f"{SITE}/", "weekly", "1.0"),
@@ -291,5 +308,5 @@ if __name__ == "__main__":
     print("생성:")
     u1 = build_taste(taste)
     u2 = build_everyone(every)
-    build_sitemap(u1 + u2)
+    build_sitemap(u1 + u2 + build_bside_urls())
     print("완료.")
