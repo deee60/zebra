@@ -156,7 +156,9 @@
   .home-link-wrap a:hover { color: var(--gold); }
 
   /* ── 주차 폴딩 (B-SIDE weekly) ── */
-  .week + .week { margin-top: 20px; }
+  .weeks { display: flex; flex-direction: column; }
+  .week.open { order: -1; margin-bottom: 36px; }
+  .week.open > .week-header { display: none; }
   .week:not(.open) > .week-header { border-bottom-color: transparent; opacity: 0.4; }
   .week > .week-header { transition: opacity 0.5s ease, color 0.2s; }
   .week.open > .week-header .week-date { color: var(--ink); }
@@ -187,8 +189,10 @@
 <div class="page">
   <header class="header">
     <h1 style="font-family:'Cormorant SC',serif; font-weight:500; font-size:16px; letter-spacing:2.5px; color:rgb(139,135,124);">B-SIDE</h1>
+    <p class="updated" id="current-week">updated Sep 23, 2026</p>
   </header>
-    <section class="week open">
+  <div class="weeks">
+  <section class="week open" data-label="Sep 23, 2026">
     <div class="week-header" onclick="toggleWeek(this)">
       <span class="week-date">updated Sep 23, 2026</span>
       <span class="week-arrow">›</span>
@@ -246,7 +250,7 @@
     </li>
     </ul>
   </section>
-  <section class="week">
+  <section class="week" data-label="Sep 17, 2026">
     <div class="week-header" onclick="toggleWeek(this)">
       <span class="week-date">updated Sep 17, 2026</span>
       <span class="week-arrow">›</span>
@@ -304,6 +308,7 @@
     </li>
     </ul>
   </section>
+  </div>
   <footer class="footer">
     <p class="colophon">zebra beta &middot; movement 2.</p>
     <div class="home-link-wrap"><a href="https://zebrabeta.kr">HOME</a></div>
@@ -316,6 +321,9 @@ function toggleWeek(el) {
   document.querySelectorAll('.week.open').forEach(function(w) { w.classList.remove('open'); });
   document.querySelectorAll('.trend-item.open').forEach(function(i) { i.classList.remove('open'); });
   if (!wasOpen) wk.classList.add('open');
+  var cw = document.getElementById('current-week');
+  if (cw) cw.textContent = 'updated ' + wk.getAttribute('data-label');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 function toggle(el) {
   var item = el.closest('.trend-item');
