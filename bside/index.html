@@ -2,12 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-B0TNF05GFQ">
-function toggleWeek(el) {
-  var wk = el.closest('.week');
-  wk.classList.toggle('open');
-}
-</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B0TNF05GFQ"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -309,6 +304,10 @@ function toggleWeek(el) {
   </footer>
 </div>
 <script>
+function toggleWeek(el) {
+  var wk = el.closest('.week');
+  wk.classList.toggle('open');
+}
 function toggle(el) {
   var item = el.closest('.trend-item');
   var wasOpen = item.classList.contains('open');
