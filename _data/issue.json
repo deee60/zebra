@@ -84,6 +84,20 @@
     "bg": "#CDD9CE"
   },
   {
+    "slug": "summernight07",
+    "kind": "music",
+    "series": "여름밤 07",
+    "title": "Song for Otona",
+    "romaji": "",
+    "artist": "Juri Mita",
+    "path": "issue/summernight07/",
+    "cover": "issue/summernight07/summernight07.jpg",
+    "published": "2026-08-17",
+    "expires": "2026-08-20T23:59:59+09:00",
+    "layout": "lay-c",
+    "bg": "#D3D8D9"
+  },
+  {
     "slug": "vol36",
     "kind": "music",
     "series": "지브라 베타 Vol.36",
@@ -124,6 +138,48 @@
     "expires": "2026-08-30T23:59:59+09:00",
     "layout": "lay-b",
     "bg": "#CDDFDD"
+  },
+  {
+    "slug": "rainwalk05",
+    "kind": "music",
+    "series": "우중산책 05",
+    "title": "Howl's Moving Castle",
+    "romaji": "",
+    "artist": "Giovanni Mirabassi",
+    "path": "issue/rainwalk05/",
+    "cover": "issue/rainwalk05/rainwalk05.jpg",
+    "published": "2026-09-01",
+    "expires": "2026-09-04T23:59:59+09:00",
+    "layout": "lay-photo",
+    "bg": "#E4E1DA"
+  },
+  {
+    "slug": "vol38",
+    "kind": "music",
+    "series": "지브라 베타 Vol.38",
+    "title": "Hold the Line",
+    "romaji": "",
+    "artist": "Toto",
+    "path": "issue/vol38/",
+    "cover": "issue/vol38/vol38.jpg",
+    "published": "2026-09-04",
+    "expires": "2026-09-07T23:59:59+09:00",
+    "layout": "lay-c",
+    "bg": "#D0DADC"
+  },
+  {
+    "slug": "gayo01",
+    "kind": "music",
+    "series": "대한민국 대중가요 클래식 100",
+    "title": "가을편지",
+    "romaji": "",
+    "artist": "김민기",
+    "path": "issue/gayo01/",
+    "cover": "issue/gayo01/gayo01.jpg",
+    "published": "2026-09-08",
+    "expires": "2026-09-10T23:59:59+09:00",
+    "layout": "lay-canon",
+    "bg": "#E4DCC9"
   },
   {
     "slug": "vol39",
