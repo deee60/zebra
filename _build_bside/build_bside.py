@@ -14,9 +14,14 @@ OUT  = SITE / "bside" / "index.html"
 def esc(s):
     return (str(s).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
 
+def has_page(it):
+    return bool(str(it.get("slug","")).strip()) and it.get("published") is not False
+
 def render_item(it):
     src = str(it.get("source", "")).strip()
     src_html = f' <span class="trend-source">({esc(src)})</span>' if src else ""
+    more = (f'        <a class="trend-more" href="/bside/{esc(it["slug"])}/">자세히 \u2192</a>\n'
+            if has_page(it) else '')
     return (
         '    <li class="trend-item">\n'
         '      <div class="trend-headline" onclick="toggle(this)">\n'
@@ -26,6 +31,7 @@ def render_item(it):
         '      </div>\n'
         '      <div class="trend-body">\n'
         f'        <p class="trend-summary">{esc(it.get("summary",""))}{src_html}</p>\n'
+        f'{more}'
         '      </div>\n'
         '    </li>'
     )
@@ -45,7 +51,119 @@ def render_week(w, newest):
         '  </section>'
     )
 
-TEMPLATE = '<!DOCTYPE html>\n<html lang="ko">\n<head>\n<meta charset="UTF-8">\n<script async src="https://www.googletagmanager.com/gtag/js?id=G-B0TNF05GFQ"></script>\n<script>\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag(\'js\', new Date());\n  gtag(\'config\', \'G-B0TNF05GFQ\');\n</script>\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>B-SIDE — zebra beta</title>\n<meta property="og:title" content="B-SIDE · zebra beta">\n<meta property="og:type" content="website">\n<meta property="og:url" content="https://zebrabeta.kr/bside/">\n<meta property="og:image" content="https://zebrabeta.kr/zebra-og.png">\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n<meta name="twitter:card" content="summary_large_image">\n<link rel="preconnect" href="https://fonts.googleapis.com">\n<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Cormorant+SC:wght@400;500&family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet">\n<style>\n  :root {\n    --cream: #EDE9DF;\n    --ink: #2B2A26;\n    --gray: #8b877c;\n    --faint: #b8b3a8;\n    --gold: #b89a5a;\n    --divider: #e1ddd3;\n  }\n  * { margin: 0; padding: 0; box-sizing: border-box; }\n  body {\n    background: var(--cream);\n    color: var(--ink);\n    font-family: \'Noto Serif KR\', serif;\n    -webkit-font-smoothing: antialiased;\n  }\n  .page {\n    max-width: 520px;\n    margin: 0 auto;\n    padding: 48px 24px 120px;\n  }\n  .header {\n    text-align: center;\n    margin-bottom: 72px;\n  }\n  .header h1 {\n    font-family: \'Cormorant Garamond\', serif;\n    font-weight: 400;\n    font-size: 18px;\n    letter-spacing: 1.68px;\n    color: rgb(139, 135, 124);\n    margin-bottom: 8px;\n  }\n  .header .updated {\n    font-family: \'Cormorant Garamond\', serif;\n    font-style: italic;\n    font-size: 11px;\n    color: rgb(169, 162, 151);\n  }\n  @media (max-width: 480px) {\n    .header { margin-bottom: 48px; }\n  }\n  .trend-list { list-style: none; }\n  .trend-item { border-bottom: 1px solid var(--divider); }\n  .trend-headline {\n    display: flex;\n    align-items: baseline;\n    gap: 10px;\n    padding: 18px 0;\n    cursor: pointer;\n    transition: color 0.2s;\n    -webkit-tap-highlight-color: transparent;\n  }\n  .trend-headline:hover { color: var(--gold); }\n  .trend-category {\n    font-family: \'Cormorant Garamond\', serif;\n    font-size: 11px;\n    letter-spacing: 0.1em;\n    text-transform: uppercase;\n    color: var(--faint);\n    flex-shrink: 0;\n    line-height: 1;\n    min-width: 32px;\n    padding-top: 3px;\n  }\n  .trend-title {\n    font-family: \'Noto Serif KR\', serif;\n    font-weight: 400;\n    font-size: 15px;\n    line-height: 1.65;\n    flex: 1;\n  }\n  .trend-arrow {\n    font-family: \'Cormorant Garamond\', serif;\n    font-size: 14px;\n    color: var(--faint);\n    flex-shrink: 0;\n    transition: transform 0.9s cubic-bezier(0.25, 0.1, 0.25, 1), color 0.6s ease;\n  }\n  .trend-item.open .trend-arrow {\n    transform: rotate(90deg);\n    color: var(--gold);\n  }\n  .trend-body {\n    max-height: 0;\n    overflow: hidden;\n    opacity: 0;\n    transition: max-height 1s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 0.8s ease 0.15s, padding 1s cubic-bezier(0.25, 0.1, 0.25, 1);\n  }\n  .trend-item.open .trend-body {\n    max-height: 600px;\n    opacity: 1;\n    padding-bottom: 20px;\n  }\n  .trend-summary {\n    font-family: \'Noto Serif KR\', serif;\n    font-weight: 300;\n    font-size: 13.5px;\n    line-height: 2;\n    color: var(--ink);\n    padding: 0 0 0 28px;\n    word-break: keep-all;\n  }\n  .trend-source {\n    font-family: \'Cormorant Garamond\', serif;\n    font-size: 11px;\n    letter-spacing: 0.08em;\n    color: var(--faint);\n    white-space: nowrap;\n  }\n  .footer {\n    margin-top: 150px;\n    text-align: center;\n  }\n  .colophon {\n    font-family: \'Cormorant Garamond\', serif;\n    font-style: italic;\n    font-weight: 300;\n    font-size: 12px;\n    letter-spacing: 0.18em;\n    color: rgb(169, 162, 151);\n  }\n  .home-link-wrap {\n    margin-top: 16px;\n  }\n  .home-link-wrap a {\n    font-family: \'Cormorant Garamond\', serif;\n    font-size: 12px;\n    letter-spacing: 0.16em;\n    color: rgb(169, 162, 151);\n    text-decoration: none;\n    transition: color 0.3s ease;\n  }\n  .home-link-wrap a:hover { color: var(--gold); }\n\n  /* ── 주차 폴딩 (B-SIDE weekly) ── */\n  .weeks { display: flex; flex-direction: column; }\n  .week.open { order: -1; margin-bottom: 36px; }\n  .week.open > .week-header { display: none; }\n  .week:not(.open) > .week-header { border-bottom-color: transparent; opacity: 0.4; }\n  .week > .week-header { transition: opacity 0.5s ease, color 0.2s; }\n  .week.open > .week-header .week-date { color: var(--ink); }\n  .week-header {\n    display: flex; align-items: baseline; gap: 10px;\n    padding: 22px 0; cursor: pointer; border-bottom: 1px solid var(--divider);\n    -webkit-tap-highlight-color: transparent; transition: color 0.2s;\n  }\n  .week-header:hover { color: var(--gold); }\n  .week-date {\n    font-family: \'Cormorant Garamond\', serif; font-style: italic;\n    font-size: 13px; letter-spacing: 0.08em; color: var(--gray);\n  }\n  .week-arrow {\n    font-family: \'Cormorant Garamond\', serif; font-size: 14px; color: var(--faint);\n    margin-left: auto; flex-shrink: 0;\n    transition: transform 0.9s cubic-bezier(0.25,0.1,0.25,1), color 0.6s ease;\n  }\n  .week.open > .week-header .week-arrow { transform: rotate(90deg); color: var(--gold); }\n  .week-items {\n    overflow: hidden; max-height: 0;\n    transition: max-height 1.1s cubic-bezier(0.25,0.1,0.25,1);\n  }\n  .week.open > .week-items { max-height: 6000px; }\n</style>\n</head>\n<body>\n<div class="page">\n  <header class="header">\n    <h1 style="font-family:\'Cormorant SC\',serif; font-weight:500; font-size:16px; letter-spacing:2.5px; color:rgb(139,135,124);">B-SIDE</h1>\n    <p class="updated" id="current-week">updated {{UPDATED}}</p>\n  </header>\n  <div class="weeks">\n{{WEEKS}}\n  </div>\n  <footer class="footer">\n    <p class="colophon">zebra beta &middot; movement 2.</p>\n    <div class="home-link-wrap"><a href="https://zebrabeta.kr">HOME</a></div>\n  </footer>\n</div>\n<script>\nfunction toggleWeek(el) {\n  var wk = el.closest(\'.week\');\n  var wasOpen = wk.classList.contains(\'open\');\n  document.querySelectorAll(\'.week.open\').forEach(function(w) { w.classList.remove(\'open\'); });\n  document.querySelectorAll(\'.trend-item.open\').forEach(function(i) { i.classList.remove(\'open\'); });\n  if (!wasOpen) wk.classList.add(\'open\');\n  var cw = document.getElementById(\'current-week\');\n  if (cw) cw.textContent = \'updated \' + wk.getAttribute(\'data-label\');\n  window.scrollTo({ top: 0, behavior: \'smooth\' });\n}\nfunction toggle(el) {\n  var item = el.closest(\'.trend-item\');\n  var wasOpen = item.classList.contains(\'open\');\n  document.querySelectorAll(\'.trend-item.open\').forEach(function(i) {\n    i.classList.remove(\'open\');\n  });\n  if (!wasOpen) item.classList.add(\'open\');\n}\n</script>\n</body>\n</html>\n'
+
+SITE_URL = "https://zebrabeta.kr"
+
+def attr(s):
+    return esc(s).replace('"', "&quot;")
+
+DETAIL = """<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B0TNF05GFQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){{dataLayer.push(arguments);}}
+  gtag('js', new Date());
+  gtag('config', 'G-B0TNF05GFQ');
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{title_tag}</title>
+<meta name="description" content="{desc}">
+<link rel="canonical" href="{canon}">
+<meta property="og:title" content="{og_title}">
+<meta property="og:description" content="{desc}">
+<meta property="og:type" content="article">
+<meta property="og:url" content="{canon}">
+<meta property="og:image" content="https://zebrabeta.kr/zebra-og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Cormorant+SC:wght@400;500&family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{jsonld}
+</script>
+<style>
+  :root {{ --cream:#EDE9DF; --ink:#2B2A26; --gray:#8b877c; --faint:#b8b3a8; --gold:#b89a5a; --divider:#e1ddd3; }}
+  * {{ margin:0; padding:0; box-sizing:border-box; }}
+  body {{ background:var(--cream); color:var(--ink); font-family:'Noto Serif KR',serif; -webkit-font-smoothing:antialiased; }}
+  .page {{ max-width:520px; margin:0 auto; padding:48px 24px 120px; }}
+  .crumb {{ text-align:center; margin-bottom:56px; }}
+  .crumb a {{ font-family:'Cormorant SC',serif; font-weight:500; font-size:14px; letter-spacing:2.5px; color:var(--gray); text-decoration:none; transition:color .3s ease; }}
+  .crumb a:hover {{ color:var(--gold); }}
+  .meta {{ font-family:'Cormorant Garamond',serif; font-size:11px; letter-spacing:.1em; color:var(--faint); margin-bottom:14px; }}
+  h1 {{ font-weight:400; font-size:19px; line-height:1.7; word-break:keep-all; margin-bottom:32px; padding-bottom:28px; border-bottom:1px solid var(--divider); }}
+  .body p {{ font-weight:300; font-size:14px; line-height:2.1; word-break:keep-all; margin-bottom:1.4em; }}
+  .source {{ font-family:'Cormorant Garamond',serif; font-size:12px; letter-spacing:.08em; color:var(--faint); margin-top:8px; }}
+  .footer {{ margin-top:120px; text-align:center; }}
+  .colophon {{ font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; font-size:12px; letter-spacing:.18em; color:rgb(169,162,151); }}
+  .home {{ margin-top:16px; }}
+  .home a {{ font-family:'Cormorant Garamond',serif; font-size:12px; letter-spacing:.16em; color:rgb(169,162,151); text-decoration:none; transition:color .3s ease; }}
+  .home a:hover {{ color:var(--gold); }}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="crumb"><a href="/bside/">&larr; B-SIDE</a></div>
+  <div class="meta">{category} &middot; {label}</div>
+  <h1>{title}</h1>
+  <div class="body">{body}</div>
+  {source_html}
+  <footer class="footer">
+    <p class="colophon">zebra beta &middot; movement 2.</p>
+    <div class="home"><a href="https://zebrabeta.kr">HOME</a></div>
+  </footer>
+</div>
+</body>
+</html>
+"""
+
+def paragraphs(text):
+    parts = [p.strip() for p in re.split(r"\n\s*\n", str(text or "").strip()) if p.strip()]
+    return "".join("<p>" + esc(p).replace("\n", "<br>") + "</p>" for p in parts)
+
+def build_details(weeks):
+    made = []
+    for w in weeks:
+        for it in w.get("items", []):
+            if not has_page(it):
+                continue
+            slug = str(it["slug"]).strip()
+            if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", slug):
+                print(f"  건너뜀(slug 형식 오류): {slug}")
+                continue
+            title = str(it.get("title", ""))
+            summary = str(it.get("summary", ""))
+            desc = re.sub(r"\s+", " ", summary).strip()
+            desc = desc if len(desc) <= 150 else desc[:149] + "\u2026"
+            canon = f"{SITE_URL}/bside/{slug}/"
+            src = str(it.get("source", "")).strip()
+            jsonld = {
+                "@context": "https://schema.org", "@type": "Article",
+                "headline": title, "description": desc,
+                "datePublished": w.get("date", ""), "inLanguage": "ko",
+                "mainEntityOfPage": canon, "image": f"{SITE_URL}/zebra-og.png",
+                "publisher": {"@type": "Organization", "name": "지브라 베타",
+                              "logo": {"@type": "ImageObject", "url": f"{SITE_URL}/zebra-og.png"}},
+            }
+            doc = DETAIL.format(
+                title_tag=attr(f"{title} — B-SIDE | 지브라 베타"),
+                desc=attr(desc), canon=canon, og_title=attr(title),
+                jsonld=json.dumps(jsonld, ensure_ascii=False, indent=2).replace("</", "<\\/"),
+                category=esc(it.get("category", "")), label=esc(w.get("label", "")),
+                title=esc(title), body=paragraphs(summary),
+                source_html=(f'<p class="source">({esc(src)})</p>' if src else ""),
+            )
+            out = SITE / "bside" / slug / "index.html"
+            out.parent.mkdir(parents=True, exist_ok=True)
+            out.write_text(doc, encoding="utf-8")
+            made.append(slug)
+    return made
+
+TEMPLATE = '<!DOCTYPE html>\n<html lang="ko">\n<head>\n<meta charset="UTF-8">\n<script async src="https://www.googletagmanager.com/gtag/js?id=G-B0TNF05GFQ"></script>\n<script>\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag(\'js\', new Date());\n  gtag(\'config\', \'G-B0TNF05GFQ\');\n</script>\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>B-SIDE — zebra beta</title>\n<meta property="og:title" content="B-SIDE · zebra beta">\n<meta property="og:type" content="website">\n<meta property="og:url" content="https://zebrabeta.kr/bside/">\n<meta property="og:image" content="https://zebrabeta.kr/zebra-og.png">\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n<meta name="twitter:card" content="summary_large_image">\n<link rel="preconnect" href="https://fonts.googleapis.com">\n<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Cormorant+SC:wght@400;500&family=Noto+Serif+KR:wght@300;400;500&display=swap" rel="stylesheet">\n<style>\n  :root {\n    --cream: #EDE9DF;\n    --ink: #2B2A26;\n    --gray: #8b877c;\n    --faint: #b8b3a8;\n    --gold: #b89a5a;\n    --divider: #e1ddd3;\n  }\n  * { margin: 0; padding: 0; box-sizing: border-box; }\n  body {\n    background: var(--cream);\n    color: var(--ink);\n    font-family: \'Noto Serif KR\', serif;\n    -webkit-font-smoothing: antialiased;\n  }\n  .page {\n    max-width: 520px;\n    margin: 0 auto;\n    padding: 48px 24px 120px;\n  }\n  .header {\n    text-align: center;\n    margin-bottom: 72px;\n  }\n  .header h1 {\n    font-family: \'Cormorant Garamond\', serif;\n    font-weight: 400;\n    font-size: 18px;\n    letter-spacing: 1.68px;\n    color: rgb(139, 135, 124);\n    margin-bottom: 8px;\n  }\n  .header .updated {\n    font-family: \'Cormorant Garamond\', serif;\n    font-style: italic;\n    font-size: 11px;\n    color: rgb(169, 162, 151);\n  }\n  @media (max-width: 480px) {\n    .header { margin-bottom: 48px; }\n  }\n  .trend-list { list-style: none; }\n  .trend-item { border-bottom: 1px solid var(--divider); }\n  .trend-headline {\n    display: flex;\n    align-items: baseline;\n    gap: 10px;\n    padding: 18px 0;\n    cursor: pointer;\n    transition: color 0.2s;\n    -webkit-tap-highlight-color: transparent;\n  }\n  .trend-headline:hover { color: var(--gold); }\n  .trend-category {\n    font-family: \'Cormorant Garamond\', serif;\n    font-size: 11px;\n    letter-spacing: 0.1em;\n    text-transform: uppercase;\n    color: var(--faint);\n    flex-shrink: 0;\n    line-height: 1;\n    min-width: 32px;\n    padding-top: 3px;\n  }\n  .trend-title {\n    font-family: \'Noto Serif KR\', serif;\n    font-weight: 400;\n    font-size: 15px;\n    line-height: 1.65;\n    flex: 1;\n  }\n  .trend-arrow {\n    font-family: \'Cormorant Garamond\', serif;\n    font-size: 14px;\n    color: var(--faint);\n    flex-shrink: 0;\n    transition: transform 0.9s cubic-bezier(0.25, 0.1, 0.25, 1), color 0.6s ease;\n  }\n  .trend-item.open .trend-arrow {\n    transform: rotate(90deg);\n    color: var(--gold);\n  }\n  .trend-body {\n    max-height: 0;\n    overflow: hidden;\n    opacity: 0;\n    transition: max-height 1s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 0.8s ease 0.15s, padding 1s cubic-bezier(0.25, 0.1, 0.25, 1);\n  }\n  .trend-item.open .trend-body {\n    max-height: 1000px;\n    opacity: 1;\n    padding-bottom: 20px;\n  }\n  .trend-summary {\n    font-family: \'Noto Serif KR\', serif;\n    font-weight: 300;\n    font-size: 13.5px;\n    line-height: 2;\n    color: var(--ink);\n    padding: 0 0 0 28px;\n    word-break: keep-all;\n  }\n  .trend-more {\n    display: inline-block; margin: 10px 0 0 28px;\n    font-family: \'Cormorant Garamond\', serif; font-size: 12px; letter-spacing: 0.1em;\n    color: var(--gray); text-decoration: none; transition: color 0.3s ease;\n  }\n  .trend-more:hover { color: var(--gold); }\n  .trend-source {\n    font-family: \'Cormorant Garamond\', serif;\n    font-size: 11px;\n    letter-spacing: 0.08em;\n    color: var(--faint);\n    white-space: nowrap;\n  }\n  .footer {\n    margin-top: 150px;\n    text-align: center;\n  }\n  .colophon {\n    font-family: \'Cormorant Garamond\', serif;\n    font-style: italic;\n    font-weight: 300;\n    font-size: 12px;\n    letter-spacing: 0.18em;\n    color: rgb(169, 162, 151);\n  }\n  .home-link-wrap {\n    margin-top: 16px;\n  }\n  .home-link-wrap a {\n    font-family: \'Cormorant Garamond\', serif;\n    font-size: 12px;\n    letter-spacing: 0.16em;\n    color: rgb(169, 162, 151);\n    text-decoration: none;\n    transition: color 0.3s ease;\n  }\n  .home-link-wrap a:hover { color: var(--gold); }\n\n  /* ── 주차 폴딩 (B-SIDE weekly) ── */\n  .weeks { display: flex; flex-direction: column; }\n  .week.open { order: -1; margin-bottom: 36px; }\n  .week.open > .week-header { display: none; }\n  .week:not(.open) > .week-header { border-bottom-color: transparent; opacity: 0.4; }\n  .week > .week-header { transition: opacity 0.5s ease, color 0.2s; }\n  .week.open > .week-header .week-date { color: var(--ink); }\n  .week-header {\n    display: flex; align-items: baseline; gap: 10px;\n    padding: 22px 0; cursor: pointer; border-bottom: 1px solid var(--divider);\n    -webkit-tap-highlight-color: transparent; transition: color 0.2s;\n  }\n  .week-header:hover { color: var(--gold); }\n  .week-date {\n    font-family: \'Cormorant Garamond\', serif; font-style: italic;\n    font-size: 13px; letter-spacing: 0.08em; color: var(--gray);\n  }\n  .week-arrow {\n    font-family: \'Cormorant Garamond\', serif; font-size: 14px; color: var(--faint);\n    margin-left: auto; flex-shrink: 0;\n    transition: transform 0.9s cubic-bezier(0.25,0.1,0.25,1), color 0.6s ease;\n  }\n  .week.open > .week-header .week-arrow { transform: rotate(90deg); color: var(--gold); }\n  .week-items {\n    overflow: hidden; max-height: 0;\n    transition: max-height 1.1s cubic-bezier(0.25,0.1,0.25,1);\n  }\n  .week.open > .week-items { max-height: 6000px; }\n</style>\n</head>\n<body>\n<div class="page">\n  <header class="header">\n    <h1 style="font-family:\'Cormorant SC\',serif; font-weight:500; font-size:16px; letter-spacing:2.5px; color:rgb(139,135,124);">B-SIDE</h1>\n    <p class="updated" id="current-week">updated {{UPDATED}}</p>\n  </header>\n  <div class="weeks">\n{{WEEKS}}\n  </div>\n  <footer class="footer">\n    <p class="colophon">zebra beta &middot; movement 2.</p>\n    <div class="home-link-wrap"><a href="https://zebrabeta.kr">HOME</a></div>\n  </footer>\n</div>\n<script>\nfunction toggleWeek(el) {\n  var wk = el.closest(\'.week\');\n  var wasOpen = wk.classList.contains(\'open\');\n  document.querySelectorAll(\'.week.open\').forEach(function(w) { w.classList.remove(\'open\'); });\n  document.querySelectorAll(\'.trend-item.open\').forEach(function(i) { i.classList.remove(\'open\'); });\n  if (!wasOpen) wk.classList.add(\'open\');\n  var cw = document.getElementById(\'current-week\');\n  if (cw) cw.textContent = \'updated \' + wk.getAttribute(\'data-label\');\n  window.scrollTo({ top: 0, behavior: \'smooth\' });\n}\nfunction toggle(el) {\n  var item = el.closest(\'.trend-item\');\n  var wasOpen = item.classList.contains(\'open\');\n  document.querySelectorAll(\'.trend-item.open\').forEach(function(i) {\n    i.classList.remove(\'open\');\n  });\n  if (!wasOpen) item.classList.add(\'open\');\n}\n</script>\n</body>\n</html>\n'
 
 def main():
     data = json.loads(DATA.read_text(encoding="utf-8"))
@@ -54,6 +172,8 @@ def main():
     blocks = [render_week(w, i == 0) for i, w in enumerate(weeks)]
     html = TEMPLATE.replace("{{UPDATED}}", esc(updated)).replace("{{WEEKS}}", "\n".join(blocks))
     OUT.write_text(html, encoding="utf-8")
+    made = build_details(weeks)
+    print(f"개별 페이지 {len(made)}개: " + ", ".join(made))
     print(f"\uc0dd\uc131 {OUT}  (\uc8fc\ucc28 {len(weeks)} \u00b7 \ucd5c\uc2e0 {updated})")
 
 if __name__ == "__main__":
