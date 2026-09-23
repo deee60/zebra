@@ -92,8 +92,7 @@ DETAIL = """<!DOCTYPE html>
   body {{ background:var(--cream); color:var(--ink); font-family:'Noto Serif KR',serif; -webkit-font-smoothing:antialiased; }}
   .page {{ max-width:520px; margin:0 auto; padding:48px 24px 120px; }}
   .crumb {{ text-align:center; margin-bottom:56px; }}
-  .crumb a {{ font-family:'Cormorant SC',serif; font-weight:500; font-size:14px; letter-spacing:2.5px; color:var(--gray); text-decoration:none; transition:color .3s ease; }}
-  .crumb a:hover {{ color:var(--gold); }}
+  .crumb {{ font-family:'Cormorant SC',serif; font-weight:500; font-size:14px; letter-spacing:2.5px; color:var(--gray); }}
   .meta {{ font-family:'Cormorant Garamond',serif; font-size:11px; letter-spacing:.1em; color:var(--faint); margin-bottom:14px; }}
   h1 {{ font-weight:400; font-size:19px; line-height:1.7; word-break:keep-all; margin-bottom:32px; padding-bottom:28px; border-bottom:1px solid var(--divider); }}
   .body p {{ font-weight:300; font-size:14px; line-height:2.1; word-break:keep-all; margin-bottom:1.4em; }}
@@ -107,7 +106,7 @@ DETAIL = """<!DOCTYPE html>
 </head>
 <body>
 <div class="page">
-  <div class="crumb"><a href="/bside/">&larr; B-SIDE</a></div>
+  <div class="crumb">B-SIDE</div>
   <div class="meta">{category} &middot; {label}</div>
   <h1>{title}</h1>
   <div class="body">{body}</div>
