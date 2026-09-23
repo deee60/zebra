@@ -9,6 +9,7 @@ on:
   push:
     paths:
       - "bside/bside.json"
+      - "_build_bside/build_bside.py"     # 틀(렌더러)만 고쳐도 자동으로 다시 그림
   workflow_dispatch:
 
 permissions:

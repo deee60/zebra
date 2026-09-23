@@ -4,7 +4,7 @@ name: publish-queue
 # ★ 재빌드하지 않는다 — 프리뷰한 index.html 픽셀 그대로.
 #   날짜(EXPIRES 상수 · 상단 이관 예고 문구)만 "발행 시각 + 72h" 로 치환한다.
 # 수동 실행 전용. Actions 탭에서 slug 를 입력해 실행.
-# 카톡 게시와 랜딩 '최근 발행물' 교체는 이 워크플로가 하지 않는다(게시 후 별도).
+# 랜딩 '최근 발행물' 링크 교체와 대기 폴더 정리도 이 워크플로가 한다(2026-09-23). 카톡 게시만 사람이.
 
 on:
   workflow_dispatch:
@@ -104,14 +104,28 @@ jobs:
           open("_data/issue.json", "a", encoding="utf-8").write("\n")
           print("issue.json 갱신:", slug, published.date().isoformat(), "→ 만료", exp_iso)
           open("/tmp/pub.txt", "w").write(f"{slug} {published.date().isoformat()}")
+
+          # 랜딩 '최근 발행물 보기' 링크를 방금 발행한 지면으로 교체 (2026-09-23 자동화)
+          landing = open("index.html", encoding="utf-8").read()
+          landing, n3 = re.subn(r'(<a class="recent latest-link" href=")issue/[^"/]+/(")',
+                                rf'\g<1>issue/{slug}/\g<2>', landing)
+          if n3 == 1:
+              open("index.html", "w", encoding="utf-8").write(landing)
+              print("랜딩 최근 발행물 →", f"issue/{slug}/")
+          else:
+              print(f"::warning::랜딩 최근 발행물 링크를 못 찾음({n3}건) — 랜딩은 손으로 확인")
+
+          # 발행 끝난 대기 폴더 비우기 (issue/ 가 원본이 된다)
+          shutil.rmtree(src)
+          print("대기열 정리:", src)
           PY
 
       - name: Commit
         run: |
-          if [ -n "$(git status --porcelain issue _data/issue.json)" ]; then
+          if [ -n "$(git status --porcelain issue _data/issue.json index.html _queue)" ]; then
             git config user.name  "zebra-bot"
             git config user.email "bot@zebrabeta.kr"
-            git add issue _data/issue.json
+            git add -A issue _data/issue.json index.html _queue
             git commit -m "publish: $(cat /tmp/pub.txt)"
             git push
           else
