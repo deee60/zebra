@@ -1,8 +1,9 @@
 name: build_bside
 
-# bside/bside.json 이 커밋되면 build_bside.py 로 bside/index.html 을 다시 그린다.
-# 최신 주는 펼쳐진 채 맨 위, 지난 주는 접혀서 아래로(날짜 클릭 시 펼침).
-# 항목 내용은 bside.json 에서만 온다. 사람은 bside.json 만 건드리고 index.html 은 자동.
+# bside/bside.json 이 커밋되면:
+#   1) build_bside.py        → bside/index.html(피드) + bside/<slug>/index.html(세부페이지)
+#   2) build_taste_everyone.py → sitemap.xml 갱신(세부페이지 주소 포함)
+# 사람은 bside.json 만 건드린다. 나머지는 자동.
 
 on:
   push:
@@ -20,17 +21,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Render bside/index.html
+      - name: Render feed + detail pages
         run: python3 _build_bside/build_bside.py
+
+      - name: Rebuild sitemap
+        run: python3 _build_taste_everyone/build_taste_everyone.py
 
       - name: Commit
         run: |
-          if [ -n "$(git status --porcelain bside/index.html)" ]; then
+          git add bside sitemap.xml
+          if git diff --cached --quiet; then
+            echo "no changes"
+          else
             git config user.name  "zebra-bot"
             git config user.email "bot@zebrabeta.kr"
-            git add bside/index.html
             git commit -m "auto: build bside [skip build]"
             git push
-          else
-            echo "no changes"
           fi
