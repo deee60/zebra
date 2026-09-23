@@ -27,7 +27,7 @@
     --gray: #8b877c;
     --faint: #b8b3a8;
     --gold: #b89a5a;
-    --divider: #d4cfc5;
+    --divider: #e1ddd3;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -156,16 +156,19 @@
   .home-link-wrap a:hover { color: var(--gold); }
 
   /* ── 주차 폴딩 (B-SIDE weekly) ── */
-  .week + .week { margin-top: 4px; }
+  .week + .week { margin-top: 20px; }
+  .week:not(.open) > .week-header { border-bottom-color: transparent; opacity: 0.4; }
+  .week > .week-header { transition: opacity 0.5s ease, color 0.2s; }
+  .week.open > .week-header .week-date { color: var(--ink); }
   .week-header {
     display: flex; align-items: baseline; gap: 10px;
-    padding: 18px 0; cursor: pointer; border-bottom: 1px solid var(--divider);
+    padding: 22px 0; cursor: pointer; border-bottom: 1px solid var(--divider);
     -webkit-tap-highlight-color: transparent; transition: color 0.2s;
   }
   .week-header:hover { color: var(--gold); }
   .week-date {
     font-family: 'Cormorant Garamond', serif; font-style: italic;
-    font-size: 12px; letter-spacing: 0.08em; color: var(--faint);
+    font-size: 13px; letter-spacing: 0.08em; color: var(--gray);
   }
   .week-arrow {
     font-family: 'Cormorant Garamond', serif; font-size: 14px; color: var(--faint);
@@ -184,9 +187,12 @@
 <div class="page">
   <header class="header">
     <h1 style="font-family:'Cormorant SC',serif; font-weight:500; font-size:16px; letter-spacing:2.5px; color:rgb(139,135,124);">B-SIDE</h1>
-    <p class="updated">updated Sep 23, 2026</p>
   </header>
     <section class="week open">
+    <div class="week-header" onclick="toggleWeek(this)">
+      <span class="week-date">updated Sep 23, 2026</span>
+      <span class="week-arrow">›</span>
+    </div>
     <ul class="trend-list week-items">
     <li class="trend-item">
       <div class="trend-headline" onclick="toggle(this)">
@@ -242,7 +248,7 @@
   </section>
   <section class="week">
     <div class="week-header" onclick="toggleWeek(this)">
-      <span class="week-date">Sep 17, 2026</span>
+      <span class="week-date">updated Sep 17, 2026</span>
       <span class="week-arrow">›</span>
     </div>
     <ul class="trend-list week-items">
@@ -306,7 +312,10 @@
 <script>
 function toggleWeek(el) {
   var wk = el.closest('.week');
-  wk.classList.toggle('open');
+  var wasOpen = wk.classList.contains('open');
+  document.querySelectorAll('.week.open').forEach(function(w) { w.classList.remove('open'); });
+  document.querySelectorAll('.trend-item.open').forEach(function(i) { i.classList.remove('open'); });
+  if (!wasOpen) wk.classList.add('open');
 }
 function toggle(el) {
   var item = el.closest('.trend-item');
