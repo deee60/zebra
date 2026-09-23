@@ -208,7 +208,7 @@ def build_taste(items):
                            jsonld=json.dumps(jsonld, ensure_ascii=False, indent=2),
                            extra_css=TASTE_CSS)
         html_doc = (head
-                    + f'<div class="crumb"><a href="/taste/">취향의 발견</a></div>\n'
+                    + f'<div class="crumb">취향의 발견</div>\n'
                     + f'<h1 class="ttl">{esc(title)}</h1>\n'
                     + (f'<div class="by">{esc(by)}</div>\n' if by else '')
                     + body_html + links
@@ -252,7 +252,7 @@ def build_everyone(items):
                   f'style="background-image:url(\'{og_image}\');" role="button" aria-label="{esc(title)} 재생">'
                   f'<div class="play" aria-hidden="true"></div></div>')
         html_doc = (head
-                    + f'<div class="crumb"><a href="/everyone/">모두의 큐레이션</a></div>\n'
+                    + f'<div class="crumb">모두의 큐레이션</div>\n'
                     + player
                     + f'<h1 class="song">{esc(title)}</h1>\n<div class="artist">{esc(artist)}</div>\n'
                     + note_html
