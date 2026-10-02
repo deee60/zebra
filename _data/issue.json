@@ -236,5 +236,19 @@
     "expires": "2026-09-25T23:59:59+09:00",
     "layout": "lay-c",
     "bg": "#D3D0C5"
+  },
+  {
+    "slug": "dryadvisory03",
+    "kind": "music",
+    "series": "건조주의보 03.",
+    "title": "긴 꿈",
+    "romaji": "",
+    "artist": "새소년",
+    "path": "issue/dryadvisory03/",
+    "cover": "issue/dryadvisory03/dryadvisory03.jpg",
+    "published": "2026-10-02",
+    "expires": "2026-10-05T23:59:59+09:00",
+    "layout": "lay-a",
+    "bg": "#D3CAC5"
   }
 ]
