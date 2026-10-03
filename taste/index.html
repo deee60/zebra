@@ -104,12 +104,12 @@
     font-family:var(--latin); font-size:11px; letter-spacing:0.18em;
     text-transform:uppercase; color:var(--gold); text-align:center; margin-bottom:44px;
   }
-  /* 제목 아래 한 줄 안내 (예: 스포일러 주의) — taste.json의 notice 필드 */
+  /* 글쓴이 아래 한 줄 안내 (예: 스포일러 주의) — taste.json의 notice 필드 */
   .r-notice{
     font-family:var(--serif); font-weight:300; font-size:12px; letter-spacing:0.02em;
-    text-align:center; color:var(--faint); margin-bottom:12px;
+    text-align:center; color:var(--faint); margin-bottom:44px;
   }
-  .r-notice.solo{ margin-bottom:44px; }
+  .r-by.tight{ margin-bottom:12px; }
   .r-body{ font-size:14.5px; line-height:2.2; color:var(--ink-soft); }
   .r-body .r-photo{ float:left; width:44%; margin:6px 26px 14px 0; }
   .r-body .r-photo img{ width:100%; display:block; border-radius:2px; }
@@ -209,7 +209,7 @@
       var img=item.cover_full||item.cover;
       var photo=img?'<figure class="r-photo"><img src="'+esc(img)+'" alt="">'+(item.photo_by?'<figcaption>사진 · '+esc(item.photo_by)+'</figcaption>':'')+'</figure>':'';
       var photo2=item.cover_2?'<figure class="r-photo r-photo-2"><img src="'+esc(item.cover_2)+'" alt="'+esc(item.cover_2_alt||'')+'">'+(item.photo_by?'<figcaption>사진 · '+esc(item.photo_by)+'</figcaption>':'')+'</figure>':'';
-      var by=item.by?'<div class="r-by">'+esc(item.by)+'</div>':'';
+      var by=item.by?'<div class="r-by'+(item.notice?' tight':'')+'">'+esc(item.by)+'</div>':'';
       var embed='';
       if(item.embed){
         var m=String(item.embed).match(/instagram\.com\/(p|reel)\/([A-Za-z0-9_-]+)/);
@@ -225,8 +225,8 @@
       } else {
         bodyHtml='<div class="r-body">'+embed+(embed?'':photo)+paras(item.body)+photo2+'<div class="clear"></div></div>';
       }
-      var notice=item.notice?'<div class="r-notice'+(item.by?'':' solo')+'">'+esc(item.notice)+'</div>':'';
-      inner.innerHTML='<div class="r-ttl">'+esc(item.title)+'</div>'+notice+by+bodyHtml+links;
+      var notice=item.notice?'<div class="r-notice">'+esc(item.notice)+'</div>':'';
+      inner.innerHTML='<div class="r-ttl">'+esc(item.title)+'</div>'+by+notice+bodyHtml+links;
       reader.classList.add('open');
       document.body.style.overflow='hidden';
       reader.scrollTop=0;
