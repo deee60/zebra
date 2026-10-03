@@ -142,10 +142,10 @@ EVERYONE_CSS = """
 @media(max-width:480px){.inner{padding:64px 24px 80px;}.song{font-size:21px;}}
 """
 
-# 제목 아래 한 줄 안내(notice)가 있는 항목에만 붙는 스타일 — 다른 페이지는 그대로
+# 글쓴이 아래 한 줄 안내(notice)가 있는 항목에만 붙는 스타일 — 다른 페이지는 그대로
 NOTICE_CSS = """
-.notice{font-family:var(--serif);font-weight:300;font-size:12px;letter-spacing:0.02em;text-align:center;color:var(--faint);margin-bottom:12px;}
-.notice.solo{margin-bottom:44px;}
+.notice{font-family:var(--serif);font-weight:300;font-size:12px;letter-spacing:0.02em;text-align:center;color:var(--faint);margin-bottom:44px;}
+.by.tight{margin-bottom:12px;}
 @media(max-width:480px){.notice{font-size:11px;}}
 """
 
@@ -218,8 +218,8 @@ def build_taste(items):
         html_doc = (head
                     + f'<div class="crumb">취향의 발견</div>\n'
                     + f'<h1 class="ttl">{esc(title)}</h1>\n'
-                    + (f'<div class="{"notice" if by else "notice solo"}">{esc(notice)}</div>\n' if notice else '')
-                    + (f'<div class="by">{esc(by)}</div>\n' if by else '')
+                    + (f'<div class="{"by tight" if notice else "by"}">{esc(by)}</div>\n' if by else '')
+                    + (f'<div class="notice">{esc(notice)}</div>\n' if notice else '')
                     + body_html + links
                     + FOOT.format(corner="/taste/", corner_name="취향의 발견"))
         out = ROOT / "taste" / slug / "index.html"
