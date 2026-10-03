@@ -104,6 +104,12 @@
     font-family:var(--latin); font-size:11px; letter-spacing:0.18em;
     text-transform:uppercase; color:var(--gold); text-align:center; margin-bottom:44px;
   }
+  /* 제목 아래 한 줄 안내 (예: 스포일러 주의) — taste.json의 notice 필드 */
+  .r-notice{
+    font-family:var(--serif); font-weight:300; font-size:12px; letter-spacing:0.02em;
+    text-align:center; color:var(--faint); margin-bottom:12px;
+  }
+  .r-notice.solo{ margin-bottom:44px; }
   .r-body{ font-size:14.5px; line-height:2.2; color:var(--ink-soft); }
   .r-body .r-photo{ float:left; width:44%; margin:6px 26px 14px 0; }
   .r-body .r-photo img{ width:100%; display:block; border-radius:2px; }
@@ -162,6 +168,7 @@
     .card .by{ display:block; margin-top:12px; }
     .reader-inner{ padding:64px 24px 80px; }
     .r-ttl{ font-size:19px; }
+    .r-notice{ font-size:11px; }
     .r-body{ font-size:14px; line-height:2.1; }
     .r-body .r-photo{ width:42%; margin:4px 16px 0 0; }
     .r-body .r-photo-2{ float:none; clear:both; width:88%; margin:18px auto 6px; }
@@ -218,7 +225,8 @@
       } else {
         bodyHtml='<div class="r-body">'+embed+(embed?'':photo)+paras(item.body)+photo2+'<div class="clear"></div></div>';
       }
-      inner.innerHTML='<div class="r-ttl">'+esc(item.title)+'</div>'+by+bodyHtml+links;
+      var notice=item.notice?'<div class="r-notice'+(item.by?'':' solo')+'">'+esc(item.notice)+'</div>':'';
+      inner.innerHTML='<div class="r-ttl">'+esc(item.title)+'</div>'+notice+by+bodyHtml+links;
       reader.classList.add('open');
       document.body.style.overflow='hidden';
       reader.scrollTop=0;
