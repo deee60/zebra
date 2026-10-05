@@ -94,6 +94,9 @@ h1.ttl{{font-family:var(--serif);font-weight:400;font-size:21px;text-align:cente
 .foot a{{font-family:var(--latin);font-size:12px;letter-spacing:0.16em;color:var(--faint);text-decoration:none;}}
 .foot a:hover{{color:var(--gold);}}
 .colophon{{text-align:center;margin-top:22px;font-family:var(--latin);font-style:italic;font-weight:300;font-size:12px;letter-spacing:0.18em;color:var(--faint);}}
+/* copy guard (same as issue pages): block text selection; right-click/copy via script below */
+html,body{{ -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; -webkit-touch-callout:none; }}
+a,button,iframe,input,textarea{{ -webkit-user-select:auto; user-select:auto; }}
 </style>
 </head>
 <body>
@@ -104,6 +107,15 @@ FOOT = """
 <div class="foot"><a href="https://zebrabeta.kr">HOME</a></div>
 <div class="colophon">zebra beta · movement 2.</div>
 </main>
+<script>
+(function(){{
+  var block=function(e){{ e.preventDefault(); return false; }};
+  document.addEventListener("contextmenu", block);
+  document.addEventListener("copy", block);
+  document.addEventListener("cut", block);
+  document.addEventListener("dragstart", block);
+}})();
+</script>
 </body>
 </html>
 """
