@@ -185,6 +185,9 @@
     transition: max-height 1.1s cubic-bezier(0.25,0.1,0.25,1);
   }
   .week.open > .week-items { max-height: 6000px; }
+  /* copy guard (same as issue pages): block text selection; right-click/copy via script below */
+  html,body{ -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; -webkit-touch-callout:none; }
+  a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
 </style>
 </head>
 <body>
@@ -393,6 +396,15 @@ function toggle(el) {
   });
   if (!wasOpen) item.classList.add('open');
 }
+</script>
+<script>
+(function(){
+  var block=function(e){ e.preventDefault(); return false; };
+  document.addEventListener("contextmenu", block);
+  document.addEventListener("copy", block);
+  document.addEventListener("cut", block);
+  document.addEventListener("dragstart", block);
+})();
 </script>
 </body>
 </html>

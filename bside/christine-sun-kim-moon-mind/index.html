@@ -60,6 +60,9 @@
   .home { margin-top:16px; }
   .home a { font-family:'Cormorant Garamond',serif; font-size:12px; letter-spacing:.16em; color:rgb(169,162,151); text-decoration:none; transition:color .3s ease; }
   .home a:hover { color:var(--gold); }
+  /* copy guard (same as issue pages): block text selection; right-click/copy via script below */
+  html,body{ -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; -webkit-touch-callout:none; }
+  a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
 </style>
 </head>
 <body>
@@ -74,5 +77,14 @@
     <div class="home"><a href="https://zebrabeta.kr">HOME</a></div>
   </footer>
 </div>
+<script>
+(function(){
+  var block=function(e){ e.preventDefault(); return false; };
+  document.addEventListener("contextmenu", block);
+  document.addEventListener("copy", block);
+  document.addEventListener("cut", block);
+  document.addEventListener("dragstart", block);
+})();
+</script>
 </body>
 </html>
