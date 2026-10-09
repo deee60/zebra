@@ -264,5 +264,19 @@
     "expires": "2026-10-09T23:59:59+09:00",
     "layout": "lay-b",
     "bg": "#D3CDC5"
+  },
+  {
+    "slug": "vol41",
+    "kind": "music",
+    "series": "지브라 베타 Vol.41",
+    "title": "I'm Into Livin'",
+    "romaji": "",
+    "artist": "Stevie Wonder",
+    "path": "issue/vol41/",
+    "cover": "issue/vol41/vol41.jpg",
+    "published": "2026-10-09",
+    "expires": "2026-10-12T23:59:59+09:00",
+    "layout": "lay-c",
+    "bg": "#DFD4CD"
   }
 ]
