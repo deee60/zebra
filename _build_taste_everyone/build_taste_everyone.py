@@ -161,6 +161,12 @@ NOTICE_CSS = """
 @media(max-width:480px){.notice{font-size:11px;}}
 """
 
+# 사진 아래 덧붙임(footnote)이 있는 항목에만 붙는 스타일 — 다른 페이지는 그대로
+FOOTNOTE_CSS = """
+.r-foot{font-family:var(--serif);font-weight:300;font-size:12.5px;line-height:2;letter-spacing:0.02em;text-align:center;color:var(--grey);margin:26px auto 0;max-width:420px;word-break:keep-all;}
+@media(max-width:480px){.r-foot{font-size:12px;margin-top:22px;}}
+"""
+
 def taste_slug(item, folder):
     if item.get("slug"):
         return item["slug"]
@@ -178,6 +184,7 @@ def build_taste(items):
         title = item.get("title","")
         by = item.get("by","")
         notice = item.get("notice","")
+        footnote = item.get("footnote","")
         preview = item.get("preview") or ""
         desc = re.sub(r"\s+", " ", preview).strip()[:150]
         canon = f"{SITE}/taste/{slug}/"
@@ -194,7 +201,8 @@ def build_taste(items):
                               f'loading="lazy" scrolling="no" allowtransparency="true" title="{esc(title)}"></iframe></div>'
                               + (f'<div class="r-cap">{esc(item.get("caption",""))}</div>' if item.get("caption") else ""))
         photo = ""
-        if not embed_html and (item.get("cover_full") or item.get("cover")):
+        # top_photo: false → 상단 사진 없이 본문부터 (공유 카드 이미지는 cover_full 그대로)
+        if not embed_html and item.get("top_photo") is not False and (item.get("cover_full") or item.get("cover")):
             pimg = absurl(item.get("cover_full") or item.get("cover"), "taste")
             cap = f'<figcaption>사진 · {esc(item["photo_by"])}</figcaption>' if item.get("photo_by") else ""
             photo = f'<figure class="r-photo"><img src="{pimg}" alt="{esc(title)}">{cap}</figure>'
@@ -226,13 +234,15 @@ def build_taste(items):
                            desc=esc(desc), canon=canon, og_title=esc(title),
                            og_type="article", og_image=esc(og_image),
                            jsonld=json.dumps(jsonld, ensure_ascii=False, indent=2),
-                           extra_css=TASTE_CSS + (NOTICE_CSS if notice else ""))
+                           extra_css=TASTE_CSS + (NOTICE_CSS if notice else "") + (FOOTNOTE_CSS if footnote else ""))
         html_doc = (head
                     + f'<div class="crumb">취향의 발견</div>\n'
                     + f'<h1 class="ttl">{esc(title)}</h1>\n'
                     + (f'<div class="{"by tight" if notice else "by"}">{esc(by)}</div>\n' if by else '')
                     + (f'<div class="notice">{esc(notice)}</div>\n' if notice else '')
-                    + body_html + links
+                    + body_html
+                    + (f'<div class="r-foot">{esc(footnote).replace(chr(10), "<br>")}</div>\n' if footnote else '')
+                    + links
                     + FOOT.format(corner="/taste/", corner_name="취향의 발견"))
         out = ROOT / "taste" / slug / "index.html"
         out.parent.mkdir(parents=True, exist_ok=True)
