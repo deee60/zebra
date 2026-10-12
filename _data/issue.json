@@ -278,5 +278,19 @@
     "expires": "2026-10-12T23:59:59+09:00",
     "layout": "lay-c",
     "bg": "#DFD4CD"
+  },
+  {
+    "slug": "dryadvisory05",
+    "kind": "music",
+    "series": "건조주의보 05.",
+    "title": "가을",
+    "romaji": "",
+    "artist": "다린",
+    "path": "issue/dryadvisory05/",
+    "cover": "issue/dryadvisory05/dryadvisory05.jpg",
+    "published": "2026-10-12",
+    "expires": "2026-10-15T23:59:59+09:00",
+    "layout": "lay-a",
+    "bg": "#D7D3C1"
   }
 ]
