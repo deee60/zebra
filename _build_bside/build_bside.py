@@ -2,6 +2,7 @@
 """B-SIDE 렌더러 — bside/bside.json 을 읽어 bside/index.html 을 그린다.
 주차(week) 단위: 최신 주는 펼쳐진 채 맨 위, 지난 주들은 접혀서 아래로(날짜 클릭 시 펼침).
 항목은 기존 아코디언(headline 클릭 → 본문) 유지. selected 개념 없음 — bside.json 에 든 것만 그린다.
+published:false 항목은 피드·개별 페이지·사이트맵 모두에서 뺀다(보일 항목이 없는 주차는 피드에서 통째로 뺀다).
 """
 import json, re
 from pathlib import Path
@@ -16,6 +17,10 @@ def esc(s):
 
 def has_page(it):
     return bool(str(it.get("slug","")).strip()) and it.get("published") is not False
+
+def visible_items(w):
+    # published:false 는 피드에서도 뺀다 (개별 페이지·사이트맵과 같은 규칙)
+    return [it for it in w.get("items", []) if it.get("published") is not False]
 
 def render_item(it):
     src = str(it.get("source", "")).strip()
@@ -34,7 +39,7 @@ def render_item(it):
     )
 
 def render_week(w, newest):
-    items = "\n".join(render_item(it) for it in w.get("items", []))
+    items = "\n".join(render_item(it) for it in visible_items(w))
     cls = "week open" if newest else "week"
     return (
         f'  <section class="{cls}" data-label="{esc(w.get("label",""))}">\n'
@@ -176,13 +181,14 @@ TEMPLATE = '<!DOCTYPE html>\n<html lang="ko">\n<head>\n<meta charset="UTF-8">\n<
 def main():
     data = json.loads(DATA.read_text(encoding="utf-8"))
     weeks = sorted(data.get("weeks", []), key=lambda w: w.get("date", ""), reverse=True)
-    updated = weeks[0]["label"] if weeks else ""
-    blocks = [render_week(w, i == 0) for i, w in enumerate(weeks)]
+    shown = [w for w in weeks if visible_items(w)]   # 보일 항목이 없는 주차는 피드에서 통째로 뺀다
+    updated = shown[0]["label"] if shown else ""
+    blocks = [render_week(w, i == 0) for i, w in enumerate(shown)]
     html = TEMPLATE.replace("{{UPDATED}}", esc(updated)).replace("{{WEEKS}}", "\n".join(blocks))
     OUT.write_text(html, encoding="utf-8")
     made = build_details(weeks)
     print(f"개별 페이지 {len(made)}개: " + ", ".join(made))
-    print(f"\uc0dd\uc131 {OUT}  (\uc8fc\ucc28 {len(weeks)} \u00b7 \ucd5c\uc2e0 {updated})")
+    print(f"\uc0dd\uc131 {OUT}  (\uc8fc\ucc28 {len(shown)} \u00b7 \ucd5c\uc2e0 {updated})")
 
 if __name__ == "__main__":
     main()
