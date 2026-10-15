@@ -32,7 +32,7 @@
       },
       {
         "id": "gayo",
-        "name": "대한민국 대중가요 클래식 100",
+        "name": "대한민국 대중음악 클래식 100",
         "prefix": "gayo",
         "kind": "canon",
         "archive_dir": "archive/gayo",
