@@ -62,6 +62,7 @@
   .lay-c{ --song-size:22px; }
   .lay-c .plate{ width:min(72%, 240px); }
   .lay-c .stamp{ margin-top:clamp(48px, 8vh, 76px); }
+  .lay-c > .series{ margin-top:clamp(40px, 7vh, 60px); }
   .lay-c .plate{ margin-top:clamp(24px, 4vh, 36px); }
   .lay-c .titles{ margin-top:clamp(28px, 5vh, 44px); }
   .lay-b .titles{ margin-top:clamp(56px, 9vh, 88px); }
