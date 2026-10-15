@@ -81,6 +81,31 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://zebrabeta.kr/bside/vienna-philharmonic-cho-seong-jin-2026/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://zebrabeta.kr/bside/anne-carson-nobel-literature-2026/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://zebrabeta.kr/bside/cho-yong-pil-2026-concert-seoul/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://zebrabeta.kr/bside/fondation-louis-vuitton-gustave-fayet/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://zebrabeta.kr/bside/rm-sfmoma-between-you-and-me/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://zebrabeta.kr/bside/kim-dong-ryul-2026-concert/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
