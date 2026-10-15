@@ -292,5 +292,19 @@
     "expires": "2026-10-15T23:59:59+09:00",
     "layout": "lay-a",
     "bg": "#D7D3C1"
+  },
+  {
+    "slug": "gayo02",
+    "kind": "music",
+    "series": "대한민국 대중음악 클래식 100",
+    "title": "아마 늦은 여름이었을 거야",
+    "romaji": "",
+    "artist": "산울림",
+    "path": "issue/gayo02/",
+    "cover": "issue/gayo02/gayo02.jpg",
+    "published": "2026-10-15",
+    "expires": "2026-10-18T23:59:59+09:00",
+    "layout": "lay-canon",
+    "bg": "#E4DCC9"
   }
 ]

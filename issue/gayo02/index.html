@@ -287,7 +287,7 @@ a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
 
   <main class="sheet lay-canon" id="sheet">
 
-    <p class="notice">이 지면은 10월 19일 자정에 아카이브로 이관됩니다</p>
+    <p class="notice">이 지면은 10월 18일 자정에 아카이브로 이관됩니다</p>
 
     <div class="canon-head">
       <p class="canon-series">대한민국 대중음악 클래식 100</p>
@@ -337,7 +337,7 @@ a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
 
 <script>
 /* 이관(만료) 처리 — 표준 블록. EXPIRES 는 build.py 가 발행시각+72시간으로 계산 */
-const EXPIRES = "2026-10-19T23:59:59+09:00";
+const EXPIRES = "2026-10-18T23:59:59+09:00";
 const isExpired = Date.now() > new Date(EXPIRES).getTime() || location.search.includes("preview=expired");
 const isArchive = location.search.includes("archive=1");
 if (isExpired && !isArchive) {
