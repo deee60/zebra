@@ -323,6 +323,7 @@ def build_sitemap(item_urls):
         (f"{SITE}/curator/ilpostino/", "monthly", "0.7"),
         (f"{SITE}/curator/minorppong/", "monthly", "0.7"),
         (f"{SITE}/curator/professionnel/", "monthly", "0.7"),
+        (f"{SITE}/curator/latesummer/", "monthly", "0.7"),
     ]
     rows = fixed + item_urls
     lines = ['<?xml version="1.0" encoding="UTF-8"?>',
