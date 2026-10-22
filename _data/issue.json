@@ -320,5 +320,19 @@
     "expires": "2026-10-23T23:59:59+09:00",
     "layout": "lay-b",
     "bg": "#DFD8CD"
+  },
+  {
+    "slug": "vol42",
+    "kind": "music",
+    "series": "지브라 베타 Vol.42",
+    "title": "Stay Alive",
+    "romaji": "",
+    "artist": "José González",
+    "path": "issue/vol42/",
+    "cover": "issue/vol42/vol42.jpg",
+    "published": "2026-10-22",
+    "expires": "2026-10-25T23:59:59+09:00",
+    "layout": "lay-b",
+    "bg": "#CBB9AE"
   }
 ]
