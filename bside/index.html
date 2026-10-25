@@ -184,7 +184,16 @@
     overflow: hidden; max-height: 0;
     transition: max-height 1.1s cubic-bezier(0.25,0.1,0.25,1);
   }
-  .week.open > .week-items { max-height: 6000px; }
+  .week.open > .week-items { max-height: 12000px; }
+  .week[data-month] > .week-header { padding: 15px 0; }
+  .week[data-month] > .week-header .week-date { font-size: 12.5px; }
+  .year-row { display: flex; align-items: baseline; margin-top: 40px; padding: 18px 0 14px; border-top: 1px solid var(--divider); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .year-row .week-date { font-family: 'Cormorant SC', serif; font-style: normal; font-weight: 500; font-size: 13px; letter-spacing: 0.32em; color: var(--gray); }
+  .year-row:hover .week-date { color: var(--gold); }
+  .year-row ~ .year-row { margin-top: 0; }
+  .year-row.expanded .week-arrow { transform: rotate(90deg); color: var(--gold); }
+  .week[data-year]:not(.open) { display: none; padding-left: 18px; }
+  .week[data-year].shown:not(.open) { display: block; }
   /* copy guard (same as issue pages): block text selection; right-click/copy via script below */
   html,body{ -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; -webkit-touch-callout:none; }
   a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
@@ -197,7 +206,7 @@
     <p class="updated" id="current-week">updated Oct 21, 2026</p>
   </header>
   <div class="weeks">
-  <section class="week open" data-label="Oct 21, 2026">
+  <section class="week open" data-label="updated Oct 21, 2026">
     <div class="week-header" onclick="toggleWeek(this)">
       <span class="week-date">updated Oct 21, 2026</span>
       <span class="week-arrow">›</span>
@@ -255,7 +264,7 @@
     </li>
     </ul>
   </section>
-  <section class="week" data-label="Oct 14, 2026">
+  <section class="week" data-label="updated Oct 14, 2026">
     <div class="week-header" onclick="toggleWeek(this)">
       <span class="week-date">updated Oct 14, 2026</span>
       <span class="week-arrow">›</span>
@@ -313,7 +322,7 @@
     </li>
     </ul>
   </section>
-  <section class="week" data-label="Oct 9, 2026">
+  <section class="week" data-label="updated Oct 9, 2026">
     <div class="week-header" onclick="toggleWeek(this)">
       <span class="week-date">updated Oct 9, 2026</span>
       <span class="week-arrow">›</span>
@@ -371,7 +380,7 @@
     </li>
     </ul>
   </section>
-  <section class="week" data-label="Oct 2, 2026">
+  <section class="week" data-label="updated Oct 2, 2026">
     <div class="week-header" onclick="toggleWeek(this)">
       <span class="week-date">updated Oct 2, 2026</span>
       <span class="week-arrow">›</span>
@@ -429,9 +438,9 @@
     </li>
     </ul>
   </section>
-  <section class="week" data-label="Sep 23, 2026">
+  <section class="week" data-month="1" data-label="September 2026">
     <div class="week-header" onclick="toggleWeek(this)">
-      <span class="week-date">updated Sep 23, 2026</span>
+      <span class="week-date">September 2026</span>
       <span class="week-arrow">›</span>
     </div>
     <ul class="trend-list week-items">
@@ -485,14 +494,6 @@
         <p class="trend-summary">제31회 부산국제영화제가 10월 6일부터 15일까지 영화의전당 일대에서 열린다. 개막작은 김종관 감독의 「낮과 밤은 서로에게」로, 한 카페를 서로 다른 시간에 스쳐 간 네 쌍의 대화를 담았다. 공식 초청작은 59개국 246편, 커뮤니티비프 69편을 더하면 모두 315편이다. 홍콩의 허안화 감독이 까멜리아상을, 배우 양자경이 올해의 아시아영화인상을 받는다. 매기 질렌할은 연출작 「플레시 임팩트」로 처음 부산을 찾는다. 가을의 부산이 다시 극장이 된다. <span class="trend-source">(부산국제영화제)</span></p>
       </div>
     </li>
-    </ul>
-  </section>
-  <section class="week" data-label="Sep 17, 2026">
-    <div class="week-header" onclick="toggleWeek(this)">
-      <span class="week-date">updated Sep 17, 2026</span>
-      <span class="week-arrow">›</span>
-    </div>
-    <ul class="trend-list week-items">
     <li class="trend-item">
       <div class="trend-headline" onclick="toggle(this)">
         <span class="trend-category">음악</span>
@@ -559,8 +560,13 @@ function toggleWeek(el) {
   document.querySelectorAll('.trend-item.open').forEach(function(i) { i.classList.remove('open'); });
   if (!wasOpen) wk.classList.add('open');
   var cw = document.getElementById('current-week');
-  if (cw) cw.textContent = 'updated ' + wk.getAttribute('data-label');
+  if (cw) cw.textContent = (wk.classList.contains('open') ? wk : document.querySelector('.week')).getAttribute('data-label');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function toggleYear(el) {
+  var on = !el.classList.contains('expanded');
+  el.classList.toggle('expanded', on);
+  document.querySelectorAll('.week[data-year="' + el.getAttribute('data-year') + '"]').forEach(function(w) { w.classList.toggle('shown', on); });
 }
 function toggle(el) {
   var item = el.closest('.trend-item');
