@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B0TNF05GFQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-B0TNF05GFQ');
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ZEBRA BETA 할로윈 스페셜 · 손으로 만든 지면 (build.py 밖). 발행은 publish-queue 가 EXPIRES·이관 예고만 치환 -->
+<title>할로윈 스페셜 · 나는 널 몰라 | Zebra Beta</title>
+<meta name="description" content="1994년 MBC 미니시리즈 《M》의 주제가, 최윤실 〈나는 널 몰라〉. zebra beta movement 2.">
+<meta name="theme-color" content="#1c1b18">
+<meta property="og:title" content="나는 널 몰라 — 최윤실 · 할로윈 스페셜">
+<meta property="og:description" content="당신의 얼굴이 낯설어지는 밤. zebra beta movement 2.">
+<meta property="og:image" content="https://zebrabeta.kr/issue/halloween26/halloween26.jpg">
+<meta property="og:image:width" content="1000">
+<meta property="og:image:height" content="1000">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<script>
+/* 카카오톡 인앱 브라우저 탈출 */
+if (/KAKAOTALK/i.test(navigator.userAgent)) {
+  location.href = "kakaotalk://web/openExternal?url=" + encodeURIComponent(location.href);
+  setTimeout(function(){ location.href = "kakaotalk://inappbrowser/close"; }, 0);
+}
+</script>
+<style>
+  /* 밤판: 지브라 크림 지면을 뒤집은 할로윈 스페셜 */
+  :root{
+    --night:#1c1b18; --fg:#ece7db; --body:#cfc9ba; --soft:#9a9486; --faint:#8a8578;
+    --gold:#c9b98f; --line:#3a3730; --line2:#2e2c27; --label:#a8352a;
+    --chip-ink:#6f6a5e; --chip-paper:#1c1b18;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; background:var(--night); }
+  body{ background:var(--night); color:var(--body); font-family:"Noto Serif KR", serif; }
+  a{ color:inherit; }
+  :focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+  .sheet{ max-width:680px; margin:0 auto; padding:56px 20px 72px; display:flex; flex-direction:column; min-height:100dvh;
+          animation:settle 1.2s ease both; }
+  @keyframes settle{ from{opacity:0;} to{opacity:1;} }
+
+  .notice{ text-align:center; font-size:11px; letter-spacing:.13em; line-height:1.95; color:var(--faint); word-break:keep-all; margin-bottom:28px; }
+  .top{ display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:12px; }
+  .top .ser{ font-family:"Cormorant Garamond", serif; font-style:italic; font-size:17px; color:var(--soft); }
+  .tag{ font-family:"Cormorant Garamond", serif; font-size:11px; letter-spacing:.22em; color:#f3ece0; background:var(--label); padding:5px 10px 4px; }
+
+  .film{ display:block; margin-top:40px; position:relative; background:var(--fg); padding:14px 14px 40px; box-shadow:0 18px 40px rgba(0,0,0,.45); text-decoration:none; }
+  .screen{ position:relative; aspect-ratio:16/9; max-width:100%; background:#0f0e0c; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+  .screen img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .play{ position:relative; width:64px; height:64px; border-radius:50%; background:rgba(15,14,12,.6); display:flex; align-items:center; justify-content:center; transition:background .25s; }
+  .film:hover .play, .film:focus-visible .play{ background:rgba(168,53,42,.85); }
+  .veil{ position:absolute; inset:0; background:rgba(236,231,219,.92); display:flex; align-items:center; justify-content:center; transition:opacity .6s ease; }
+  .veil span{ font-family:"Cormorant Garamond", serif; font-style:italic; font-size:120px; line-height:1; color:#6f6a5e; }
+  .film:hover .veil, .film:focus-visible .veil{ opacity:0; }
+  .cap{ position:absolute; left:14px; right:14px; bottom:12px; font-family:"Cormorant Garamond","Noto Serif KR",serif; font-style:italic; font-size:13px; color:#6f6a5e; display:flex; justify-content:space-between; gap:12px; }
+
+  .head{ margin-top:56px; }
+  h1{ font-weight:300; font-size:clamp(34px,7vw,46px); line-height:1.15; color:var(--fg); letter-spacing:-.01em; }
+  .sub{ margin-top:12px; font-family:"Cormorant Garamond","Noto Serif KR",serif; font-style:italic; font-size:19px; color:#b9b2a3; }
+  .rule{ width:28px; height:1px; background:#6f6a5e; margin:32px 0; }
+  .lead{ margin-bottom:28px; text-align:right; font-weight:300; font-size:17px; line-height:1.9; color:var(--gold); }
+  .note{ font-size:15.5px; line-height:2; font-weight:300; word-break:keep-all; }
+  .note + .note{ margin-top:20px; }
+
+  .credits{ margin-top:48px; padding-top:20px; border-top:1px solid var(--line); display:flex; flex-direction:column; gap:6px; font-size:13px; line-height:1.7; }
+  .credits div{ display:flex; gap:16px; }
+  .credits span:first-child{ width:104px; flex:0 0 auto; color:var(--soft); }
+  .credits span:last-child{ color:#ddd7c9; font-size:14px; }
+
+  .listen{ margin-top:36px; text-align:center; }
+  .listen-row{ display:flex; justify-content:center; align-items:center; flex-wrap:wrap; column-gap:24px; row-gap:8px; }
+  .listen-row + .listen-row{ margin-top:13px; }
+  .listen-row svg{ width:13.5px; height:13.5px; flex:0 0 13.5px; }
+  .listen-row .off{ position:relative; display:inline-flex; align-items:center; gap:6px; color:#5a564d; cursor:default; font-size:12px; font-weight:500; letter-spacing:.12em; padding:4px 0; }
+  .listen-row .off.latin{ font-family:"Cormorant Garamond", serif; font-size:14px; letter-spacing:.08em; }
+  .listen-row .off svg{ opacity:.5; }
+  .listen-row .off::after{ content:attr(data-off); position:absolute; left:50%; transform:translate(-50%,-168%); white-space:nowrap; pointer-events:none;
+    background:var(--fg); color:var(--night); font-family:"Noto Serif KR",serif; font-weight:400; font-size:10.5px; letter-spacing:.06em; padding:5px 9px; border-radius:2px; opacity:0; transition:opacity .2s; }
+  .listen-row .off:hover::after{ opacity:.94; }
+  .listen-note{ margin-top:14px; font-size:11.5px; color:var(--faint); letter-spacing:.04em; }
+
+  .see{ margin-top:96px; }
+  .see h2{ padding-bottom:14px; border-bottom:1px solid var(--line); font-weight:400; font-size:18px; color:var(--fg); }
+  .rec{ display:flex; flex-wrap:wrap; gap:24px; align-items:center; padding:40px 0 32px; border-bottom:1px solid var(--line2); }
+  .mat{ flex:0 1 300px; width:300px; max-width:100%; background:var(--fg); padding:8px; box-shadow:0 12px 28px rgba(0,0,0,.4); }
+  .frame{ position:relative; aspect-ratio:16/9; max-width:100%; background:#0f0e0c; }
+  .frame iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+  .txt{ position:relative; flex:1 1 260px; min-width:0; display:flex; flex-direction:column; gap:6px; }
+  .txt .n{ position:absolute; left:0; bottom:100%; margin-bottom:6px; font-family:"Cormorant Garamond",serif; font-size:13px; color:var(--faint); }
+  .txt .s{ font-family:"Cormorant Garamond",serif; font-weight:500; font-size:24px; line-height:1.2; color:var(--fg); }
+  .txt .a{ font-family:"Cormorant Garamond",serif; font-style:italic; font-size:16px; color:#b9b2a3; }
+  .txt p{ margin-top:8px; font-size:14px; line-height:1.85; color:#bfb9aa; font-weight:300; word-break:keep-all; }
+
+  .colophon{ margin-top:64px; text-align:right; font-family:"Cormorant Garamond",serif; font-style:italic; font-size:14px; color:var(--faint); }
+  .homenav{ margin-top:28px; text-align:center; }
+  .homenav a{ font-family:"Cormorant Garamond",serif; font-size:12px; letter-spacing:.22em; color:var(--soft); text-decoration:none; padding:10px 14px; display:inline-block; }
+  .homenav a:hover{ color:var(--gold); }
+
+  .spacer{ flex:1 1 auto; }
+  .moved{ text-align:center; }
+  .moved .rule{ width:30px; height:1px; background:var(--faint); margin:26px auto; border:0; }
+  .moved .line{ font-size:15.5px; color:var(--body); letter-spacing:.05em; line-height:1.9; }
+  .moved .sub{ margin-top:28px; font-size:12.5px; color:var(--faint); letter-spacing:.06em; line-height:2.2; word-break:keep-all; font-style:normal; font-family:"Noto Serif KR",serif; }
+  .moved .home{ margin-top:44px; }
+  .moved .home a{ display:inline-block; padding:9px 22px; border:1px solid var(--gold); color:var(--gold); text-decoration:none; font-size:12.5px; letter-spacing:.12em; transition:background .25s, color .25s; }
+  .moved .home a:hover{ background:var(--gold); color:var(--night); }
+
+  @media (prefers-reduced-motion: reduce){ .sheet{ animation:none; } .veil{ transition:none; } }
+
+/* 복사 방지 — 드래그 선택 차단 */
+html,body{ -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; -webkit-touch-callout:none; }
+a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
+</style>
+</head>
+<body>
+
+  <main class="sheet" id="sheet">
+
+    <p class="notice">이 지면은 11월 1일 자정에 아카이브로 이관됩니다</p>
+
+    <div class="top"><span class="ser">할로윈 스페셜.</span><span class="tag">HALLOWEEN · 10.31</span></div>
+
+    <a class="film" href="https://www.youtube.com/watch?v=nhnb7DS2bVE" target="_blank" rel="noopener" aria-label="나는 널 몰라 전곡 영상, 유튜브에서 보기">
+      <div class="screen">
+        <img src="https://i.ytimg.com/vi/nhnb7DS2bVE/maxresdefault.jpg" alt="" loading="lazy">
+        <div class="play"><svg aria-hidden="true" width="22" height="24" viewBox="0 0 22 24"><path d="M3 2 L20 12 L3 22 Z" fill="#ece7db"/></svg></div>
+        <div class="veil" aria-hidden="true"><span>M</span></div>
+      </div>
+      <p class="cap"><span>나는 널 몰라 — 최윤실</span><span>▶ 유튜브에서 전곡 보기</span></p>
+    </a>
+
+    <div class="head">
+      <h1>나는 널 몰라</h1>
+      <p class="sub">최윤실 · 미니시리즈 《M》 주제가</p>
+    </div>
+    <div class="rule"></div>
+    <p class="lead">당신의 얼굴이<br>낯설어지는 밤</p>
+    <p class="note">최윤실의 〈나는 널 몰라〉는 1994년 8월 MBC가 납량 특집으로 방영한 10부작 미니시리즈 《M》의 서늘하면서도 신비한 주제가입니다. 당대의 스타 심은하가 주인공 박마리를 맡은 이 드라마는 최종회 시청률 52.2%로 지금까지 깨어지지 않은 납량 드라마 기록을 세우며 시청자들을 공포에 떨게 했습니다. 초록빛으로 변하는 눈, 낮게 변조된 목소리, 그리고 오프닝마다 흐르던 이 노래... 그 당시 많은 사람들을 공포로 몰아넣은 간주의 백워드 매스킹에는 공영방송의 작품이어서인지 ‘니가 차가운 무관심의 냉소를 되풀이할수록 내 가슴에선 불꽃이 인다’는 다소 맥 빠지는 메시지가 들어 있습니다.</p>
+    <p class="note">《M》은 티빙에서 《M:리부트》로 리메이크되어 2027년 공개될 예정입니다. 심은하가 맡았던 마리 역은 정채연이 연기합니다.</p>
+
+    <div class="credits">
+      <div><span>노래</span><span>최윤실</span></div>
+      <div><span>작사·작곡</span><span>안지홍</span></div>
+      <div><span>드라마</span><span>MBC 미니시리즈 《M》 · 1994.8.1~8.30</span></div>
+      <div><span>연출 · 극본</span><span>정세호 · 이홍구</span></div>
+      <div><span>주연</span><span>심은하</span></div>
+    </div>
+
+    <footer class="listen">
+      <nav class="listen-row" aria-label="해외 스트리밍">
+        <span class="off latin" data-off="스트리밍 권리가 없습니다" aria-disabled="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="var(--chip-ink)"/><path d="M16.6 5.9 9.9 7.3c-.4.1-.6.4-.6.8v5.8a2 2 0 1 0 1.1 1.8V9.9l5.1-1.1v3.7a2 2 0 1 0 1.1 1.8V6.6c0-.4-.4-.8-.9-.7z" fill="var(--chip-paper)"/></svg>Apple Music</span>
+        <span class="off latin" data-off="스트리밍 권리가 없습니다" aria-disabled="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="var(--chip-ink)"/><path d="M6.6 9.5c3.7-1.1 7.9-.7 10.9 1.1" stroke="var(--chip-paper)" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M7.1 12.4c3.1-.9 6.6-.5 9.1 1" stroke="var(--chip-paper)" stroke-width="1.3" fill="none" stroke-linecap="round"/><path d="M7.6 15.2c2.5-.7 5.3-.4 7.3.8" stroke="var(--chip-paper)" stroke-width="1.1" fill="none" stroke-linecap="round"/></svg>Spotify</span>
+        <span class="off latin" data-off="스트리밍 권리가 없습니다" aria-disabled="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="var(--chip-ink)"/><circle cx="12" cy="12" r="6.8" fill="none" stroke="var(--chip-paper)" stroke-width="1.3"/><path d="M10.3 9.4l4.7 2.6-4.7 2.6z" fill="var(--chip-paper)"/></svg>YouTube Music</span>
+        <span class="off latin" data-off="스트리밍 권리가 없습니다" aria-disabled="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="var(--chip-ink)"/><path d="M7.9 7.4l2.4 2.4-2.4 2.4-2.4-2.4zM12.7 7.4l2.4 2.4-2.4 2.4-2.4-2.4zM17.5 9.8l-2.4 2.4 2.4 2.4 2.4-2.4zM12.7 12.2l2.4 2.4-2.4 2.4-2.4-2.4z" fill="var(--chip-paper)" transform="translate(-0.6 1)"/></svg>Tidal</span>
+      </nav>
+      <nav class="listen-row" aria-label="국내 스트리밍">
+        <span class="off" data-off="스트리밍 권리가 없습니다" aria-disabled="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="var(--chip-ink)"/><path d="M15 6.9v7a2.2 2.2 0 1 1-1.1-1.9V9l-4 .9v4.1a2.2 2.2 0 1 1-1.1-1.9V8.2z" fill="var(--chip-paper)"/></svg>멜론</span>
+        <span class="off" data-off="스트리밍 권리가 없습니다" aria-disabled="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="var(--chip-ink)"/><text x="12" y="16.6" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="var(--chip-paper)">g</text></svg>지니</span>
+        <span class="off" data-off="스트리밍 권리가 없습니다" aria-disabled="true"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="var(--chip-ink)"/><text x="12" y="16.6" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="var(--chip-paper)">b</text></svg>벅스</span>
+      </nav>
+      <p class="listen-note">이 곡은 음원 서비스에 올라 있지 않습니다</p>
+    </footer>
+
+    <section class="see" aria-label="함께 보기">
+      <h2>함께 보기</h2>
+      <div class="rec">
+        <div class="mat"><div class="frame"><iframe src="https://www.youtube-nocookie.com/embed/32kYH6XZrIo" title="Familiar — Agnes Obel" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe></div></div>
+        <div class="txt"><span class="n">01.</span><span class="s">Familiar</span><span class="a">Agnes Obel · 2016</span><p>아그네스 오벨이 비밀스러운 사랑에 관한 노래라고 말한 곡입니다. 후렴의 낮은 남자 목소리는 오벨이 자기 목소리를 남자 음역으로 낮춰 만든 것으로, 비밀이 유령처럼 따라다닌다는 설정을 소리로 옮겨 놓았습니다. 넷플릭스 드라마 《다크》에 쓰이며 널리 알려졌습니다.</p></div>
+      </div>
+      <div class="rec">
+        <div class="mat"><div class="frame"><iframe src="https://www.youtube-nocookie.com/embed/FZQvIJxG9Xs" title="The Shining — 예고편" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe></div></div>
+        <div class="txt"><span class="n">02.</span><span class="s">The Shining</span><span class="a">Stanley Kubrick · 1980</span><p>스탠리 큐브릭이 스티븐 킹의 소설을 영화로 옮긴 작품입니다. 겨울 동안 문을 닫은 오버룩 호텔의 관리인으로 들어간 잭 토런스(잭 니콜슨)가 고립 속에서 서서히 무너집니다.</p></div>
+      </div>
+      <div class="rec">
+        <div class="mat"><div class="frame"><iframe src="https://www.youtube-nocookie.com/embed/cyQukqhP0UA" title="The Shinning — The Simpsons" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe></div></div>
+        <div class="txt"><span class="n">03.</span><span class="s">The Shinning</span><span class="a">The Simpsons · Treehouse of Horror V · 1994</span><p>《M》이 방영된 1994년, 할로윈 전날인 10월 30일 미국 폭스에서 방영된 심슨 가족의 할로윈 특집입니다. 앞의 《샤이닝》을 패러디한 이 에피소드는 시리즈 최고의 할로윈 편으로 꼽힙니다. 텔레비전도 맥주도 끊긴 산장의 호머 심슨의 이야기입니다.</p></div>
+      </div>
+    </section>
+
+    <p class="colophon">zebra beta · movement 2.</p>
+    <div class="homenav"><a href="https://zebrabeta.kr">HOME</a></div>
+
+  </main>
+
+<script>
+/* 이관(만료) 처리 — 표준 블록. EXPIRES 는 publish-queue 가 발행시각+72시간 그날 자정 직전으로 치환 */
+const EXPIRES = "2026-11-01T23:59:59+09:00";
+const isExpired = Date.now() > new Date(EXPIRES).getTime() || location.search.includes("preview=expired");
+const isArchive = location.search.includes("archive=1");
+if (isExpired && !isArchive) {
+  document.getElementById("sheet").innerHTML = `
+    <div class="spacer"></div>
+    <div class="moved">
+      <hr class="rule">
+      <p class="line">이 큐레이션은<br>아카이브로 이관되었습니다</p>
+      <p class="sub">지브라의 큐레이션은<br>발행 후 72시간 동안 열립니다.<br>이후 아카이브로 옮겨지며,<br>아카이브는 V1.0부터 회원에게 열립니다.</p>
+      <p class="home"><a href="https://zebrabeta.kr">지브라 베타</a></p>
+    </div>
+    <div class="spacer"></div>
+    <p class="colophon">zebra beta · movement 2.</p>`;
+}
+</script>
+
+<script>
+(function(){
+  var block=function(e){ e.preventDefault(); return false; };
+  document.addEventListener("contextmenu", block);
+  document.addEventListener("copy", block);
+  document.addEventListener("cut", block);
+  document.addEventListener("dragstart", block);
+})();
+</script>
+</body>
+</html>
