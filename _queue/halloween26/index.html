@@ -91,16 +91,18 @@ if (/KAKAOTALK/i.test(navigator.userAgent)) {
 
   .see{ margin-top:96px; }
   .see h2{ padding-bottom:14px; border-bottom:1px solid var(--line); font-weight:400; font-size:18px; color:var(--fg); }
-  .rec{ display:flex; flex-wrap:wrap; gap:24px; align-items:center; padding:40px 0 32px; border-bottom:1px solid var(--line2); }
-  .mat{ flex:0 1 300px; width:300px; max-width:100%; background:var(--fg); padding:8px; box-shadow:0 12px 28px rgba(0,0,0,.4); }
+  /* 영상창은 제목 줄을 빼고 소개 글(본문)의 세로 가운데에 맞춘다 */
+  .rec{ display:grid; grid-template-columns:minmax(0,300px) minmax(0,1fr); column-gap:24px; row-gap:6px; align-items:start; padding:32px 0; border-bottom:1px solid var(--line2); }
+  .mat{ grid-column:1; grid-row:4; align-self:center; width:100%; max-width:100%; background:var(--fg); padding:8px; box-shadow:0 12px 28px rgba(0,0,0,.4); }
   .frame{ position:relative; aspect-ratio:16/9; max-width:100%; background:#0f0e0c; }
   .frame iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
-  .txt{ position:relative; flex:1 1 260px; min-width:0; display:flex; flex-direction:column; gap:6px; }
-  .txt .n{ position:absolute; left:0; bottom:100%; margin-bottom:6px; font-family:"Cormorant Garamond",serif; font-size:13px; color:var(--faint); }
-  .txt .s{ font-family:"Cormorant Garamond",serif; font-weight:500; font-size:24px; line-height:1.2; color:var(--fg); }
-  .txt .a{ font-family:"Cormorant Garamond",serif; font-style:italic; font-size:16px; color:#b9b2a3; }
-  .txt p.hint{ margin-top:10px; font-size:12px; line-height:1.7; color:var(--faint); }
-  .txt p{ margin-top:8px; font-size:14px; line-height:1.85; color:#bfb9aa; font-weight:300; word-break:keep-all; }
+  .txt{ display:contents; }
+  .txt > *{ grid-column:2; min-width:0; }
+  .txt .n{ grid-row:1; font-family:"Cormorant Garamond",serif; font-size:13px; color:var(--faint); }
+  .txt .s{ grid-row:2; font-family:"Cormorant Garamond",serif; font-weight:500; font-size:24px; line-height:1.2; color:var(--fg); }
+  .txt .a{ grid-row:3; font-family:"Cormorant Garamond",serif; font-style:italic; font-size:16px; color:#b9b2a3; }
+  .txt p.hint{ grid-row:5; margin-top:4px; font-size:12px; line-height:1.7; color:var(--faint); }
+  .txt p{ grid-row:4; align-self:center; margin:4px 0; font-size:14px; line-height:1.85; color:#bfb9aa; font-weight:300; word-break:keep-all; }
 
   .colophon{ margin-top:64px; text-align:right; font-family:"Cormorant Garamond",serif; font-style:italic; font-size:14px; color:var(--faint); }
   .homenav{ margin-top:28px; text-align:center; }
@@ -116,6 +118,7 @@ if (/KAKAOTALK/i.test(navigator.userAgent)) {
   .moved .home a{ display:inline-block; padding:9px 22px; border:1px solid var(--gold); color:var(--gold); text-decoration:none; font-size:12.5px; letter-spacing:.12em; transition:background .25s, color .25s; }
   .moved .home a:hover{ background:var(--gold); color:var(--night); }
 
+  @media (max-width:640px){ .rec{ grid-template-columns:minmax(0,1fr); } .mat{ grid-column:1; grid-row:auto; margin-bottom:14px; } .txt > *{ grid-column:1; grid-row:auto; } }
   @media (prefers-reduced-motion: reduce){ .sheet{ animation:none; } .veil{ transition:none; } }
 
 /* 복사 방지 — 드래그 선택 차단 */
