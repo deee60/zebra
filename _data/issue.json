@@ -334,5 +334,19 @@
     "expires": "2026-10-25T23:59:59+09:00",
     "layout": "lay-b",
     "bg": "#CBB9AE"
+  },
+  {
+    "slug": "dryadvisory07",
+    "kind": "music",
+    "series": "건조주의보 07.",
+    "title": "방랑자 (Feat. 최백호)",
+    "romaji": "",
+    "artist": "박주원",
+    "path": "issue/dryadvisory07/",
+    "cover": "issue/dryadvisory07/dryadvisory07.jpg",
+    "published": "2026-10-27",
+    "expires": "2026-10-30T23:59:59+09:00",
+    "layout": "lay-c",
+    "bg": "#DCD7D0"
   }
 ]
