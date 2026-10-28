@@ -348,5 +348,19 @@
     "expires": "2026-10-30T23:59:59+09:00",
     "layout": "lay-c",
     "bg": "#DCD7D0"
+  },
+  {
+    "slug": "vol43",
+    "kind": "music",
+    "series": "지브라 베타 Vol.43",
+    "title": "Goldberg Variations, BWV 988: Aria",
+    "romaji": "",
+    "artist": "Thibaut Garcia & Antoine Morinière",
+    "path": "issue/vol43/",
+    "cover": "issue/vol43/vol43.jpg",
+    "published": "2026-10-28",
+    "expires": "2026-10-31T23:59:59+09:00",
+    "layout": "lay-b",
+    "bg": "#D7C9C1"
   }
 ]
