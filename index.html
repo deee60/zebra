@@ -316,21 +316,16 @@
     setTimeout(function(){ email.value=''; agree.checked=false; },300);
   });
 </script>
-<!-- 할로윈 스페셜 잉크 (2026-10-29 18:00 ~ 11-01 23:59:59 KST). 기간이 지나면 저절로 꺼진다. #ink 로 다시 보기 -->
-<!-- WebGL 액체 잉크가 기본, 못 그리는 기기는 막대 잉크로 대신한다. 다 덮이면 할로윈 스페셜 지면으로 이동 -->
+<!-- 할로윈 스페셜 잉크 (2026-10-29 18:00 ~ 11-01 23:59:59 KST). 기간이 지나면 저절로 꺼진다. #ink 로 다시 보기.
+     WebGL 액체 잉크가 다 덮이면 스페셜 지면으로 이동. WebGL 이 없는 기기는 잉크 없이 바로 이동 -->
 <style>
   #zbInk{position:fixed;inset:0;z-index:999;pointer-events:none;display:none}
   #zbInk.on{display:block;pointer-events:auto}
   #zbInk canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-  #zbInk .inks{position:absolute;inset:0;filter:url(#zbGoo)}
-  #zbInk .drip{position:absolute;top:0;background:#1c1b18;transform:translateY(-102%);transition-property:transform}
-  #zbInk.down .drip{transform:translateY(0)}
   #zbInk .veil{position:absolute;inset:0;background:#1c1b18;opacity:0;transition:opacity 1.2s ease}
   #zbInk.close .veil{opacity:1}
 </style>
 <div id="zbInk" aria-hidden="true">
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="zbGoo" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.035 0.004" numOctaves="1" seed="11" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="7" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation="2.4" result="b"/><feColorMatrix in="b" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -10"/></filter></svg>
-  <div class="inks" id="zbInks"></div>
   <div class="veil"></div>
 </div>
 <script>
@@ -439,36 +434,10 @@
     return true;
   }
 
-  /* ── 대신: 막대 잉크 (WebGL 을 못 쓰는 기기) ── */
-  function startDOM(){
-    var inks=document.getElementById("zbInks");
-    var LEAD=1.8, EASE="cubic-bezier(.62,.02,.86,.58)", RUSH="cubic-bezier(.5,0,.96,.3)";
-    var D=[], x=-1.2;
-    while(x<101){ var w=r(.6,1.4); D.push([x,w,r(103,122),(4.6-(w-.6)/.8*1.9)*r(.85,1.15),LEAD+r(0,1.6)]); x+=r(.3,.8); }
-    for(var i=0;i<34+Math.floor(r(0,14));i++){ D.push([r(0,99.6),r(.28,.55),r(108,135),r(4.6,5.6),LEAD+r(-.3,1.4)]); }
-    D.push([r(22,48),r(.85,1.1),r(150,170),r(6.0,6.8),0,"lead"]);
-    var sheet=document.createElement("div"); sheet.className="drip";
-    sheet.style.cssText="left:0;width:100%;height:115%";
-    var pts=["0 0","100% 0","100% 80%"];
-    for(var k=100;k>0;k-=r(1.5,4)) pts.push(k.toFixed(1)+"% "+r(80,100).toFixed(1)+"%");
-    pts.push("0 85%"); sheet.style.clipPath="polygon("+pts.join(", ")+")";
-    sheet.style.transitionTimingFunction=EASE; sheet.style.transitionDuration="3.4s"; sheet.style.transitionDelay=(LEAD+1.5)+"s";
-    inks.appendChild(sheet);
-    D.forEach(function(d){
-      var el=document.createElement("div"); el.className="drip";
-      el.style.left=d[0].toFixed(2)+"%"; el.style.width=d[1].toFixed(2)+"%"; el.style.height=d[2].toFixed(1)+"%";
-      var top=d[5]==="lead"?r(40,44):r(34,46), tip=d[5]==="lead"?84:r(72,92), pt=r(42,58);
-      el.style.clipPath="polygon("+top.toFixed(1)+"% 0, "+(100-top).toFixed(1)+"% 0, 100% "+tip.toFixed(1)+"%, "+pt.toFixed(1)+"% 100%, 0 "+(tip+r(-4,4)).toFixed(1)+"%)";
-      el.style.transitionTimingFunction=d[5]==="lead"?EASE:RUSH;
-      el.style.transitionDuration=d[3].toFixed(2)+"s"; el.style.transitionDelay=d[4].toFixed(2)+"s";
-      inks.appendChild(el);
-    });
-    begin(); void inks.offsetHeight;
-    setTimeout(function(){ box.classList.add("down"); }, 900);
-    finish(900+5600);
-  }
+  /* WebGL 을 못 쓰는 기기: 잉크 없이 바로 스페셜 지면으로 */
+  function skip(){ try{ localStorage.setItem(KEY,"1"); }catch(e){} location.href=DEST; }
 
-  function start(){ if(!startGL()) startDOM(); }
+  function start(){ if(!startGL()) skip(); }
 
   // 지면이 실제로 올라가 있을 때만 (발행 전·실패 시 랜딩 그대로)
   fetch(DEST,{method:"HEAD",cache:"no-store"}).then(function(res){ if(res.ok) start(); }).catch(function(){});
