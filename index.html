@@ -316,7 +316,7 @@
     setTimeout(function(){ email.value=''; agree.checked=false; },300);
   });
 </script>
-<!-- 할로윈 스페셜 잉크 (2026-10-29 16:00 ~ 11-01 23:59:59 KST). 기간이 지나면 저절로 꺼진다. #ink 로 다시 보기.
+<!-- 할로윈 스페셜 잉크 (2026-10-29 16:00 ~ 10-31 23:59:59 KST, 방문자당 첫 방문 1회). 기간이 지나면 저절로 꺼진다. #ink 로 다시 보기.
      WebGL 액체 잉크가 다 덮이면 스페셜 지면으로 이동. WebGL 이 없는 기기는 잉크 없이 바로 이동 -->
 <style>
   #zbInk{position:fixed;inset:0;z-index:999;pointer-events:none;display:none}
@@ -331,12 +331,15 @@
 <script>
 (function(){
   var START=new Date("2026-10-29T16:00:00+09:00").getTime(),
-      END=new Date("2026-11-01T23:59:59+09:00").getTime(),
+      END=new Date("2026-10-31T23:59:59+09:00").getTime(),
       DEST="issue/halloween26/", KEY="zb_ink_halloween26";
   var force=location.hash==="#ink", now=Date.now();
+  /* 스페셜 지면의 HOME(#home)으로 돌아온 경우엔 잉크 없이 랜딩 */
+  if(location.hash==="#home"){ try{ history.replaceState(null,"",location.pathname+location.search); }catch(e){} return; }
   if(!force && (now<START || now>END)) return;
-  if(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches && !force) return;
+  /* 방문자당 첫 방문 한 번만. 그 뒤로는 평소 랜딩 */
   if(!force){ try{ if(localStorage.getItem(KEY)) return; }catch(e){} }
+  if(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches && !force) return;
 
   function r(a,b){ return a+(b-a)*Math.random(); }
   var box=document.getElementById("zbInk");
@@ -347,7 +350,7 @@
   }
   function finish(closeAt){
     setTimeout(function(){ box.classList.add("close"); }, closeAt);
-    setTimeout(function(){ location.href=DEST; }, closeAt+1200);
+    setTimeout(function(){ location.replace(DEST); }, closeAt+1200);
   }
 
   /* ── 기본: WebGL 액체 잉크 ── 한 줄기가 먼저 떨어져 멈추고, 위쪽 막이 들쭉날쭉 쏟아지며 중간 줄기 넷이 빠져나온다 */
@@ -435,7 +438,7 @@
   }
 
   /* WebGL 을 못 쓰는 기기: 잉크 없이 바로 스페셜 지면으로 */
-  function skip(){ try{ localStorage.setItem(KEY,"1"); }catch(e){} location.href=DEST; }
+  function skip(){ try{ localStorage.setItem(KEY,"1"); }catch(e){} location.replace(DEST); }
 
   function start(){ if(!startGL()) skip(); }
 
