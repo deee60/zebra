@@ -316,7 +316,7 @@
     setTimeout(function(){ email.value=''; agree.checked=false; },300);
   });
 </script>
-<!-- 할로윈 스페셜 잉크 (2026-10-29 18:00 ~ 11-01 23:59:59 KST). 기간이 지나면 저절로 꺼진다. #ink 로 다시 보기.
+<!-- 할로윈 스페셜 잉크 (2026-10-29 16:00 ~ 11-01 23:59:59 KST). 기간이 지나면 저절로 꺼진다. #ink 로 다시 보기.
      WebGL 액체 잉크가 다 덮이면 스페셜 지면으로 이동. WebGL 이 없는 기기는 잉크 없이 바로 이동 -->
 <style>
   #zbInk{position:fixed;inset:0;z-index:999;pointer-events:none;display:none}
@@ -330,7 +330,7 @@
 </div>
 <script>
 (function(){
-  var START=new Date("2026-10-29T18:00:00+09:00").getTime(),
+  var START=new Date("2026-10-29T16:00:00+09:00").getTime(),
       END=new Date("2026-11-01T23:59:59+09:00").getTime(),
       DEST="issue/halloween26/", KEY="zb_ink_halloween26";
   var force=location.hash==="#ink", now=Date.now();
