@@ -362,5 +362,19 @@
     "expires": "2026-10-31T23:59:59+09:00",
     "layout": "lay-b",
     "bg": "#D7C9C1"
+  },
+  {
+    "slug": "halloween26",
+    "kind": "music",
+    "series": "할로윈 스페셜.",
+    "title": "나는 널 몰라",
+    "romaji": "",
+    "artist": "최윤실",
+    "path": "issue/halloween26/",
+    "cover": "issue/halloween26/halloween26.jpg",
+    "published": "2026-10-29",
+    "expires": "2026-11-01T23:59:59+09:00",
+    "layout": "lay-night",
+    "bg": "#1c1b18"
   }
 ]
