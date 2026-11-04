@@ -86,6 +86,31 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://zebrabeta.kr/bside/bob-dylan-rolling-thunder-revue-1976-live-recordings/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://zebrabeta.kr/bside/dunhuang-buddhist-sutras-national-museum-of-korea/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://zebrabeta.kr/bside/seo-jinhee-simcheongga-wanchang-pansori/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://zebrabeta.kr/bside/song-youngju-simplicity-20th-anniversary-concert/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://zebrabeta.kr/bside/kim-whanki-30-xi-71-212/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://zebrabeta.kr/bside/lim-yunchan-philadelphia-orchestra-alsop-2026/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
