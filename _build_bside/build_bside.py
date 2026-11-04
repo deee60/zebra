@@ -197,7 +197,7 @@ def short_title(it):
 
 def render_feed(shown):
     """소식은 위에 한 주만 보인다. 아래 색인: 연도 한 줄에 달을 가로로 놓고, 달을 누르면 그 달의 주가
-    날짜와 첫 소식 제목 + '외 N건'으로 나온다. 줄을 누르면 그 주가 위로 올라온다. 위에 떠 있는 주는 색인에서 뺀다."""
+    날짜와 첫 소식 제목 + '외'으로 나온다. 줄을 누르면 그 주가 위로 올라온다. 위에 떠 있는 주는 색인에서 뺀다."""
     blocks = [render_week(w, i == 0) for i, w in enumerate(shown)]
     years = []                                   # [(year, [(month, [weeks])])] 최신순
     for w in shown:
@@ -222,7 +222,7 @@ def render_feed(shown):
                 wid = esc(w["id"])
                 d = f'{MONTHS[m-1][:3]} {int(w["date"][8:10])}'
                 its = visible_items(w)
-                more = f' <span class="arc-n">외 {len(its)-1}건</span>' if len(its) > 1 else ""
+                more = ' <span class="arc-n">외</span>' if len(its) > 1 else ""
                 nav.append(f'      <div class="arc-w{" on" if w is shown[0] else ""}" data-id="{wid}" onclick="showWeek(\'{wid}\',-1)">'
                            f'<span class="arc-d">{d}</span><span class="arc-t">{esc(short_title(its[0]))}{more}</span></div>')
             nav.append('    </div>')
