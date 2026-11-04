@@ -185,18 +185,22 @@
     transition: max-height 1.1s cubic-bezier(0.25,0.1,0.25,1);
   }
   .week.open > .week-items { max-height: 12000px; }
-  /* 위계: 주(기울임·가장 가벼움) < 달(바로 선 소문자 대문자체) < 연도(더 크고 진하게) */
-  .week[data-month] > .week-header { padding: 16px 0; }
-  .week[data-month] > .week-header .week-date { font-family: 'Cormorant SC', serif; font-style: normal; font-weight: 500; font-size: 12.5px; letter-spacing: 0.2em; color: var(--gray); }
-  .week[data-month] > .week-header:hover .week-date { color: var(--gold); }
-  .week:not([data-month]) + .week[data-month] { margin-top: 28px; border-top: 1px solid var(--divider); padding-top: 6px; }
+  /* 위계: 주(기울임·가장 가벼움) < 달(바로 선 소문자 대문자체) < 연도(더 크고 진하게). 연도 → 달 → 주 → 소식 순서로 펼친다 */
+  .month-row { display: flex; align-items: baseline; gap: 10px; padding: 16px 0; cursor: pointer; border-bottom: 1px solid var(--divider); -webkit-tap-highlight-color: transparent; }
+  .month-row .week-date { font-family: 'Cormorant SC', serif; font-style: normal; font-weight: 500; font-size: 12.5px; letter-spacing: 0.2em; color: var(--gray); }
+  .month-row:hover .week-date { color: var(--gold); }
+  .month-row.expanded .week-arrow { transform: rotate(90deg); color: var(--gold); }
+  .week:not([data-mkey]) + .month-row { margin-top: 28px; border-top: 1px solid var(--divider); }
+  .month-row[data-year] { padding-left: 18px; }
+  .month-row[data-year]:not(.shown) { display: none; }
+  .week[data-mkey]:not(.open) { display: none; padding-left: 18px; }
+  .week[data-mkey].nested:not(.open) { padding-left: 36px; }
+  .week[data-mkey].shown:not(.open) { display: block; }
   .year-row { display: flex; align-items: baseline; margin-top: 44px; padding: 20px 0 16px; border-top: 1px solid var(--faint); cursor: pointer; -webkit-tap-highlight-color: transparent; }
   .year-row .week-date { font-family: 'Cormorant SC', serif; font-style: normal; font-weight: 500; font-size: 16px; letter-spacing: 0.34em; color: #6b675e; }
   .year-row:hover .week-date { color: var(--gold); }
   .year-row ~ .year-row { margin-top: 0; }
   .year-row.expanded .week-arrow { transform: rotate(90deg); color: var(--gold); }
-  .week[data-year]:not(.open) { display: none; padding-left: 18px; }
-  .week[data-year].shown:not(.open) { display: block; }
   /* copy guard (same as issue pages): block text selection; right-click/copy via script below */
   html,body{ -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; -webkit-touch-callout:none; }
   a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
@@ -279,9 +283,13 @@
     </li>
     </ul>
   </section>
-  <section class="week" data-month="1" data-label="October 2026">
+  <div class="month-row" data-mkey="2026-10" onclick="toggleMonth(this)">
+    <span class="week-date">October 2026</span>
+    <span class="week-arrow">›</span>
+  </div>
+  <section class="week" data-label="updated Oct 28, 2026" data-mkey="2026-10">
     <div class="week-header" onclick="toggleWeek(this)">
-      <span class="week-date">October 2026</span>
+      <span class="week-date">updated Oct 28, 2026</span>
       <span class="week-arrow">›</span>
     </div>
     <ul class="trend-list week-items">
@@ -345,6 +353,14 @@
 80여 점의 전시작들은 모두 런던 테이트 미술관의 소장품으로 「폭풍우 치는 바다와 불타는 난파선」, 「폐허의 달빛」 같은 터너의 유화·수채화가 걸린다. 첫 방 「어두운 방」은 터너가 손님을 어두운 방에서 기다리게 해 감각을 깨운 뒤 그림을 보여준 일화를 재현했다. <span class="trend-source">(美術手帖(비주쓰테초))</span></p>
       </div>
     </li>
+    </ul>
+  </section>
+  <section class="week" data-label="updated Oct 21, 2026" data-mkey="2026-10">
+    <div class="week-header" onclick="toggleWeek(this)">
+      <span class="week-date">updated Oct 21, 2026</span>
+      <span class="week-arrow">›</span>
+    </div>
+    <ul class="trend-list week-items">
     <li class="trend-item">
       <div class="trend-headline" onclick="toggle(this)">
         <span class="trend-category">음악</span>
@@ -395,6 +411,14 @@
         <p class="trend-summary">서울시립미술관이 10월 21일 서소문본관에서 «린 허쉬만 리슨: 나의 [나]들»을 연다. 2027년 2월 21일까지 2~3층에서 열리고, 관람은 무료이며 예약이 필요 없다. 1941년생 미국 미디어 아티스트 린 허쉬만 리슨의 아시아 첫 미술관 개인전으로, 1960년대 초기 작업부터 최근작까지 회화·사진·조각·미디어 설치·영화·아카이브 200여 점을 여섯 개 섹션으로 나눠 보인다. 1970년대에 허구의 인물 로베르타 브라이트모어로 몇 해를 산 작업, 관객이 리모컨으로 이야기를 고르는 1980년대 인터랙티브 작품 「로나」, 인공지능 에이전트와 가상 인물의 상호작용을 다룬 「에이전트 루비」가 나온다. 영어로 만든 인터랙티브 작품 「로나」·「딥 컨택트」·「에이전트 루비」는 한국어로 처음 제공된다. 11월부터 1월까지는 서울아트시네마와 함께 «새롭게 발견된 여성들» 상영 프로그램이 열린다. <span class="trend-source">(서울시립미술관)</span></p>
       </div>
     </li>
+    </ul>
+  </section>
+  <section class="week" data-label="updated Oct 14, 2026" data-mkey="2026-10">
+    <div class="week-header" onclick="toggleWeek(this)">
+      <span class="week-date">updated Oct 14, 2026</span>
+      <span class="week-arrow">›</span>
+    </div>
+    <ul class="trend-list week-items">
     <li class="trend-item">
       <div class="trend-headline" onclick="toggle(this)">
         <span class="trend-category">음악</span>
@@ -445,6 +469,14 @@
         <p class="trend-summary">방탄소년단 RM의 개인 소장품을 미술관에서 처음 선보이는 전시 «RM x SFMOMA: Between You and Me(너와 나 사이)»가 10월 3일 샌프란시스코 현대미술관에서 개막했다. 2027년 2월 7일까지 열린다. 약 1,500년에 걸친 한국 미술의 흐름을 따라 180점 가까운 작품이 전시됐고, 대부분은 RM의 소장품이다. 장욱진·윤형근·김환기·백남준과 마크 로스코·마티스·조지아 오키프의 작품이 함께 놓였다. RM은 SFMOMA 큐레이터 두 명과 작품을 고르고, 전시 글과 작품 설명을 직접 썼으며, 오디오 가이드를 한국어와 영어로 녹음하고 전시장 음악도 골랐다. 그는 프리뷰에서 이번 전시를 "꽤 긴 자기소개"라고 말했다. 개막 주말 입장권은 매진됐다. <span class="trend-source">(SFMOMA)</span></p>
       </div>
     </li>
+    </ul>
+  </section>
+  <section class="week" data-label="updated Oct 9, 2026" data-mkey="2026-10">
+    <div class="week-header" onclick="toggleWeek(this)">
+      <span class="week-date">updated Oct 9, 2026</span>
+      <span class="week-arrow">›</span>
+    </div>
+    <ul class="trend-list week-items">
     <li class="trend-item">
       <div class="trend-headline" onclick="toggle(this)">
         <span class="trend-category">음악</span>
@@ -495,6 +527,14 @@
         <p class="trend-summary">한글 점자 '훈맹정음' 반포 100주년을 맞아 특별전 «점에서 세상으로: 훈맹정음 100주년»이 10월 7일 인천 송도 국립세계문자박물관에서 개막했다. 훈맹정음은 송암 박두성(1888–1963)이 1926년 11월 4일 반포한 한글 점자로, '시각장애인을 가르치는 바른 소리'라는 뜻이다. 1913년 제생원 맹아부 교사로 부임한 박두성은 학생들이 일본어 점자만 배울 수 있는 현실을 보고 제자들과 한글 점자를 연구했다. 전시에는 1926년 한글 점자표와 1933년 족답식 제판기, 박두성이 쓰던 점자 타자기 등 국가등록문화유산 11점이 나왔고, 루이 브라유의 6점식 점자판 등 세계 점자의 역사도 함께 소개된다. 시각장애인과 비장애인이 함께 관람할 수 있도록 모든 설명문에 점자를 병기하고, 주요 자료는 손으로 만질 수 있는 모형으로 만들었다. 전시는 2027년 2월 14일까지, 무료다. 한글날에 맞춰 찾아가 보기 좋은 전시다. <span class="trend-source">(국립세계문자박물관)</span></p>
       </div>
     </li>
+    </ul>
+  </section>
+  <section class="week" data-label="updated Oct 2, 2026" data-mkey="2026-10">
+    <div class="week-header" onclick="toggleWeek(this)">
+      <span class="week-date">updated Oct 2, 2026</span>
+      <span class="week-arrow">›</span>
+    </div>
+    <ul class="trend-list week-items">
     <li class="trend-item">
       <div class="trend-headline" onclick="toggle(this)">
         <span class="trend-category">음악</span>
@@ -547,9 +587,13 @@
     </li>
     </ul>
   </section>
-  <section class="week" data-month="1" data-label="September 2026">
+  <div class="month-row" data-mkey="2026-09" onclick="toggleMonth(this)">
+    <span class="week-date">September 2026</span>
+    <span class="week-arrow">›</span>
+  </div>
+  <section class="week" data-label="updated Sep 23, 2026" data-mkey="2026-09">
     <div class="week-header" onclick="toggleWeek(this)">
-      <span class="week-date">September 2026</span>
+      <span class="week-date">updated Sep 23, 2026</span>
       <span class="week-arrow">›</span>
     </div>
     <ul class="trend-list week-items">
@@ -603,6 +647,14 @@
         <p class="trend-summary">제31회 부산국제영화제가 10월 6일부터 15일까지 영화의전당 일대에서 열린다. 개막작은 김종관 감독의 「낮과 밤은 서로에게」로, 한 카페를 서로 다른 시간에 스쳐 간 네 쌍의 대화를 담았다. 공식 초청작은 59개국 246편, 커뮤니티비프 69편을 더하면 모두 315편이다. 홍콩의 허안화 감독이 까멜리아상을, 배우 양자경이 올해의 아시아영화인상을 받는다. 매기 질렌할은 연출작 「플레시 임팩트」로 처음 부산을 찾는다. 가을의 부산이 다시 극장이 된다. <span class="trend-source">(부산국제영화제)</span></p>
       </div>
     </li>
+    </ul>
+  </section>
+  <section class="week" data-label="updated Sep 17, 2026" data-mkey="2026-09">
+    <div class="week-header" onclick="toggleWeek(this)">
+      <span class="week-date">updated Sep 17, 2026</span>
+      <span class="week-arrow">›</span>
+    </div>
+    <ul class="trend-list week-items">
     <li class="trend-item">
       <div class="trend-headline" onclick="toggle(this)">
         <span class="trend-category">음악</span>
@@ -672,10 +724,18 @@ function toggleWeek(el) {
   if (cw) cw.textContent = (wk.classList.contains('open') ? wk : document.querySelector('.week')).getAttribute('data-label');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+function setMonth(m, on) {
+  m.classList.toggle('expanded', on);
+  document.querySelectorAll('.week[data-mkey="' + m.getAttribute('data-mkey') + '"]').forEach(function(w) { w.classList.toggle('shown', on); });
+}
+function toggleMonth(el) { setMonth(el, !el.classList.contains('expanded')); }
 function toggleYear(el) {
   var on = !el.classList.contains('expanded');
   el.classList.toggle('expanded', on);
-  document.querySelectorAll('.week[data-year="' + el.getAttribute('data-year') + '"]').forEach(function(w) { w.classList.toggle('shown', on); });
+  document.querySelectorAll('.month-row[data-year="' + el.getAttribute('data-year') + '"]').forEach(function(m) {
+    m.classList.toggle('shown', on);
+    if (!on) setMonth(m, false);
+  });
 }
 function toggle(el) {
   var item = el.closest('.trend-item');
