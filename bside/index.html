@@ -200,10 +200,11 @@
   .arc-weeks.on { display: block; }
   .arc-w { display: flex; align-items: baseline; gap: 16px; padding: 12px 0; }
   .arc-d { width: 52px; flex-shrink: 0; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 15px; color: var(--gray); cursor: pointer; }
-  .arc-w.on .arc-d { color: var(--gold); }
-  .arc-w ul { list-style: none; flex: 1; }
-  .arc-w li { font-family: 'Noto Serif KR', serif; font-weight: 300; font-size: 13.5px; line-height: 1.7; padding: 2px 0; cursor: pointer; word-break: keep-all; -webkit-tap-highlight-color: transparent; transition: color .2s; }
-  .arc-w li:hover { color: var(--gold); }
+  .arc-w.on { display: none; }  /* 위에 떠 있는 주는 색인에서 뺀다 */
+  .arc-w { cursor: pointer; padding: 9px 0; -webkit-tap-highlight-color: transparent; }
+  .arc-t { flex: 1; font-family: 'Noto Serif KR', serif; font-weight: 300; font-size: 13.5px; line-height: 1.7; word-break: keep-all; transition: color .2s; }
+  .arc-w:hover .arc-t, .arc-w:hover .arc-d { color: var(--gold); }
+  .arc-n { color: var(--faint); font-size: 12px; margin-left: 4px; white-space: nowrap; }
   /* copy guard (same as issue pages): block text selection; right-click/copy via script below */
   html,body{ -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; -webkit-touch-callout:none; }
   a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
@@ -706,18 +707,18 @@
   <nav class="archive">
     <div class="arc-y"><span class="arc-yn">2026</span><span class="arc-ms"><a class="arc-mb" data-mkey="2026-09" onclick="pickMonth(this)">Sep</a> <a class="arc-mb" data-mkey="2026-10" onclick="pickMonth(this)">Oct</a> <a class="arc-mb on" data-mkey="2026-11" onclick="pickMonth(this)">Nov</a></span></div>
     <div class="arc-weeks on" data-mkey="2026-11">
-      <div class="arc-w on" data-id="2026-11-04"><span class="arc-d" onclick="showWeek('2026-11-04',-1)">Nov 4</span><ul><li onclick="showWeek('2026-11-04',0)">밥 딜런 「The Rolling Thunder Revue: The 1976 Live Recordings」 11월 6일 발매</li><li onclick="showWeek('2026-11-04',1)">국립중앙박물관 «천년의 봉인을 열다»</li><li onclick="showWeek('2026-11-04',2)">국립극장 완창판소리 «서진희의 심청가»</li><li onclick="showWeek('2026-11-04',3)">재즈 피아니스트 송영주, 데뷔 20주년 단독 공연</li><li onclick="showWeek('2026-11-04',4)">김환기 미공개 점화 「30-XI-71 #212」 국내 첫 공개</li></ul></div>
+      <div class="arc-w on" data-id="2026-11-04" onclick="showWeek('2026-11-04',-1)"><span class="arc-d">Nov 4</span><span class="arc-t">밥 딜런 「The Rolling Thunder Revue: The 1976 Live Recordings」 11월 6일 발매 <span class="arc-n">외 4건</span></span></div>
     </div>
     <div class="arc-weeks" data-mkey="2026-10">
-      <div class="arc-w" data-id="2026-10-28"><span class="arc-d" onclick="showWeek('2026-10-28',-1)">Oct 28</span><ul><li onclick="showWeek('2026-10-28',0)">임윤찬, 필라델피아 오케스트라와 5일 연속 협연</li><li onclick="showWeek('2026-10-28',1)">무라카미 류 별세</li><li onclick="showWeek('2026-10-28',2)">레너드 코헨 10주기 공식 헌정 공연 「Everybody Knows」</li><li onclick="showWeek('2026-10-28',3)">「미션」 개봉 40주년 4K 재개봉</li><li onclick="showWeek('2026-10-28',4)">테이트 미술관 «터너전: 숭고의 회화, 현대미술과의 대화»</li></ul></div>
-      <div class="arc-w" data-id="2026-10-21"><span class="arc-d" onclick="showWeek('2026-10-21',-1)">Oct 21</span><ul><li onclick="showWeek('2026-10-21',0)">데미안 라이스 내한</li><li onclick="showWeek('2026-10-21',1)">코엔 형제, 제18회 뤼미에르상 수상</li><li onclick="showWeek('2026-10-21',2)">류성룡 「징비록」 영어 증보판, 국내 출판기념회</li><li onclick="showWeek('2026-10-21',3)">백현진 연말 콘서트 「건강!」</li><li onclick="showWeek('2026-10-21',4)">린 허쉬만 리슨 «나의 [나]들»</li></ul></div>
-      <div class="arc-w" data-id="2026-10-14"><span class="arc-d" onclick="showWeek('2026-10-14',-1)">Oct 14</span><ul><li onclick="showWeek('2026-10-14',0)">빈 필하모닉 내한</li><li onclick="showWeek('2026-10-14',1)">앤 카슨, 2026 노벨문학상 수상</li><li onclick="showWeek('2026-10-14',2)">조용필 &amp; 위대한탄생, 10개월 만의 서울 콘서트</li><li onclick="showWeek('2026-10-14',3)">루이 비통 재단, 컬렉터이자 디자이너 귀스타브 파예 전 개막</li><li onclick="showWeek('2026-10-14',4)">RM의 소장품, 미술관에 처음</li></ul></div>
-      <div class="arc-w" data-id="2026-10-09"><span class="arc-d" onclick="showWeek('2026-10-09',-1)">Oct 9</span><ul><li onclick="showWeek('2026-10-09',0)">김동률, 7년 만의 세종문화회관 단독 콘서트 「오래된 노래」</li><li onclick="showWeek('2026-10-09',1)">번역가 안톤 허, 박경리문학상 특별상 '우리이음상' 첫 수상</li><li onclick="showWeek('2026-10-09',2)">위켄드, 8년 만의 내한 공연 「현대카드 슈퍼콘서트 28」</li><li onclick="showWeek('2026-10-09',3)">«스페인 미술 500년: 빛과 어둠의 연대기»</li><li onclick="showWeek('2026-10-09',4)">훈맹정음 100주년 특별전 «점에서 세상으로» 개막</li></ul></div>
-      <div class="arc-w" data-id="2026-10-02"><span class="arc-d" onclick="showWeek('2026-10-02',-1)">Oct 2</span><ul><li onclick="showWeek('2026-10-02',0)">스티비 원더, 「Songs in the Key of Life」 50주년에 미공개 4곡 EP 공개</li><li onclick="showWeek('2026-10-02',1)">제23회 자라섬재즈페스티벌 10월 9~11일</li><li onclick="showWeek('2026-10-02',2)">윌렘 드 쿠닝, 네덜란드를 떠난 지 100년 만의 귀향</li><li onclick="showWeek('2026-10-02',3)">이중섭 회고전 «끝내지 못한 이야기» 10월 15일 개막</li><li onclick="showWeek('2026-10-02',4)">「곰돌이 푸」 출간 100년</li></ul></div>
+      <div class="arc-w" data-id="2026-10-28" onclick="showWeek('2026-10-28',-1)"><span class="arc-d">Oct 28</span><span class="arc-t">임윤찬, 필라델피아 오케스트라와 5일 연속 협연 <span class="arc-n">외 4건</span></span></div>
+      <div class="arc-w" data-id="2026-10-21" onclick="showWeek('2026-10-21',-1)"><span class="arc-d">Oct 21</span><span class="arc-t">데미안 라이스 내한 <span class="arc-n">외 4건</span></span></div>
+      <div class="arc-w" data-id="2026-10-14" onclick="showWeek('2026-10-14',-1)"><span class="arc-d">Oct 14</span><span class="arc-t">빈 필하모닉 내한 <span class="arc-n">외 4건</span></span></div>
+      <div class="arc-w" data-id="2026-10-09" onclick="showWeek('2026-10-09',-1)"><span class="arc-d">Oct 9</span><span class="arc-t">김동률, 7년 만의 세종문화회관 단독 콘서트 「오래된 노래」 <span class="arc-n">외 4건</span></span></div>
+      <div class="arc-w" data-id="2026-10-02" onclick="showWeek('2026-10-02',-1)"><span class="arc-d">Oct 2</span><span class="arc-t">스티비 원더, 「Songs in the Key of Life」 50주년에 미공개 4곡 EP 공개 <span class="arc-n">외 4건</span></span></div>
     </div>
     <div class="arc-weeks" data-mkey="2026-09">
-      <div class="arc-w" data-id="2026-09-23"><span class="arc-d" onclick="showWeek('2026-09-23',-1)">Sep 23</span><ul><li onclick="showWeek('2026-09-23',0)">브루노 마스, 4년 만의 내한 「The Romantic Tour」 고양종합운동장 6회로 확대</li><li onclick="showWeek('2026-09-23',1)">부커상 2026 최종후보 6편 발표</li><li onclick="showWeek('2026-09-23',2)">존 콜트레인 탄생 100주년</li><li onclick="showWeek('2026-09-23',3)">김 크리스틴 선 개인전 «달 마음(Moon Mind)»</li><li onclick="showWeek('2026-09-23',4)">제31회 부산국제영화제 10월 6일 개막</li></ul></div>
-      <div class="arc-w" data-id="2026-09-17"><span class="arc-d" onclick="showWeek('2026-09-17',-1)">Sep 17</span><ul><li onclick="showWeek('2026-09-17',0)">아이유, 정규 6집 선공개 싱글 「이 별로부터」 발매</li><li onclick="showWeek('2026-09-17',1)">무라카미 하루키 신작 장편 「가호」 한국어판 10월 출간 확정</li><li onclick="showWeek('2026-09-17',2)">솔 르윗 «Open Structure» 개막</li><li onclick="showWeek('2026-09-17',3)">블루노트(Blue Note), 런던 코벤트가든에 첫 영국 지점 9월 23일 개관</li><li onclick="showWeek('2026-09-17',4)">Ezra Collective, 4집 「Here Because of Hope」 발매</li></ul></div>
+      <div class="arc-w" data-id="2026-09-23" onclick="showWeek('2026-09-23',-1)"><span class="arc-d">Sep 23</span><span class="arc-t">브루노 마스, 4년 만의 내한 「The Romantic Tour」 고양종합운동장 6회로 확대 <span class="arc-n">외 4건</span></span></div>
+      <div class="arc-w" data-id="2026-09-17" onclick="showWeek('2026-09-17',-1)"><span class="arc-d">Sep 17</span><span class="arc-t">아이유, 정규 6집 선공개 싱글 「이 별로부터」 발매 <span class="arc-n">외 4건</span></span></div>
     </div>
   </nav>
   <footer class="footer">
@@ -748,8 +749,24 @@ function showWeek(id, k) {
   var wk = document.querySelector('.week.open'), cw = document.getElementById('current-week');
   if (cw && wk) cw.textContent = wk.getAttribute('data-label');
   if (wk && k >= 0) { var it = wk.querySelectorAll('.trend-item')[k]; if (it) it.classList.add('open'); }
+  refreshArc();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+function refreshArc() {
+  var best = null, on = document.querySelector('.arc-mb.on');
+  document.querySelectorAll('.arc-mb').forEach(function(b) {
+    var k = b.getAttribute('data-mkey');
+    var any = document.querySelector('.arc-weeks[data-mkey="' + k + '"] .arc-w:not(.on)');
+    b.style.display = any ? '' : 'none';
+    if (any && (!best || k > best.getAttribute('data-mkey'))) best = b;
+  });
+  document.querySelectorAll('.arc-y').forEach(function(y) {
+    var vis = Array.prototype.some.call(y.querySelectorAll('.arc-mb'), function(b) { return b.style.display !== 'none'; });
+    y.style.display = vis ? '' : 'none';
+  });
+  if ((!on || on.style.display === 'none') && best) pickMonth(best);
+}
+document.addEventListener('DOMContentLoaded', refreshArc);
 function toggle(el) {
   var item = el.closest('.trend-item');
   var wasOpen = item.classList.contains('open');
