@@ -185,22 +185,22 @@
     transition: max-height 1.1s cubic-bezier(0.25,0.1,0.25,1);
   }
   .week.open > .week-items { max-height: 12000px; }
-  /* 위계: 주(기울임·가장 가벼움) < 달(바로 선 소문자 대문자체) < 연도(더 크고 진하게). 연도 → 달 → 주 → 소식 순서로 펼친다 */
-  .month-row { display: flex; align-items: baseline; gap: 10px; padding: 16px 0; cursor: pointer; border-bottom: 1px solid var(--divider); -webkit-tap-highlight-color: transparent; }
-  .month-row .week-date { font-family: 'Cormorant SC', serif; font-style: normal; font-weight: 500; font-size: 12.5px; letter-spacing: 0.2em; color: var(--gray); }
-  .month-row:hover .week-date { color: var(--gold); }
-  .month-row.expanded .week-arrow { transform: rotate(90deg); color: var(--gold); }
-  .week:not([data-mkey]) + .month-row { margin-top: 28px; border-top: 1px solid var(--divider); }
-  .month-row[data-year] { padding-left: 18px; }
-  .month-row[data-year]:not(.shown) { display: none; }
-  .week[data-mkey]:not(.open) { display: none; padding-left: 18px; }
-  .week[data-mkey].nested:not(.open) { padding-left: 36px; }
-  .week[data-mkey].shown:not(.open) { display: block; }
-  .year-row { display: flex; align-items: baseline; margin-top: 44px; padding: 20px 0 16px; border-top: 1px solid var(--faint); cursor: pointer; -webkit-tap-highlight-color: transparent; }
-  .year-row .week-date { font-family: 'Cormorant SC', serif; font-style: normal; font-weight: 500; font-size: 16px; letter-spacing: 0.34em; color: #6b675e; }
-  .year-row:hover .week-date { color: var(--gold); }
-  .year-row ~ .year-row { margin-top: 0; }
-  .year-row.expanded .week-arrow { transform: rotate(90deg); color: var(--gold); }
+  /* 소식은 한 주만 보인다. 주 고르기는 아래 색인: 연도 → 달 → 날짜. 줄은 색인 위 한 줄뿐, 위계는 글자 크기·굵기·들여쓰기로 */
+  .week:not(.open) { display: none; }
+  .week > .week-header { display: none; }
+  .archive { margin-top: 64px; padding-top: 36px; border-top: 1px solid var(--divider); }
+  .arc-year + .arc-year { margin-top: 26px; }
+  .arc-y { display: flex; align-items: baseline; gap: 10px; cursor: pointer; font-family: 'Cormorant SC', serif; font-weight: 500; font-size: 17px; letter-spacing: 0.3em; color: #6b675e; -webkit-tap-highlight-color: transparent; }
+  .arc-y:hover { color: var(--gold); }
+  .arc-year.open .arc-y .week-arrow { transform: rotate(90deg); color: var(--gold); }
+  .arc-months { display: none; padding: 14px 0 0 2px; }
+  .arc-year.open .arc-months { display: block; }
+  .arc-m { display: flex; align-items: baseline; padding: 7px 0; }
+  .arc-mn { width: 104px; flex-shrink: 0; font-family: 'Cormorant SC', serif; font-weight: 500; font-size: 12px; letter-spacing: 0.2em; color: var(--gray); }
+  .arc-days { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+  .arc-d { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px; color: var(--gray); cursor: pointer; border-bottom: 1px solid transparent; line-height: 1.2; -webkit-tap-highlight-color: transparent; transition: color .2s; }
+  .arc-d:hover { color: var(--gold); }
+  .arc-d.on { color: var(--gold); border-bottom-color: var(--gold); }
   /* copy guard (same as issue pages): block text selection; right-click/copy via script below */
   html,body{ -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; -webkit-touch-callout:none; }
   a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
@@ -213,7 +213,7 @@
     <p class="updated" id="current-week">updated Nov 4, 2026</p>
   </header>
   <div class="weeks">
-  <section class="week open" data-label="updated Nov 4, 2026">
+  <section class="week open" data-id="2026-11-04" data-label="updated Nov 4, 2026">
     <div class="week-header" onclick="toggleWeek(this)">
       <span class="week-date">updated Nov 4, 2026</span>
       <span class="week-arrow">›</span>
@@ -283,11 +283,7 @@
     </li>
     </ul>
   </section>
-  <div class="month-row" data-mkey="2026-10" onclick="toggleMonth(this)">
-    <span class="week-date">October 2026</span>
-    <span class="week-arrow">›</span>
-  </div>
-  <section class="week" data-label="updated Oct 28, 2026" data-mkey="2026-10">
+  <section class="week" data-id="2026-10-28" data-label="updated Oct 28, 2026">
     <div class="week-header" onclick="toggleWeek(this)">
       <span class="week-date">updated Oct 28, 2026</span>
       <span class="week-arrow">›</span>
@@ -355,7 +351,7 @@
     </li>
     </ul>
   </section>
-  <section class="week" data-label="updated Oct 21, 2026" data-mkey="2026-10">
+  <section class="week" data-id="2026-10-21" data-label="updated Oct 21, 2026">
     <div class="week-header" onclick="toggleWeek(this)">
       <span class="week-date">updated Oct 21, 2026</span>
       <span class="week-arrow">›</span>
@@ -413,7 +409,7 @@
     </li>
     </ul>
   </section>
-  <section class="week" data-label="updated Oct 14, 2026" data-mkey="2026-10">
+  <section class="week" data-id="2026-10-14" data-label="updated Oct 14, 2026">
     <div class="week-header" onclick="toggleWeek(this)">
       <span class="week-date">updated Oct 14, 2026</span>
       <span class="week-arrow">›</span>
@@ -471,7 +467,7 @@
     </li>
     </ul>
   </section>
-  <section class="week" data-label="updated Oct 9, 2026" data-mkey="2026-10">
+  <section class="week" data-id="2026-10-09" data-label="updated Oct 9, 2026">
     <div class="week-header" onclick="toggleWeek(this)">
       <span class="week-date">updated Oct 9, 2026</span>
       <span class="week-arrow">›</span>
@@ -529,7 +525,7 @@
     </li>
     </ul>
   </section>
-  <section class="week" data-label="updated Oct 2, 2026" data-mkey="2026-10">
+  <section class="week" data-id="2026-10-02" data-label="updated Oct 2, 2026">
     <div class="week-header" onclick="toggleWeek(this)">
       <span class="week-date">updated Oct 2, 2026</span>
       <span class="week-arrow">›</span>
@@ -587,11 +583,7 @@
     </li>
     </ul>
   </section>
-  <div class="month-row" data-mkey="2026-09" onclick="toggleMonth(this)">
-    <span class="week-date">September 2026</span>
-    <span class="week-arrow">›</span>
-  </div>
-  <section class="week" data-label="updated Sep 23, 2026" data-mkey="2026-09">
+  <section class="week" data-id="2026-09-23" data-label="updated Sep 23, 2026">
     <div class="week-header" onclick="toggleWeek(this)">
       <span class="week-date">updated Sep 23, 2026</span>
       <span class="week-arrow">›</span>
@@ -649,7 +641,7 @@
     </li>
     </ul>
   </section>
-  <section class="week" data-label="updated Sep 17, 2026" data-mkey="2026-09">
+  <section class="week" data-id="2026-09-17" data-label="updated Sep 17, 2026">
     <div class="week-header" onclick="toggleWeek(this)">
       <span class="week-date">updated Sep 17, 2026</span>
       <span class="week-arrow">›</span>
@@ -708,6 +700,16 @@
     </ul>
   </section>
   </div>
+  <nav class="archive">
+    <div class="arc-year open">
+      <div class="arc-y" onclick="toggleYear(this)">2026<span class="week-arrow">›</span></div>
+      <div class="arc-months">
+        <div class="arc-m"><span class="arc-mn">November</span><span class="arc-days"><a class="arc-d on" data-id="2026-11-04" onclick="showWeek(this)">4</a></span></div>
+        <div class="arc-m"><span class="arc-mn">October</span><span class="arc-days"><a class="arc-d" data-id="2026-10-28" onclick="showWeek(this)">28</a> <a class="arc-d" data-id="2026-10-21" onclick="showWeek(this)">21</a> <a class="arc-d" data-id="2026-10-14" onclick="showWeek(this)">14</a> <a class="arc-d" data-id="2026-10-09" onclick="showWeek(this)">9</a> <a class="arc-d" data-id="2026-10-02" onclick="showWeek(this)">2</a></span></div>
+        <div class="arc-m"><span class="arc-mn">September</span><span class="arc-days"><a class="arc-d" data-id="2026-09-23" onclick="showWeek(this)">23</a> <a class="arc-d" data-id="2026-09-17" onclick="showWeek(this)">17</a></span></div>
+      </div>
+    </div>
+  </nav>
   <footer class="footer">
     <p class="colophon">zebra beta &middot; movement 2.</p>
     <div class="home-link-wrap"><a href="https://zebrabeta.kr">HOME</a></div>
@@ -724,19 +726,16 @@ function toggleWeek(el) {
   if (cw) cw.textContent = (wk.classList.contains('open') ? wk : document.querySelector('.week')).getAttribute('data-label');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-function setMonth(m, on) {
-  m.classList.toggle('expanded', on);
-  document.querySelectorAll('.week[data-mkey="' + m.getAttribute('data-mkey') + '"]').forEach(function(w) { w.classList.toggle('shown', on); });
+function showWeek(a) {
+  var id = a.getAttribute('data-id');
+  document.querySelectorAll('.trend-item.open').forEach(function(i) { i.classList.remove('open'); });
+  document.querySelectorAll('.week').forEach(function(w) { w.classList.toggle('open', w.getAttribute('data-id') === id); });
+  document.querySelectorAll('.arc-d').forEach(function(d) { d.classList.toggle('on', d === a); });
+  var wk = document.querySelector('.week.open'), cw = document.getElementById('current-week');
+  if (cw && wk) cw.textContent = wk.getAttribute('data-label');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-function toggleMonth(el) { setMonth(el, !el.classList.contains('expanded')); }
-function toggleYear(el) {
-  var on = !el.classList.contains('expanded');
-  el.classList.toggle('expanded', on);
-  document.querySelectorAll('.month-row[data-year="' + el.getAttribute('data-year') + '"]').forEach(function(m) {
-    m.classList.toggle('shown', on);
-    if (!on) setMonth(m, false);
-  });
-}
+function toggleYear(el) { el.parentNode.classList.toggle('open'); }
 function toggle(el) {
   var item = el.closest('.trend-item');
   var wasOpen = item.classList.contains('open');
