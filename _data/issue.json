@@ -390,5 +390,19 @@
     "expires": "2026-11-06T23:59:59+09:00",
     "layout": "lay-canon",
     "bg": "#E4DCC9"
+  },
+  {
+    "slug": "dryadvisory08",
+    "kind": "music",
+    "series": "건조주의보 08.",
+    "title": "홍제천의 그믐달",
+    "romaji": "",
+    "artist": "고상지",
+    "path": "issue/dryadvisory08/",
+    "cover": "issue/dryadvisory08/dryadvisory08.jpg",
+    "published": "2026-11-05",
+    "expires": "2026-11-08T23:59:59+09:00",
+    "layout": "lay-a",
+    "bg": "#CBC5AE"
   }
 ]
