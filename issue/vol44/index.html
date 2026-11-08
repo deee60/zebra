@@ -266,7 +266,7 @@ a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
 
   <main class="sheet lay-c" id="sheet">
 
-    <p class="notice">이 지면은 11월 10일 자정에 아카이브로 이관됩니다</p>
+    <p class="notice">이 지면은 11월 11일 자정에 아카이브로 이관됩니다</p>
 
     <div class="stamp"><span class="sp-t">지브라 베타 Vol.44</span></div>
 
@@ -314,7 +314,7 @@ a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
 
 <script>
 /* 이관(만료) 처리 — 표준 블록. EXPIRES 는 build.py 가 발행시각+72시간으로 계산 */
-const EXPIRES = "2026-11-10T23:59:59+09:00";
+const EXPIRES = "2026-11-11T23:59:59+09:00";
 const isExpired = Date.now() > new Date(EXPIRES).getTime() || location.search.includes("preview=expired");
 const isArchive = location.search.includes("archive=1");
 if (isExpired && !isArchive) {
