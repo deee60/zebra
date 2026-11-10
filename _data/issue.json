@@ -418,5 +418,19 @@
     "expires": "2026-11-11T23:59:59+09:00",
     "layout": "lay-c",
     "bg": "#CDD5DF"
+  },
+  {
+    "slug": "dryadvisory09",
+    "kind": "music",
+    "series": "건조주의보 09.",
+    "title": "On the Square",
+    "romaji": "",
+    "artist": "Mac DeMarco",
+    "path": "issue/dryadvisory09/",
+    "cover": "issue/dryadvisory09/dryadvisory09.jpg",
+    "published": "2026-11-10",
+    "expires": "2026-11-13T23:59:59+09:00",
+    "layout": "lay-b",
+    "bg": "#D7CBC1"
   }
 ]
