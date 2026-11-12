@@ -432,5 +432,19 @@
     "expires": "2026-11-13T23:59:59+09:00",
     "layout": "lay-b",
     "bg": "#D7CBC1"
+  },
+  {
+    "slug": "vol45",
+    "kind": "music",
+    "series": "지브라 베타 Vol.45",
+    "title": "Fantasy",
+    "romaji": "",
+    "artist": "Earth, Wind & Fire",
+    "path": "issue/vol45/",
+    "cover": "issue/vol45/vol45.jpg",
+    "published": "2026-11-12",
+    "expires": "2026-11-15T23:59:59+09:00",
+    "layout": "lay-a",
+    "bg": "#D0CDC8"
   }
 ]
