@@ -56,6 +56,7 @@ HEAD = """<!DOCTYPE html>
   gtag('js', new Date());
   gtag('config', '{ga}');
 </script>
+<script src="/_z/t.js" defer></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{title}</title>
 <meta name="description" content="{desc}">
