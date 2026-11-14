@@ -446,5 +446,19 @@
     "expires": "2026-11-15T23:59:59+09:00",
     "layout": "lay-a",
     "bg": "#D0CDC8"
+  },
+  {
+    "slug": "vol46",
+    "kind": "music",
+    "series": "지브라 베타 Vol.46",
+    "title": "Emmanuel",
+    "romaji": "",
+    "artist": "Chris Botti · Lucia Micarelli",
+    "path": "issue/vol46/",
+    "cover": "issue/vol46/vol46.jpg",
+    "published": "2026-11-14",
+    "expires": "2026-11-17T23:59:59+09:00",
+    "layout": "lay-a",
+    "bg": "#DFDCCD"
   }
 ]
