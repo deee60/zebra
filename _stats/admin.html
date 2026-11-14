@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>zebra beta · 관리자</title>
+<style>
+:root{--ink:#1d1d1f;--muted:#6e6e73;--line:#e5e5ea;--soft:#f5f5f7;--accent:#111;--pink:#d6336c;--bar:#3a3a3c;--bar2:#c7c7cc}
+*{box-sizing:border-box}body{margin:0;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;color:var(--ink);background:#fafafa}
+header{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line);padding:12px 20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+h1{font-size:16px;margin:0 12px 0 0}main{max-width:1200px;margin:0 auto;padding:16px 20px 60px}
+.btn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font:inherit;cursor:pointer}.btn.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin:8px 0 16px}
+.tile{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px}.tile b{display:block;font-size:22px}.tile span{color:var(--muted);font-size:12px}
+.tile.live b{color:var(--pink)}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:14px;overflow:auto}
+.card h2{font-size:14px;margin:0 0 10px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:800px){.grid2{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600;white-space:nowrap;cursor:default}td.n,th.n{text-align:right;white-space:nowrap}tr.click{cursor:pointer}tr.click:hover{background:var(--soft)}
+.meter{height:6px;background:var(--soft);border-radius:3px;overflow:hidden;min-width:60px}.meter i{display:block;height:100%;background:var(--bar)}
+.chart{display:flex;align-items:flex-end;gap:2px;height:120px;border-bottom:1px solid var(--line)}.chart div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;position:relative}
+.chart i{display:block;background:var(--bar2);border-radius:2px 2px 0 0}.chart i.v{background:var(--bar);position:absolute;bottom:0;left:25%;right:25%}
+.axis{display:flex;justify-content:space-between;color:var(--muted);font-size:11px;margin-top:4px}
+.muted{color:var(--muted)}.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 12px}
+#login{max-width:380px;margin:80px auto;background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px}#login input{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;margin:10px 0}
+.sess{border-left:3px solid var(--line);padding:4px 0 8px 12px;margin:10px 0}.sess h3{font-size:13px;margin:0 0 6px}.step{padding:4px 0;border-bottom:1px dashed var(--line)}
+.pill{display:inline-block;background:var(--soft);border-radius:999px;padding:1px 8px;margin:1px 3px 1px 0;font-size:12px}
+input[type=date]{border:1px solid var(--line);border-radius:999px;padding:5px 10px;font:inherit}
+</style>
+</head>
+<body>
+<div id="login" hidden>
+  <h1>zebra beta 관리자</h1>
+  <p class="muted">관리자 토큰을 넣어 주세요. 이 브라우저에만 저장됩니다.</p>
+  <input id="tok" type="password" autocomplete="off" placeholder="ADMIN_TOKEN">
+  <button class="btn on" id="go">들어가기</button> <span id="err" class="muted"></span>
+</div>
+<div id="app" hidden>
+<header>
+  <h1>zebra beta · 방문 기록</h1>
+  <span id="ranges"></span>
+  <input type="date" id="day" title="하루 보기 (한국 시간)">
+  <button class="btn" id="reload">새로고침</button>
+  <button class="btn" id="csv">CSV 내려받기</button>
+  <button class="btn" id="out">로그아웃</button>
+</header>
+<main>
+  <div class="tiles" id="tiles"></div>
+  <div class="card"><h2>시간대별 <span class="muted">(짙은 막대 = 방문자, 옅은 막대 = 페이지뷰 · 한국 시간)</span></h2><div class="chart" id="chart"></div><div class="axis" id="axis"></div></div>
+  <div class="tabs" id="tabs"></div>
+  <div id="view"></div>
+</main>
+</div>
+<script>
+(function () {
+  var KEY = 'za', tok = localStorage.getItem(KEY) || '';
+  var $ = function (s) { return document.querySelector(s); };
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var num = function (n) { return (n || 0).toLocaleString('ko-KR'); };
+  var dur = function (ms) { ms = Math.round(ms || 0); var s = Math.round(ms / 1000); if (s < 60) return s + '초'; var m = Math.floor(s / 60); if (m < 60) return m + '분 ' + (s % 60) + '초'; return Math.floor(m / 60) + '시간 ' + (m % 60) + '분'; };
+  var kst = function (t, withDay) { var d = new Date(t + 9 * 3600e3), p = function (x) { return String(x).padStart(2, '0'); };
+    return (withDay === false ? '' : (d.getUTCMonth() + 1) + '/' + d.getUTCDate() + ' ') + p(d.getUTCHours()) + ':' + p(d.getUTCMinutes()); };
+  var cn = (function () { try { var dn = new Intl.DisplayNames(['ko'], { type: 'region' }); return function (c) { try { return c ? dn.of(c) : '알 수 없음'; } catch (e) { return c; } }; } catch (e) { return function (c) { return c || '알 수 없음'; }; } })();
+  var DEV = { phone: '휴대폰', tablet: '태블릿', desktop: 'PC' };
+
+  var RANGES = [['1시간', 3600e3], ['6시간', 6 * 3600e3], ['24시간', 864e5], ['7일', 7 * 864e5], ['30일', 30 * 864e5], ['180일', 180 * 864e5]];
+  var span = 864e5, dayPick = '', tab = 'pages', cache = {}, inPerson = false;
+  function win() {
+    if (dayPick) { var s = Date.parse(dayPick + 'T00:00:00+09:00'); return [s, s + 864e5]; }
+    var to = Date.now(); return [to - span, to];
+  }
+  function get(path, extra) {
+    var w = win(), u = '/_z/api/' + path + '?from=' + w[0] + '&to=' + w[1] + (extra || '');
+    return fetch(u, { headers: { authorization: 'Bearer ' + tok } }).then(function (r) { if (r.status === 401) { logout(); throw new Error('auth'); } return r.json(); });
+  }
+  function logout() { localStorage.removeItem(KEY); tok = ''; $('#app').hidden = true; $('#login').hidden = false; }
+
+  function drawRanges() {
+    $('#ranges').innerHTML = RANGES.map(function (r) { return '<button class="btn' + (!dayPick && r[1] === span ? ' on' : '') + '" data-s="' + r[1] + '">' + r[0] + '</button>'; }).join(' ');
+    $('#ranges').querySelectorAll('button').forEach(function (b) { b.onclick = function () { span = +b.dataset.s; dayPick = ''; $('#day').value = ''; load(); }; });
+  }
+  var TABS = [['pages', '많이 본 페이지'], ['sources', '들어온 곳'], ['places', '지역'], ['tech', '기기 · 브라우저'], ['clicks', '누른 링크'], ['visitors', '방문자']];
+  function drawTabs() {
+    $('#tabs').innerHTML = TABS.map(function (t) { return '<button class="btn' + (t[0] === tab ? ' on' : '') + '" data-t="' + t[0] + '">' + t[1] + '</button>'; }).join('');
+    $('#tabs').querySelectorAll('button').forEach(function (b) { b.onclick = function () { tab = b.dataset.t; drawTabs(); showTab(); }; });
+  }
+
+  function load(keep) {
+    drawRanges(); cache = {};
+    get('summary').then(function (s) {
+      var bounce = s.visits ? Math.round(s.bounce_visits / s.visits * 100) : 0;
+      var tiles = [['live', '지금 보는 사람 (5분)', num(s.live)], ['', '방문자', num(s.visitors)], ['', '처음 온 사람', num(s.new_visitors)], ['', '방문 수', num(s.visits)],
+        ['', '페이지뷰', num(s.pv)], ['', '방문당 머문 시간', dur(s.visits ? s.active / s.visits : 0)], ['', '방문당 페이지', s.visits ? (s.pv / s.visits).toFixed(1) : '0'],
+        ['', '한 페이지만 보고 나감', bounce + '%']];
+      $('#tiles').innerHTML = tiles.map(function (t) { return '<div class="tile ' + t[0] + '"><b>' + t[2] + '</b><span>' + t[1] + '</span></div>'; }).join('');
+      var mx = Math.max.apply(null, [1].concat(s.series.map(function (x) { return x.pv; })));
+      $('#chart').innerHTML = s.series.map(function (x) { return '<div title="' + kst(x.t, s.step > 3600e3 ? true : true) + ' · 방문자 ' + x.visitors + ' · 페이지뷰 ' + x.pv + '"><i style="height:' + (x.pv / mx * 100) + '%"></i><i class="v" style="height:' + (x.visitors / mx * 100) + '%"></i></div>'; }).join('');
+      var ser = s.series; $('#axis').innerHTML = ser.length ? '<span>' + kst(ser[0].t) + '</span><span>' + kst(ser[ser.length - 1].t) + '</span>' : '<span class="muted">기록 없음</span>';
+    }).catch(function () {});
+    if (!keep) showTab();
+  }
+
+  function table(cols, rows, onRow) {
+    if (!rows.length) return '<p class="muted">이 기간에는 기록이 없습니다.</p>';
+    return '<table><tr>' + cols.map(function (c) { return '<th' + (c.n ? ' class="n"' : '') + '>' + c.h + '</th>'; }).join('') + '</tr>' +
+      rows.map(function (r, i) { return '<tr' + (onRow ? ' class="click" data-i="' + i + '"' : '') + '>' + cols.map(function (c) { return '<td' + (c.n ? ' class="n"' : '') + '>' + c.f(r) + '</td>'; }).join('') + '</tr>'; }).join('') + '</table>';
+  }
+  var meter = function (v, mx) { return '<div class="meter"><i style="width:' + Math.round((v || 0) / (mx || 1) * 100) + '%"></i></div>'; };
+  function card(title, html) { return '<div class="card"><h2>' + title + '</h2>' + html + '</div>'; }
+
+  function showTab() {
+    inPerson = false; var v = $('#view'); v.innerHTML = '<p class="muted">불러오는 중…</p>';
+    get(tab).then(function (d) {
+      cache[tab] = d;
+      if (tab === 'pages') {
+        var mx = Math.max.apply(null, [1].concat(d.map(function (r) { return r.views; })));
+        v.innerHTML = card('많이 본 페이지', table([
+          { h: '페이지', f: function (r) { return '<b>' + esc(r.title || r.path) + '</b><br><span class="muted">' + esc(r.path) + '</span>'; } },
+          { h: '', f: function (r) { return meter(r.views, mx); } },
+          { h: '조회', n: 1, f: function (r) { return num(r.views); } }, { h: '사람', n: 1, f: function (r) { return num(r.visitors); } },
+          { h: '평균 머문 시간', n: 1, f: function (r) { return dur(r.avg_ms); } }, { h: '평균 스크롤', n: 1, f: function (r) { return Math.round(r.avg_scroll || 0) + '%'; } },
+          { h: '끝까지 읽음', n: 1, f: function (r) { return r.views ? Math.round(r.read_to_end / r.views * 100) + '%' : '-'; } }], d));
+      } else if (tab === 'sources') {
+        var mx2 = Math.max.apply(null, [1].concat(d.map(function (r) { return r.visits; })));
+        v.innerHTML = card('들어온 곳 <span class="muted">(방문의 첫 페이지 기준 · utm_source가 있으면 그것)</span>', table([
+          { h: '어디서', f: function (r) { return esc(r.src); } }, { h: '', f: function (r) { return meter(r.visits, mx2); } },
+          { h: '방문', n: 1, f: function (r) { return num(r.visits); } }, { h: '사람', n: 1, f: function (r) { return num(r.visitors); } }], d));
+      } else if (tab === 'places') {
+        var mx3 = Math.max.apply(null, [1].concat(d.map(function (r) { return r.visitors; })));
+        v.innerHTML = card('지역 <span class="muted">(접속한 곳 기준 · Cloudflare가 알려 주는 도시, 휴대폰 데이터는 실제 위치와 다를 수 있음)</span>', table([
+          { h: '나라', f: function (r) { return esc(cn(r.country)); } }, { h: '지역', f: function (r) { return esc(r.region || '-'); } }, { h: '도시', f: function (r) { return esc(r.city || '-'); } },
+          { h: '', f: function (r) { return meter(r.visitors, mx3); } }, { h: '사람', n: 1, f: function (r) { return num(r.visitors); } },
+          { h: '조회', n: 1, f: function (r) { return num(r.views); } }, { h: '평균 머문 시간', n: 1, f: function (r) { return dur(r.avg_ms); } }], d));
+      } else if (tab === 'tech') {
+        var part = function (t, rows, lab) { var m = Math.max.apply(null, [1].concat(rows.map(function (r) { return r.visitors; })));
+          return card(t, table([{ h: '', f: function (r) { return esc(lab ? lab(r.k) : (r.k || '-')); } }, { h: '', f: function (r) { return meter(r.visitors, m); } }, { h: '사람', n: 1, f: function (r) { return num(r.visitors); } }], rows)); };
+        v.innerHTML = '<div class="grid2">' + part('기기', d.device, function (k) { return DEV[k] || k; }) + part('운영체제', d.os) + part('브라우저 · 앱', d.browser) + part('언어', d.lang) + part('통신사 · 회사망', d.isp) + part('화면 크기', d.screen) + '</div>';
+      } else if (tab === 'clicks') {
+        v.innerHTML = card('누른 링크 <span class="muted">(사이트 안 링크는 경로, 바깥 링크는 주소)</span>', table([{ h: '링크', f: function (r) { return esc(r.link); } }, { h: '횟수', n: 1, f: function (r) { return num(r.n); } }], d));
+      } else if (tab === 'visitors') {
+        v.innerHTML = card('방문자 <span class="muted">(최근 순 · 누르면 그 사람의 전체 기록)</span>', table([
+          { h: '마지막', f: function (r) { return kst(r.last_ts); } },
+          { h: '어디서', f: function (r) { return esc([r.city, r.region, cn(r.country)].filter(Boolean).join(', ')); } },
+          { h: '기기', f: function (r) { return esc((DEV[r.device] || r.device) + ' · ' + r.os + ' · ' + r.browser); } },
+          { h: '처음 들어온 곳', f: function (r) { return esc(r.first_src); } },
+          { h: '방문', n: 1, f: function (r) { return num(r.visits) + (r.ever_first < win()[0] ? ' <span class="pill">재방문</span>' : ''); } },
+          { h: '페이지', n: 1, f: function (r) { return num(r.views); } }, { h: '머문 시간', n: 1, f: function (r) { return dur(r.active); } }], d, true));
+        v.querySelectorAll('tr.click').forEach(function (tr) { tr.onclick = function () { person(d[+tr.dataset.i].vid); }; });
+      }
+    }).catch(function (e) { if (String(e.message) !== 'auth') v.innerHTML = '<p class="muted">불러오지 못했습니다.</p>'; });
+  }
+
+  function person(vid) {
+    inPerson = true; var v = $('#view'); v.innerHTML = '<p class="muted">불러오는 중…</p>';
+    fetch('/_z/api/visitor?vid=' + encodeURIComponent(vid), { headers: { authorization: 'Bearer ' + tok } }).then(function (r) { return r.json(); }).then(function (rows) {
+      if (!rows.length) { v.innerHTML = '<p class="muted">기록 없음</p>'; return; }
+      var f = rows[0], tot = rows.reduce(function (a, r) { return a + (r.active_ms || 0); }, 0);
+      var sess = []; rows.forEach(function (r) { var s = sess[sess.length - 1]; if (!s || s.sid !== r.sid) sess.push(s = { sid: r.sid, rows: [] }); s.rows.push(r); });
+      var head = '<button class="btn" id="back">‹ 방문자 목록</button>' +
+        card('이 사람 요약', '<p>' + esc([f.city, f.region, cn(f.country)].filter(Boolean).join(', ')) + ' · ' + esc((DEV[f.device] || f.device) + ' · ' + f.os + ' · ' + f.browser) +
+          ' · 화면 ' + f.sw + '×' + f.sh + ' · 언어 ' + esc(f.lang || '-') + ' · ' + esc(f.isp || '') + '</p><p>처음 온 날 ' + kst(f.ts) + ' · 방문 ' + sess.length + '번 · 페이지 ' + rows.length + '개 · 총 머문 시간 ' + dur(tot) + '</p>');
+      var body = sess.slice().reverse().map(function (s) {
+        var a = s.rows[0], end = s.rows[s.rows.length - 1], t = s.rows.reduce(function (x, r) { return x + (r.active_ms || 0); }, 0);
+        var src = a.utm_source ? 'utm: ' + a.utm_source + (a.utm_medium ? ' / ' + a.utm_medium : '') + (a.utm_campaign ? ' / ' + a.utm_campaign : '') : a.ref_host || (a.ref_path ? '사이트 안 ' + a.ref_path : '직접 · 앱 · 북마크');
+        return '<div class="sess"><h3>' + kst(a.ts) + ' ~ ' + kst(end.left_ts || end.ts, false) + ' · ' + s.rows.length + '페이지 · ' + dur(t) + ' · 들어온 곳: ' + esc(src) + ' · ' + esc(a.city || '') + '</h3>' +
+          s.rows.map(function (r) { var c = []; try { c = JSON.parse(r.clicks || '[]'); } catch (e) {}
+            return '<div class="step">' + kst(r.ts, false) + ' <b>' + esc(r.title || r.path) + '</b> <span class="muted">' + esc(r.path) + '</span><br><span class="pill">머문 시간 ' + dur(r.active_ms) + '</span><span class="pill">스크롤 ' + (r.scroll || 0) + '%</span>' +
+              (c.length ? c.map(function (x) { return '<span class="pill">누름 → ' + esc(x) + '</span>'; }).join('') : '') + '</div>'; }).join('') + '</div>';
+      }).join('');
+      v.innerHTML = head + card('방문 기록 <span class="muted">(최근 방문이 위)</span>', body);
+      $('#back').onclick = function () { tab = 'visitors'; drawTabs(); showTab(); };
+    });
+  }
+
+  function csv() {
+    get('export').then(function (rows) {
+      if (!rows.length) return;
+      var k = Object.keys(rows[0]), q = function (x) { x = x == null ? '' : String(x); return /[",\n]/.test(x) ? '"' + x.replace(/"/g, '""') + '"' : x; };
+      var s = '﻿' + k.join(',') + '\n' + rows.map(function (r) { return k.map(function (c) { return q(c === 'ts' || c === 'left_ts' ? (r[c] ? new Date(r[c] + 9 * 3600e3).toISOString().replace('T', ' ').slice(0, 19) : '') : r[c]); }).join(','); }).join('\n');
+      var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([s], { type: 'text/csv' })); a.download = 'zebra-visits.csv'; a.click();
+    });
+  }
+
+  function start() { $('#login').hidden = true; $('#app').hidden = false; drawTabs(); load(); }
+  $('#go').onclick = function () { tok = $('#tok').value.trim(); fetch('/_z/api/summary?from=0&to=1', { headers: { authorization: 'Bearer ' + tok } }).then(function (r) {
+    if (r.ok) { localStorage.setItem(KEY, tok); start(); } else { $('#err').textContent = '토큰이 맞지 않습니다.'; } }); };
+  $('#tok').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('#go').click(); });
+  $('#reload').onclick = function () { load(); }; $('#csv').onclick = csv; $('#out').onclick = logout;
+  $('#day').onchange = function () { dayPick = $('#day').value; load(); };
+  setInterval(function () { if (!$('#app').hidden && !dayPick && document.visibilityState === 'visible') load(inPerson); }, 60000);
+  if (tok) start(); else { $('#login').hidden = false; }
+})();
+</script>
+</body>
+</html>

@@ -6,3 +6,4 @@ exclude:
   - archive
   - _queue
   - _build
+  - _stats
