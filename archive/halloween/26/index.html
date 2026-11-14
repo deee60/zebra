@@ -10,6 +10,7 @@
   gtag('js', new Date());
   gtag('config', 'G-B0TNF05GFQ');
 </script>
+<script src="/_z/t.js" defer></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ZEBRA BETA 할로윈 스페셜 · 손으로 만든 지면 (build.py 밖). 발행은 publish-queue 가 EXPIRES·이관 예고만 치환 -->
 <title>할로윈 스페셜 · 나는 널 몰라 | Zebra Beta</title>
@@ -27,7 +28,8 @@
 <script>
 /* 카카오톡 인앱 브라우저 탈출 */
 if (/KAKAOTALK/i.test(navigator.userAgent)) {
-  location.href = "kakaotalk://web/openExternal?url=" + encodeURIComponent(location.href);
+  var _u = location.href; try { var _x = new URL(_u); if (!_x.searchParams.has("utm_source")) { _x.searchParams.set("utm_source", "kakaotalk"); _u = _x.href; } } catch (e) {}
+  location.href = "kakaotalk://web/openExternal?url=" + encodeURIComponent(_u);
   setTimeout(function(){ location.href = "kakaotalk://inappbrowser/close"; }, 0);
 }
 </script>

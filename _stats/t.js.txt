@@ -1,0 +1,47 @@
+/* zebra beta visit stats — counts visits, time on screen, scroll and clicked links. No cookies sent, no IP kept. */
+(function () {
+  try {
+    if (navigator.webdriver || /bot|crawl|spider|preview|headless/i.test(navigator.userAgent)) return;
+    var ls = window.localStorage, ss = window.sessionStorage;
+    var rid = function () { return (Date.now().toString(36) + Math.random().toString(36).slice(2, 12)).slice(0, 20); };
+    var isNew = 0, vid = '', sid = '', now = Date.now();
+    try { vid = ls.getItem('zv') || ''; if (!vid) { vid = rid(); ls.setItem('zv', vid); isNew = 1; } } catch (e) { vid = rid(); isNew = 1; }
+    try {
+      var last = +(ls.getItem('zt') || 0); sid = ss.getItem('zs') || '';
+      if (!sid || now - last > 30 * 60e3) { sid = rid(); ss.setItem('zs', sid); }
+      ls.setItem('zt', String(now));
+    } catch (e) { sid = rid(); }
+    var id = rid(), q = new URLSearchParams(location.search);
+    var send = function (u, o, beacon) {
+      var s = JSON.stringify(o);
+      if (beacon && navigator.sendBeacon) { navigator.sendBeacon(u, new Blob([s], { type: 'text/plain' })); return; }
+      fetch(u, { method: 'POST', body: s, keepalive: true, credentials: 'omit', headers: { 'content-type': 'text/plain' } }).catch(function () {});
+    };
+    send('/_z/hit', { id: id, vid: vid, sid: sid, n: isNew, path: location.pathname, title: document.title, ref: document.referrer,
+      us: q.get('utm_source'), um: q.get('utm_medium'), uc: q.get('utm_campaign'),
+      lang: (navigator.languages && navigator.languages[0]) || navigator.language, sw: screen.width, sh: screen.height });
+
+    var active = 0, since = document.visibilityState === 'visible' ? Date.now() : 0, maxScroll = 0, clicks = [];
+    var tick = function () { if (since) { active += Date.now() - since; since = Date.now(); } };
+    var depth = function () {
+      var h = document.documentElement, b = document.body;
+      var full = Math.max(h.scrollHeight, b ? b.scrollHeight : 0), seen = (window.scrollY || h.scrollTop) + window.innerHeight;
+      var p = full > 0 ? Math.min(100, Math.round(seen / full * 100)) : 100; if (p > maxScroll) maxScroll = p;
+    };
+    var beat = function (beacon) { tick(); depth(); try { ls.setItem('zt', String(Date.now())); } catch (e) {} send('/_z/beat', { id: id, a: active, s: maxScroll, c: clicks }, beacon); };
+    depth();
+    addEventListener('scroll', function () { depth(); }, { passive: true });
+    document.addEventListener('click', function (e) {
+      var a = e.target && e.target.closest ? e.target.closest('a[href]') : null; if (!a) return;
+      var h = a.getAttribute('href') || ''; if (/^(javascript|#)/.test(h)) return;
+      try { var u = new URL(h, location.href); clicks.push(u.host === location.host ? u.pathname + u.hash : u.host + u.pathname); } catch (x) { clicks.push(h.slice(0, 200)); }
+      if (clicks.length > 20) clicks = clicks.slice(-20);
+      beat(true);
+    }, true);
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'hidden') { beat(true); since = 0; } else { since = Date.now(); }
+    });
+    addEventListener('pagehide', function () { beat(true); });
+    setInterval(function () { if (document.visibilityState === 'visible') beat(false); }, 15000);
+  } catch (e) { /* never break the page */ }
+})();

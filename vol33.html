@@ -155,7 +155,8 @@ const ZEBRA = {
 <script>
 /* 카카오톡 인앱 브라우저 탈출 — 외부 브라우저로 열어야 앱 연결이 제대로 됩니다 */
 if (/KAKAOTALK/i.test(navigator.userAgent)) {
-  location.href = "kakaotalk://web/openExternal?url=" + encodeURIComponent(location.href);
+  var _u = location.href; try { var _x = new URL(_u); if (!_x.searchParams.has("utm_source")) { _x.searchParams.set("utm_source", "kakaotalk"); _u = _x.href; } } catch (e) {}
+  location.href = "kakaotalk://web/openExternal?url=" + encodeURIComponent(_u);
 }
 
 /* ── 플랫폼 아이콘 (수정할 필요 없음) ── */

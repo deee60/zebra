@@ -9,6 +9,7 @@
   gtag('js', new Date());
   gtag('config', 'G-B0TNF05GFQ');
 </script>
+<script src="/_z/t.js" defer></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>할머니와 고양이 — 취향의 발견 | 지브라 베타</title>
 <meta name="description" content="올해 만 85세가 넘으신 할머니는 정원을 텃밭으로 일구어 쓰시는데 길고양이가 매일 집으로 찾아와 나무 밑둥 위에 한참을 머물다 갔다고 합니다.">
@@ -48,7 +49,8 @@
 </script>
 <script>
 if (/KAKAOTALK/i.test(navigator.userAgent)) {
-  location.href = "kakaotalk://web/openExternal?url=" + encodeURIComponent(location.href);
+  var _u = location.href; try { var _x = new URL(_u); if (!_x.searchParams.has("utm_source")) { _x.searchParams.set("utm_source", "kakaotalk"); _u = _x.href; } } catch (e) {}
+  location.href = "kakaotalk://web/openExternal?url=" + encodeURIComponent(_u);
   setTimeout(function(){ location.href = "kakaotalk://inappbrowser/close"; }, 0);
 }
 </script>

@@ -56,6 +56,7 @@ HEAD = """<!DOCTYPE html>
   gtag('js', new Date());
   gtag('config', '{ga}');
 </script>
+<script src="/_z/t.js" defer></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{title}</title>
 <meta name="description" content="{desc}">
@@ -75,7 +76,8 @@ HEAD = """<!DOCTYPE html>
 </script>
 <script>
 if (/KAKAOTALK/i.test(navigator.userAgent)) {{
-  location.href = "kakaotalk://web/openExternal?url=" + encodeURIComponent(location.href);
+  var _u = location.href; try {{ var _x = new URL(_u); if (!_x.searchParams.has("utm_source")) {{ _x.searchParams.set("utm_source", "kakaotalk"); _u = _x.href; }} }} catch (e) {{}}
+  location.href = "kakaotalk://web/openExternal?url=" + encodeURIComponent(_u);
   setTimeout(function(){{ location.href = "kakaotalk://inappbrowser/close"; }}, 0);
 }}
 </script>

@@ -1,0 +1,10 @@
+{
+  // zebra beta visit stats (Rod 11/15). Lives on zebrabeta.kr/_z/* only; the site itself stays on GitHub Pages.
+  "name": "zebra-stats",
+  "main": "worker.js",
+  "compatibility_date": "2026-11-01",
+  "routes": [{ "pattern": "zebrabeta.kr/_z/*", "zone_name": "zebrabeta.kr" }],
+  "d1_databases": [{ "binding": "DB", "database_name": "zebra-stats", "database_id": "047ae551-975b-4c9e-a5d4-6c784bbe2f17" }],
+  "triggers": { "crons": ["17 18 * * *"] }
+  // secret (set in the dashboard, never in this file): ADMIN_TOKEN
+}
