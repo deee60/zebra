@@ -1,5 +1,19 @@
 [
   {
+    "slug": "vol01",
+    "kind": "music",
+    "series": "지브라 베타 Vol.01",
+    "title": "The Steps of Positano",
+    "romaji": "",
+    "artist": "Chris Botti",
+    "path": "issue/vol01/",
+    "cover": "issue/vol01/vol01.jpg",
+    "published": "2025-11-11",
+    "expires": "2025-11-14T23:59:59+09:00",
+    "layout": "lay-c",
+    "bg": "#D9D8D3"
+  },
+  {
     "slug": "summernight03",
     "kind": "music",
     "series": "여름밤 03",

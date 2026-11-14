@@ -22,7 +22,7 @@ KST = timezone(timedelta(hours=9))
 SITE = "https://zebrabeta.kr"
 STUB = "<!-- ZEBRA_EXPIRED_STUB -->"
 TEASER_TAG = "ZEBRA_EXPIRED_TEASER"
-TEASER = "<!-- ZEBRA_EXPIRED_TEASER v2 -->"   # 모양을 바꾸면 v 숫자를 올린다 → 다음 실행 때 전부 아카이브 사본에서 다시 만듦
+TEASER = "<!-- ZEBRA_EXPIRED_TEASER v3 -->"   # 모양을 바꾸면 v 숫자를 올린다 → 다음 실행 때 전부 아카이브 사본에서 다시 만듦
 NOINDEX = '<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">'
 INDEX = '<meta name="robots" content="index, follow">'
 DEFAULT_MOVED = """
@@ -111,6 +111,30 @@ def make_stub(src_html):
     cls = cls.group(1) if cls else "sheet"
     return head + "<body>\n" + STUB + '\n  <main class="' + cls + '" id="sheet">' + moved + "\n  </main>\n</body>\n</html>\n"
 
+TEASER_SHARE = 0.35   # 맛보기로 보여줄 노트 분량 상한(전체 글자 수 대비)
+
+def teaser_text(paras):
+    """첫 문단에서 문장 단위로, 노트 전체의 35%를 넘지 않게 잘라낸다.
+    첫 문장이 이미 절반을 넘으면 35% 지점의 띄어쓰기에서 끊고 '…'."""
+    first = re.sub(r"^<p>|</p>$", "", paras[0].strip())
+    total = sum(len(plain(x)) for x in paras) or 1
+    limit = max(total * TEASER_SHARE, min(60, total * 0.5))   # 아주 짧은 노트도 한 줄은 보이게
+    sents = re.split(r"(?<=[.!?])\s+", first)
+    out = sents[0]
+    for x in sents[1:]:
+        if len(plain("<p>" + out + " " + x + "</p>")) > limit:
+            break
+        out += " " + x
+    if len(plain("<p>" + out + "</p>")) > total * 0.5:
+        cut = out[: int(limit)]
+        sp = cut.rfind(" ")
+        cut = cut[:sp] if sp > 0 else cut
+        for o, c in (("(", ")"), ("《", "》"), ("〈", "〉"), ("'", "'")):
+            if cut.count(o) > cut.count(c) if o != c else cut.count(o) % 2:
+                cut = cut[: cut.rfind(o)]              # 괄호·따옴표 안에서 끊기지 않게
+        out = cut.rstrip(" ,·") + "…"
+    return out
+
 def make_teaser(src_html, e):
     """아카이브 사본(원본 전체)에서 맛보기 페이지를 만든다. 노트가 없으면 None."""
     inner = note_inner(src_html)
@@ -118,7 +142,8 @@ def make_teaser(src_html, e):
         return None
     paras = re.findall(r"<p>.*?</p>", inner, re.S)
     credit = re.search(r'<div class="credit">.*?</div>(?=\s*$)', inner, re.S) or re.search(r'<div class="credit">.*', inner, re.S)
-    teaser_p = paras[0].replace("<p>", '<p class="teaser">', 1)
+    teaser_txt = teaser_text(paras)
+    teaser_p = '<p class="teaser">' + teaser_txt + "</p>"
     cred = credit.group(0) if credit else ""
     cred = re.sub(r'(<a\b[^>]*?)\s+href="[^"]*"', r"\1", cred)          # 크레딧 안 링크(뮤직비디오 등)도 눌리지 않게
     cred = re.sub(r'\s+target="_blank"|\s+rel="noopener"', "", cred)
@@ -144,7 +169,7 @@ def make_teaser(src_html, e):
     song, artist, series = e.get("title", ""), e.get("artist", ""), (e.get("series", "") or "").rstrip(". ")
     series = re.sub(r"^지브라\s*베타\s*", "", series)                       # 제목 끝 '| 지브라 베타'와 겹치지 않게
     title = " — ".join(x for x in [song, artist] if x) + (" · " + series if series else "") + " | 지브라 베타"
-    desc = plain(paras[0])
+    desc = plain("<p>" + teaser_txt + "</p>")
     desc = desc if len(desc) <= 150 else desc[:148].rstrip() + "…"
     url = f"{SITE}/issue/{e['slug']}/"
     head = head.replace(NOINDEX, "").replace(INDEX, "")
