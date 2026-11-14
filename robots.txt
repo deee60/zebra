@@ -4,3 +4,4 @@ Disallow: /archive/
 Disallow: /_queue/
 
 Sitemap: https://zebrabeta.kr/sitemap.xml
+Sitemap: https://zebrabeta.kr/sitemap-issue.xml
