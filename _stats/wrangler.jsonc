@@ -4,7 +4,7 @@
   "main": "worker.js",
   "compatibility_date": "2026-11-01",
   "routes": [{ "pattern": "zebrabeta.kr/_z/*", "zone_name": "zebrabeta.kr" }],
-  "d1_databases": [{ "binding": "DB", "database_name": "zebra-stats", "database_id": "REPLACE_WITH_D1_ID" }],
+  "d1_databases": [{ "binding": "DB", "database_name": "zebra-stats", "database_id": "047ae551-975b-4c9e-a5d4-6c784bbe2f17" }],
   "triggers": { "crons": ["17 18 * * *"] }
   // secret (set in the dashboard, never in this file): ADMIN_TOKEN
 }
