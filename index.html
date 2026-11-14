@@ -78,7 +78,7 @@
   }
   .social a{
     font-family:'Cormorant Garamond',serif;font-size:10px;letter-spacing:.2em;
-    color:#c9c4b8;text-decoration:none;text-transform:uppercase;transition:color .25s;
+    color:#a39d90;text-decoration:none;text-transform:uppercase;transition:color .25s;
   }
   .social a:hover{color:var(--gold)}
   .social .dot{color:#d4cfc5;margin:0 8px}
@@ -112,16 +112,16 @@
 
   .divider{
     width:9px;height:0;
-    margin:16px auto 56px;animation:fadeUp 1s ease .55s both;
+    margin:16px auto 54px;animation:fadeUp 1s ease .55s both;
   }
   .social a{
     font-family:'Cormorant Garamond',serif;font-size:10px;letter-spacing:.2em;
-    color:#c9c4b8;text-decoration:none;text-transform:uppercase;transition:color .25s;
+    color:#a39d90;text-decoration:none;text-transform:uppercase;transition:color .25s;
   }
   .social a:hover{color:var(--gold)}
 
   .notify{
-    width:100%;max-width:340px;margin-bottom:28px;animation:fadeUp 1s ease .6s both;
+    width:100%;max-width:340px;margin-bottom:18px;animation:fadeUp 1s ease .6s both;
   }
   .notify .lbl{font-size:13px;color:var(--soft);margin-bottom:12px;letter-spacing:.02em}
   .form{display:flex;gap:8px}
@@ -207,6 +207,9 @@
 
   .cta-note{font-size:13px;color:var(--soft);margin-bottom:12px;letter-spacing:.02em}
   .cta-main{margin-bottom:0}
+  .notify .kakao{font-size:12px;color:var(--gold);letter-spacing:.06em;text-decoration:none;transition:color .25s}
+  .notify .kakao:hover{opacity:.75}
+  .notify + .social{margin-top:-4px}
   .cta-main a{
     display:inline-block;background:var(--ink);color:var(--paper);border-radius:2px;
     padding:7px 22px;font-size:12px;letter-spacing:.06em;text-decoration:none;
@@ -220,6 +223,7 @@
   }
   .form button.ghost:hover{color:var(--ink);border-color:var(--gold);opacity:1;transform:none}
 </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"지브라 베타","alternateName":"Zebra Beta","url":"https://zebrabeta.kr","logo":"https://zebrabeta.kr/zebra-logo.png","sameAs":["https://instagram.com/zebrabeta26","https://brunch.co.kr/@zebrabeta"]}</script>
 </head>
 <body>
   <div class="wrap">
@@ -246,12 +250,7 @@
     <div class="divider" aria-hidden="true"></div>
 
     <div class="notify">
-      <div class="cta-note">큐레이션이 발행되면 알려드립니다</div>
-      <div class="cta-main"><a href="https://open.kakao.com/o/gw3he7Wi" target="_blank" rel="noopener">카톡으로 받기</a></div>
-    </div>
-
-    <div class="social">
-      <a href="https://instagram.com/zebrabeta26" target="_blank" rel="noopener">Instagram</a><span class="dot">·</span><a href="https://brunch.co.kr/@zebrabeta" target="_blank" rel="noopener">Brunch</a>
+      <a class="kakao" href="https://open.kakao.com/o/gw3he7Wi" target="_blank" rel="noopener">카카오톡 알림 받기</a>
     </div>
 
     <footer>zebra beta movement 2.</footer>
