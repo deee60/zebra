@@ -26,6 +26,9 @@ th{color:var(--muted);font-weight:600;white-space:nowrap;cursor:default}td.n,th.
 #login{max-width:380px;margin:80px auto;background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px}#login input{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;margin:10px 0}
 .sess{border-left:3px solid var(--line);padding:4px 0 8px 12px;margin:10px 0}.sess h3{font-size:13px;margin:0 0 6px}.step{padding:4px 0;border-bottom:1px dashed var(--line)}
 .pill{display:inline-block;background:var(--soft);border-radius:999px;padding:1px 8px;margin:1px 3px 1px 0;font-size:12px}
+.pill.live{background:#ffe3ee;color:var(--pink)}.pill.new{background:#e6f4ea;color:#1e7a3c}.pill.re{background:#e8eefc;color:#2b4fb5}
+.ppl td{font-size:12.5px;line-height:1.55}.ppl td:first-child{white-space:nowrap}.flow{max-width:420px}.flow b{font-weight:500}.flow .ar{color:var(--muted);margin:0 3px}.flow .ns{color:var(--pink);margin:0 4px}
+.sub{color:var(--muted);font-size:11.5px}#q{border:1px solid var(--line);border-radius:999px;padding:6px 12px;font:inherit;width:260px;max-width:100%;margin:0 0 10px}
 input[type=date]{border:1px solid var(--line);border-radius:999px;padding:5px 10px;font:inherit}
 </style>
 </head>
@@ -65,7 +68,7 @@ input[type=date]{border:1px solid var(--line);border-radius:999px;padding:5px 10
   var DEV = { phone: '휴대폰', tablet: '태블릿', desktop: 'PC' };
 
   var RANGES = [['1시간', 3600e3], ['6시간', 6 * 3600e3], ['24시간', 864e5], ['7일', 7 * 864e5], ['30일', 30 * 864e5], ['180일', 180 * 864e5]];
-  var span = 864e5, dayPick = '', tab = 'pages', cache = {}, inPerson = false;
+  var span = 864e5, dayPick = '', tab = 'people', q = '', cache = {}, inPerson = false;
   function win() {
     if (dayPick) { var s = Date.parse(dayPick + 'T00:00:00+09:00'); return [s, s + 864e5]; }
     var to = Date.now(); return [to - span, to];
@@ -80,7 +83,7 @@ input[type=date]{border:1px solid var(--line);border-radius:999px;padding:5px 10
     $('#ranges').innerHTML = RANGES.map(function (r) { return '<button class="btn' + (!dayPick && r[1] === span ? ' on' : '') + '" data-s="' + r[1] + '">' + r[0] + '</button>'; }).join(' ');
     $('#ranges').querySelectorAll('button').forEach(function (b) { b.onclick = function () { span = +b.dataset.s; dayPick = ''; $('#day').value = ''; load(); }; });
   }
-  var TABS = [['pages', '많이 본 페이지'], ['sources', '들어온 곳'], ['places', '지역'], ['tech', '기기 · 브라우저'], ['clicks', '누른 링크'], ['visitors', '방문자']];
+  var TABS = [['people', '방문자별 통합'], ['pages', '많이 본 페이지'], ['sources', '들어온 곳'], ['places', '지역'], ['tech', '기기 · 브라우저'], ['clicks', '누른 링크'], ['visitors', '방문자']];
   function drawTabs() {
     $('#tabs').innerHTML = TABS.map(function (t) { return '<button class="btn' + (t[0] === tab ? ' on' : '') + '" data-t="' + t[0] + '">' + t[1] + '</button>'; }).join('');
     $('#tabs').querySelectorAll('button').forEach(function (b) { b.onclick = function () { tab = b.dataset.t; drawTabs(); showTab(); }; });
@@ -109,11 +112,38 @@ input[type=date]{border:1px solid var(--line);border-radius:999px;padding:5px 10
   var meter = function (v, mx) { return '<div class="meter"><i style="width:' + Math.round((v || 0) / (mx || 1) * 100) + '%"></i></div>'; };
   function card(title, html) { return '<div class="card"><h2>' + title + '</h2>' + html + '</div>'; }
 
+  var tshort = function (r) { if (r.path === '/') return '랜딩'; var t = String(r.title || '').split(' | ')[0].replace(/^지브라 베타\s*/, '').trim(); return t ? (t.length > 22 ? t.slice(0, 21) + '…' : t) : r.path; };
+  function match(r) { if (!q) return true; var hay = [r.city, r.region, cn(r.country), r.isp, DEV[r.device] || r.device, r.os, r.browser, r.lang, r.sources.join(' '),
+      r.flow.map(function (f) { return f.path + ' ' + (f.title || ''); }).join(' '), r.clicks.join(' ')].join(' ').toLowerCase(); hay += ' ' + hay.replace(/kakao/g, '카카오톡 카톡').replace(/instagram/g, '인스타그램 인스타').replace(/brunch/g, '브런치').replace(/google/g, '구글').replace(/naver/g, '네이버').replace(/youtube/g, '유튜브'); return hay.indexOf(q.toLowerCase()) >= 0; }
+  function peopleView(d) {
+    var rows = d.filter(match);
+    var html = '<input id="q" placeholder="찾기: 도시, 유입, 페이지, 기기, 링크…" value="' + esc(q) + '"> <span class="muted">' + num(rows.length) + '명</span>' + table([
+      { h: '사람', f: function (r) { return kst(r.last_ts) + '<br>' + (r.live ? '<span class="pill live">지금 보는 중</span>' : '') +
+          (r.ever_first < win()[0] ? '<span class="pill re">재방문</span>' : '<span class="pill new">처음</span>') + '<span class="sub">방문 ' + r.visits + '번</span>'; } },
+      { h: '지역', f: function (r) { return esc([r.city, r.region !== r.city ? r.region : ''].filter(Boolean).join(', ') || '-') + '<br><span class="sub">' + esc(cn(r.country)) + (r.cities.length > 1 ? ' · 여러 곳: ' + esc(r.cities.join(', ')) : '') + '</span>'; } },
+      { h: '기기 · 브라우저', f: function (r) { return esc((DEV[r.device] || r.device || '-') + ' · ' + (r.os || '-') + ' · ' + (r.browser || '-')) +
+          '<br><span class="sub">' + (r.sw ? r.sw + '×' + r.sh + ' · ' : '') + esc(r.lang || '') + (r.isp ? ' · ' + esc(r.isp) : '') + '</span>'; } },
+      { h: '들어온 곳', f: function (r) { return r.sources.length ? r.sources.map(function (x) { return '<span class="pill">' + esc(x) + '</span>'; }).join('') : '<span class="sub">사이트 안</span>'; } },
+      { h: '본 페이지 (순서대로)', f: function (r) { var fl = r.flow, cut = fl.length > 8 ? fl.slice(-8) : fl;
+          return '<div class="flow">' + (fl.length > 8 ? '<span class="sub">앞 ' + (fl.length - 8) + '개 생략 · </span>' : '') + cut.map(function (f, i) {
+            return (i ? (f.new_visit ? '<span class="ns">║</span>' : '<span class="ar">→</span>') : '') + '<b title="' + esc(f.path) + ' · ' + dur(f.ms) + ' · 스크롤 ' + f.sc + '%">' + esc(tshort(f)) + '</b>'; }).join('') + '</div>'; } },
+      { h: '머문 시간', n: 1, f: function (r) { return dur(r.active) + '<br><span class="sub">페이지 ' + r.views + ' · 스크롤 ' + r.avg_scroll + '%</span>'; } },
+      { h: '누른 링크', f: function (r) { return r.clicks.length ? r.clicks.slice(0, 5).map(function (x) { return '<span class="pill">' + esc(x.length > 28 ? x.slice(0, 27) + '…' : x) + '</span>'; }).join('') + (r.clicks.length > 5 ? '<span class="sub">+' + (r.clicks.length - 5) + '</span>' : '') : '<span class="sub">-</span>'; } }
+    ], rows, true);
+    return card('방문자별 통합 <span class="muted">(한 줄 = 한 사람(기기·브라우저) · 최근 순 · ║ = 새 방문 · 줄을 누르면 전체 기록)</span>', '<div class="ppl">' + html + '</div>');
+  }
+
   function showTab() {
     inPerson = false; var v = $('#view'); v.innerHTML = '<p class="muted">불러오는 중…</p>';
     get(tab).then(function (d) {
       cache[tab] = d;
-      if (tab === 'pages') {
+      if (tab === 'people') {
+        var draw = function () { v.innerHTML = peopleView(d);
+          var inp = $('#q'); inp.oninput = function () { q = inp.value; var pos = inp.selectionStart; draw(); var n = $('#q'); n.focus(); n.setSelectionRange(pos, pos); };
+          var vis = d.filter(match);
+          v.querySelectorAll('tr.click').forEach(function (tr) { tr.onclick = function () { person(vis[+tr.dataset.i].vid); }; }); };
+        draw();
+      } else if (tab === 'pages') {
         var mx = Math.max.apply(null, [1].concat(d.map(function (r) { return r.views; })));
         v.innerHTML = card('많이 본 페이지', table([
           { h: '페이지', f: function (r) { return '<b>' + esc(r.title || r.path) + '</b><br><span class="muted">' + esc(r.path) + '</span>'; } },
@@ -157,7 +187,7 @@ input[type=date]{border:1px solid var(--line);border-radius:999px;padding:5px 10
       if (!rows.length) { v.innerHTML = '<p class="muted">기록 없음</p>'; return; }
       var f = rows[0], tot = rows.reduce(function (a, r) { return a + (r.active_ms || 0); }, 0);
       var sess = []; rows.forEach(function (r) { var s = sess[sess.length - 1]; if (!s || s.sid !== r.sid) sess.push(s = { sid: r.sid, rows: [] }); s.rows.push(r); });
-      var head = '<button class="btn" id="back">‹ 방문자 목록</button>' +
+      var head = '<button class="btn" id="back">‹ 목록으로</button>' +
         card('이 사람 요약', '<p>' + esc([f.city, f.region, cn(f.country)].filter(Boolean).join(', ')) + ' · ' + esc((DEV[f.device] || f.device) + ' · ' + f.os + ' · ' + f.browser) +
           ' · 화면 ' + f.sw + '×' + f.sh + ' · 언어 ' + esc(f.lang || '-') + ' · ' + esc(f.isp || '') + '</p><p>처음 온 날 ' + kst(f.ts) + ' · 방문 ' + sess.length + '번 · 페이지 ' + rows.length + '개 · 총 머문 시간 ' + dur(tot) + '</p>');
       var body = sess.slice().reverse().map(function (s) {
@@ -169,7 +199,7 @@ input[type=date]{border:1px solid var(--line);border-radius:999px;padding:5px 10
               (c.length ? c.map(function (x) { return '<span class="pill">누름 → ' + esc(x) + '</span>'; }).join('') : '') + '</div>'; }).join('') + '</div>';
       }).join('');
       v.innerHTML = head + card('방문 기록 <span class="muted">(최근 방문이 위)</span>', body);
-      $('#back').onclick = function () { tab = 'visitors'; drawTabs(); showTab(); };
+      $('#back').onclick = function () { drawTabs(); showTab(); };
     });
   }
 

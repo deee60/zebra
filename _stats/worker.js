@@ -145,6 +145,35 @@ async function api(path, url, env) {
     (SELECT COALESCE(utm_source, ref_host, '(direct / app)') FROM pv f WHERE f.vid = pv.vid ORDER BY ts LIMIT 1) first_src,
     (SELECT MIN(ts) FROM pv a WHERE a.vid = pv.vid) ever_first
     FROM pv WHERE ${W} GROUP BY vid ORDER BY last_ts DESC LIMIT 500`, from, to);
+  if (path === 'people') {
+    // one row per visitor (browser): everything about them in this window, merged
+    const rows = await all(env, `SELECT vid, sid, ts, left_ts, path, title, ref_host, ref_path, utm_source, utm_medium, country, region, city, isp, device, os, browser, lang, sw, sh,
+      active_ms, scroll, clicks FROM pv WHERE ${W} ORDER BY ts LIMIT 30000`, from, to);
+    const ef = await all(env, `SELECT vid, MIN(ts) ef FROM pv WHERE vid IN (SELECT DISTINCT vid FROM pv WHERE ${W}) GROUP BY vid`, from, to);
+    const first = new Map(ef.map((r) => [r.vid, r.ef]));
+    const m = new Map(); const now = Date.now();
+    for (const r of rows) {
+      let p = m.get(r.vid);
+      if (!p) {
+        p = { vid: r.vid, first_ts: r.ts, last_ts: r.ts, ever_first: first.get(r.vid) || r.ts, sids: new Set(), views: 0, active: 0, scroll_sum: 0,
+          country: r.country, region: r.region, city: r.city, isp: r.isp, device: r.device, os: r.os, browser: r.browser, lang: r.lang, sw: r.sw, sh: r.sh,
+          sources: [], flow: [], clicks: [], cities: [] };
+        m.set(r.vid, p);
+      }
+      const isStart = !p.sids.has(r.sid); p.sids.add(r.sid);
+      if (isStart) {
+        const src = r.utm_source ? 'utm:' + r.utm_source : r.ref_host ? r.ref_host : r.ref_path ? null : '직접 · 앱';
+        if (src && !p.sources.includes(src)) p.sources.push(src);
+      }
+      p.last_ts = Math.max(p.last_ts, r.left_ts || r.ts); p.views++; p.active += r.active_ms || 0; p.scroll_sum += r.scroll || 0;
+      p.flow.push({ ts: r.ts, path: r.path, title: r.title, ms: r.active_ms || 0, sc: r.scroll || 0, new_visit: isStart });
+      if (r.city && !p.cities.includes(r.city)) p.cities.push(r.city);
+      if (r.clicks && r.clicks !== '[]') { try { for (const c of JSON.parse(r.clicks)) if (!p.clicks.includes(c)) p.clicks.push(c); } catch { /* */ } }
+      p.city = r.city || p.city; p.region = r.region || p.region; p.country = r.country || p.country; p.isp = r.isp || p.isp;
+    }
+    return [...m.values()].map((p) => ({ ...p, sids: undefined, visits: p.sids.size, avg_scroll: p.views ? Math.round(p.scroll_sum / p.views) : 0, scroll_sum: undefined,
+      live: now - p.last_ts < 5 * 60e3, flow: p.flow.slice(-60) })).sort((a, b) => b.last_ts - a.last_ts).slice(0, 500);
+  }
   if (path === 'visitor') {
     const vid = url.searchParams.get('vid') || ''; if (!ID.test(vid)) return [];
     return all(env, `SELECT id, sid, ts, path, title, ref_host, ref_path, utm_source, utm_medium, utm_campaign, country, region, city, tz, isp, device, os, browser, lang, sw, sh,
