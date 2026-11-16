@@ -86,6 +86,31 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://zebrabeta.kr/bside/diana-krall-seoul-2026-sejong-center/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://zebrabeta.kr/bside/booker-prize-2026-m-john-harrison-the-end-of-everything/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://zebrabeta.kr/bside/chagall-ever-crossing-centre-pompidou-hanwha/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://zebrabeta.kr/bside/mmca-reading-paper-to-pixel-korean-graphic-design/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://zebrabeta.kr/bside/blue-note-tokyo-all-star-jazz-orchestra-lisa-ono-2026/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://zebrabeta.kr/bside/bob-dylan-rolling-thunder-revue-1976-live-recordings/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
