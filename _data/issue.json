@@ -474,5 +474,19 @@
     "expires": "2026-11-17T23:59:59+09:00",
     "layout": "lay-a",
     "bg": "#DFDCCD"
+  },
+  {
+    "slug": "dryadvisory10",
+    "kind": "music",
+    "series": "건조주의보 10.",
+    "title": "어떤 사람 A",
+    "romaji": "",
+    "artist": "윤상",
+    "path": "issue/dryadvisory10/",
+    "cover": "issue/dryadvisory10/dryadvisory10.jpg",
+    "published": "2026-11-17",
+    "expires": "2026-11-20T23:59:59+09:00",
+    "layout": "lay-c",
+    "bg": "#D3CAC5"
   }
 ]
