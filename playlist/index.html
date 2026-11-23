@@ -45,6 +45,9 @@
   /* 면마다 자켓 색: A 와인, B 회색 — 면을 바꾸면 디졸브로 넘어간다 */
   .sleeve[data-theme=wine]{--jk-bg:#4a2a27;--jk-ink:#f1e7da;--jk-accent:#d8b77a;--jk-soft:rgba(241,231,218,.66);--jk-faint:rgba(241,231,218,.45)}
   .sleeve[data-theme=grey]{--jk-bg:#6e6a64;--jk-ink:#f3eee4;--jk-accent:#e2c58e;--jk-soft:rgba(243,238,228,.7);--jk-faint:rgba(243,238,228,.5)}
+  /* 재생해서 창으로 열리면 같은 색을 옅게 풀어 영상과 글씨를 편하게 */
+  .sleeve.playing[data-theme=wine]{--jk-bg:#b9aba1;--jk-ink:#2b2a26;--jk-accent:#6b4636;--jk-soft:rgba(43,42,38,.62);--jk-faint:rgba(43,42,38,.42)}
+  .sleeve.playing[data-theme=grey]{--jk-bg:#c2bcb2;--jk-ink:#2b2a26;--jk-accent:#7a6440;--jk-soft:rgba(43,42,38,.62);--jk-faint:rgba(43,42,38,.42)}
   .sleeve .btn{color:var(--jk-soft,var(--mute))}
   .sleeve .btn:hover{color:var(--jk-ink,var(--ink))}
   .sleeve .sidelabel{color:var(--jk-accent,var(--wine))}
