@@ -116,7 +116,6 @@
 </head>
 <body>
 <div class="page">
-  <p class="kicker">플레이리스트</p>
 
   <div class="stage" id="stage">
     <div class="record ease" id="record">
@@ -304,7 +303,7 @@
       stage.style.height = '260px'; stage.style.marginBottom = '0px';
       jr = (st.opened ? -Math.min(24, gutter) : (W-260)/2) + 260;
     }
-    document.querySelector('.kicker').style.transform = 'translateX('+(jr - W)+'px)';
+    var kk = document.querySelector('.kicker'); if (kk) kk.style.transform = 'translateX('+(jr - W)+'px)';
     var rx = st.opened && st.out && !st.started ? 118 : (st.opened ? 40 : (W-260)/2 + 48);
     record.style.transform = 'translateX('+rx+'px)';
   }
