@@ -175,6 +175,13 @@
   /* copy guard (same as issue pages): block text selection; right-click/copy via script below */
   html,body{ -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; -webkit-touch-callout:none; }
   a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
+  /* 겨울 배경: 랜딩과 같은 서리 숲(아이보리) + 흰 눈 */
+  html{background:#efece4}
+  html body{background:transparent}
+  body::before{content:'';position:fixed;left:0;right:0;top:0;height:100vh;z-index:-1;pointer-events:none;
+    background:url(/frost-winter.jpg) center top/cover no-repeat;
+    -webkit-mask-image:linear-gradient(#000 0%,#000 40%,transparent 88%);mask-image:linear-gradient(#000 0%,#000 40%,transparent 88%)}
+  #snow{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
 </style>
 </head>
 <body>
@@ -298,6 +305,42 @@
   document.addEventListener("cut", block);
   document.addEventListener("dragstart", block);
 })();
+</script>
+<canvas id="snow" aria-hidden="true"></canvas>
+<script>
+  /* 흰 눈: 스텔라장 「나의 겨울 여행」처럼 — 작고 또렷한 눈송이와 크고 흐린 눈송이(초점 밖)가 섞여 천천히 */
+  (function(){
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var c=document.getElementById('snow'), x=c.getContext('2d'), W, H, dpr=Math.min(2, window.devicePixelRatio||1), flakes=[];
+    function size(){ W=c.clientWidth||innerWidth; H=c.clientHeight||innerHeight; c.width=W*dpr; c.height=H*dpr; x.setTransform(dpr,0,0,dpr,0,0); }
+    var t0 = Date.now();
+    function mk(top){
+      var big = top && (Date.now() - t0 > 4000) && Math.random() < .14, r = big ? 5+Math.random()*7 : 2+Math.random()*2.6;
+      return { x:Math.random(), y: top ? -r*2 : Math.random()*H, r:r, big:big,
+               v: big ? .35+Math.random()*.45 : .45+Math.random()*.7,   // 큰 송이는 가까워서 느리고 흐리다
+               a: Math.random()*6.28, s: .003+Math.random()*.007, w: .25+Math.random()*.5,
+               o: big ? .38+Math.random()*.25 : .85+Math.random()*.15 };
+    }
+    function draw(f){
+      var px = f.x*W; var g = x.createRadialGradient(px, f.y, 0, px, f.y, f.r);
+      if (f.big){ g.addColorStop(0,'rgba(255,255,255,'+f.o+')'); g.addColorStop(.55,'rgba(255,255,255,'+(f.o*.7)+')'); g.addColorStop(1,'rgba(255,255,255,0)'); }
+      else { g.addColorStop(0,'rgba(255,255,255,'+f.o+')'); g.addColorStop(.35,'rgba(255,255,255,'+(f.o*.75)+')'); g.addColorStop(1,'rgba(255,255,255,0)'); }
+      x.shadowColor = f.big ? 'rgba(110,100,85,.18)' : 'rgba(100,90,75,.32)'; x.shadowBlur = f.big ? 10 : 6;
+      x.beginPath(); x.arc(px, f.y, f.r, 0, 6.283); x.fillStyle = g; x.fill();
+    }
+    size(); var n = W < 600 ? 34 : 60; for (var i=0;i<n;i++) flakes.push(mk(false));
+    addEventListener('resize', size);
+    (function tick(){
+      if (c.clientWidth && (Math.abs(c.clientWidth-W)>2 || Math.abs(c.clientHeight-H)>2)) size();
+      x.clearRect(0,0,W,H);
+      for (var i=0;i<flakes.length;i++){
+        var f=flakes[i]; f.y+=f.v; f.a+=f.s; f.x+=Math.sin(f.a)*f.w/(W||1000);
+        if (f.y>H+f.r*2){ flakes[i]=mk(true); continue; }
+        draw(f);
+      }
+      requestAnimationFrame(tick);
+    })();
+  })();
 </script>
 </body>
 </html>
