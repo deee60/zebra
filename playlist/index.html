@@ -85,7 +85,7 @@
   .info{position:absolute;z-index:3;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:45px;gap:4px;opacity:0;pointer-events:none;transition:opacity 1s ease .9s;text-align:center}
   .info .t{font-size:14px}
   .info .a{font-size:11px;color:var(--mute)}
-  .credit{position:absolute;z-index:3;font-family:'Cormorant Garamond',serif;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 1s ease .9s}
+  .credit{position:absolute;z-index:3;font-family:'Cormorant Garamond',serif;font-size:10.5px;letter-spacing:.12em;font-style:italic;font-size:12px;color:var(--gold);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 1s ease .9s}
   .playing .credit{opacity:1}
   .row{margin-top:10px;display:flex;align-items:center;gap:6px}
   .row .side{min-height:40px;font-style:italic;font-size:11px}
@@ -318,7 +318,7 @@
     var song = SIDES[st.s].songs[st.cur % SIDES[st.s].songs.length];
     $('songTitle').textContent = song.title;
     $('songArtist').textContent = song.artist;
-    $('songBy').textContent = song.by ? 'Curated by '+song.by : '';
+    $('songBy').textContent = song.by ? 'curated by '+song.by : '';
     $('toggleBtn').innerHTML = st.playing
       ? '<svg aria-hidden="true" width="9" height="11" viewBox="0 0 9 11"><path d="M1.5 1 V10 M7.5 1 V10" stroke="currentColor" stroke-width="1.1" fill="none"/></svg>'
       : '<svg aria-hidden="true" width="9" height="11" viewBox="0 0 9 11"><path d="M1 1 L8.5 5.5 L1 10 Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round" fill="none"/></svg>';
