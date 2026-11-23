@@ -205,14 +205,16 @@
       var left = (W - J) / 2;                           // 내용 폭 밖으로 넓힌다
       var m = Math.max(12, Math.min(32, (J - 356) / 2 + 32)); // 영상 둘레 종이 여백
       var ew = J - m*2, eh = Math.max(200, Math.round(ew * 9 / 16));
-      sleeve.style.width = J+'px'; sleeve.style.height = J+'px';
-      sleeve.style.transform = 'translateX('+left+'px)';
-      stage.style.height = J+'px'; stage.style.marginBottom = '48px';
       screen.style.left = m+'px'; screen.style.top = (m+32)+'px'; screen.style.width = ew+'px'; screen.style.height = eh+'px';
-      info.style.left = m+'px'; info.style.right = m+'px'; info.style.top = (m+32+eh)+'px';
+      info.style.left = m+'px'; info.style.right = m+'px'; info.style.top = (m+32+eh)+'px'; info.style.bottom = 'auto';
+      // 좁은 화면에서는 곡 정보·버튼이 자켓 밖으로 넘치지 않게 자켓을 그만큼 늘린다
+      var H = Math.max(J, m + 32 + eh + info.offsetHeight + Math.max(m, 24));
+      sleeve.style.width = J+'px'; sleeve.style.height = H+'px';
+      sleeve.style.transform = 'translateX('+left+'px)';
+      stage.style.height = H+'px'; stage.style.marginBottom = '48px';
       var cr=$('songBy'); cr.style.right = m+'px'; cr.style.top = (m+10)+'px';
       var bk=$('backBtn'); bk.style.left = (m-14)+'px'; bk.style.top = Math.round(m/2)+'px';
-      jr = left + J;
+      jr = Math.min(left + J, W + (vw - W) / 2 - 16);   // 화면 끝에 붙어 잘리지 않게
     } else {
       sleeve.style.width = '260px'; sleeve.style.height = '260px';
       var gutter = (document.documentElement.clientWidth - W) / 2;
@@ -264,6 +266,7 @@
       : '<svg aria-hidden="true" width="9" height="11" viewBox="0 0 9 11"><path d="M1 1 L8.5 5.5 L1 10 Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round" fill="none"/></svg>';
     $('toggleBtn').setAttribute('aria-label', st.playing ? '일시정지' : '재생');
     disc.classList.toggle('spin', st.playing);
+    if (st.started) layout();
   }
 
   function render(){
