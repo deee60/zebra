@@ -104,6 +104,9 @@
     background:url(/frost-winter-v3.jpg) center top/cover no-repeat;
     -webkit-mask-image:linear-gradient(#000 0%,#000 40%,transparent 88%);mask-image:linear-gradient(#000 0%,#000 40%,transparent 88%)}
   #snow{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+  body.tight .page{padding-top:18px;padding-bottom:12px}
+  body.tight .kicker{margin-bottom:10px}
+  body.tight footer{padding-top:14px}
 </style>
 </head>
 <body>
@@ -267,7 +270,19 @@
       screen.style.left = m+'px'; screen.style.top = (m+band)+'px'; screen.style.width = ew+'px'; screen.style.height = eh+'px';
       info.style.left = m+'px'; info.style.right = m+'px'; info.style.top = (m+band+eh)+'px'; info.style.bottom = 'auto';
       // 좁은 화면에서는 곡 정보·버튼이 자켓 밖으로 넘치지 않게 자켓을 그만큼 늘린다
+      // 휴대폰: 재생 중엔 위 여백을 줄이고, 그래도 넘치면 영상-곡 정보 간격(45px)을 필요한 만큼만 줄여 HOME까지 한 화면에
+      document.body.classList.toggle('tight', small);
+      info.style.paddingTop = '';
       var H = Math.max(J, m + band + eh + info.offsetHeight + (small ? 18 : Math.max(m, 24)));
+      if (small) {
+        var foot = document.querySelector('footer');
+        var avail = window.innerHeight - stage.getBoundingClientRect().top - window.scrollY - foot.offsetHeight - 18 - 12;
+        if (H > avail) {
+          var pad = Math.max(14, 45 - (H - avail));
+          info.style.paddingTop = pad + 'px';
+          H = Math.max(J, m + band + eh + info.offsetHeight + 18);
+        }
+      }
       sleeve.style.width = J+'px'; sleeve.style.height = H+'px';
       sleeve.style.transform = 'translateX('+left+'px)';
       stage.style.height = H+'px'; stage.style.marginBottom = '18px';
@@ -276,6 +291,7 @@
       jr = Math.min(left + J, W + (vw - W) / 2 - 16);   // 화면 끝에 붙어 잘리지 않게
     } else {
       sleeve.style.width = '260px'; sleeve.style.height = '260px';
+      document.body.classList.remove('tight'); info.style.paddingTop = '';
       var gutter = (document.documentElement.clientWidth - W) / 2;
       sleeve.style.transform = 'translateX(' + (st.opened ? -Math.min(24, gutter) : (W-260)/2) + 'px)';
       stage.style.height = '260px'; stage.style.marginBottom = '0px';
