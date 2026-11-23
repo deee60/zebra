@@ -26,8 +26,9 @@
   :root{--bg:#eeece7;--sleeve:#e3ddd0;--ink:#2b2a26;--mute:#6f6b61;--soft:#8b877c;--faint:#a39d8f;--gold:#b89a5a;--wine:#8a6d32;--vinyl:#1c1b18}
   *{box-sizing:border-box}
   html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Noto Serif KR',serif;-webkit-font-smoothing:antialiased}
-  body{min-height:100vh;display:flex;justify-content:center;overflow-x:hidden}
-  .page{width:356px;max-width:calc(100vw - 24px);padding:40px 0 22px;display:flex;flex-direction:column;min-height:100vh;min-height:100dvh}
+  /* 한 화면 고정: 페이지가 보이는 화면에 딱 붙어 스크롤 없이 늘 HOME까지 보인다 */
+  html,body{height:100%;overflow:hidden;overscroll-behavior:none}
+  .page{position:fixed;top:0;bottom:0;left:0;right:0;margin:0 auto;width:356px;max-width:calc(100vw - 24px);padding:40px 0 22px;display:flex;flex-direction:column}
   .kicker{margin:0 0 6px;align-self:flex-end;font-family:'Cormorant Garamond','Noto Serif KR',serif;font-size:12px;letter-spacing:.14em;margin-right:-.14em;color:var(--soft);transition:transform 1.4s cubic-bezier(.22,.7,.2,1)}
   .stage{position:relative;width:100%;height:260px;transition:height 1.2s ease,margin-bottom 1.2s ease}
   .ease{transition:transform 1.4s cubic-bezier(.22,.7,.2,1),opacity 1s ease}
@@ -260,7 +261,7 @@
   function contentW(){ return stage.getBoundingClientRect().width; }
 
   /* 레이아웃: 앨범(260) ↔ 재생(화면 폭 정사각) */
-  function fitPage(){ var pg=document.querySelector('.page'); if(pg) pg.style.minHeight = window.innerHeight+'px'; }
+  function fitPage(){}
   function layout(){
     fitPage();
     var W = contentW();
@@ -282,7 +283,8 @@
       var H = Math.max(J, m + band + eh + info.offsetHeight + (small ? 18 : Math.max(m, 24)));
       if (small) {
         var foot = document.querySelector('footer');
-        var avail = window.innerHeight - stage.getBoundingClientRect().top - window.scrollY - foot.offsetHeight - 18 - 12;
+        var pg = document.querySelector('.page'), pb = parseFloat(getComputedStyle(pg).paddingBottom) || 0;
+        var avail = pg.getBoundingClientRect().bottom - pb - stage.getBoundingClientRect().top - foot.offsetHeight - 18;
         if (H > avail) {
           var pad = Math.max(14, 45 - (H - avail));
           info.style.paddingTop = pad + 'px';
@@ -455,6 +457,7 @@
     renderInfo();
   };
   window.addEventListener('resize', layout);
+  if (window.visualViewport) visualViewport.addEventListener('resize', layout);
 
   loadYT();
   render();
