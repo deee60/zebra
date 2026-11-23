@@ -28,7 +28,7 @@
   html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Noto Serif KR',serif;-webkit-font-smoothing:antialiased}
   body{min-height:100vh;display:flex;justify-content:center;overflow-x:hidden}
   .page{width:356px;max-width:calc(100vw - 24px);padding:56px 0 36px;display:flex;flex-direction:column;min-height:100vh}
-  .kicker{margin:0 0 22px;align-self:flex-end;font-size:10px;letter-spacing:.32em;margin-right:-.32em;color:#a08a57}
+  .kicker{margin:0 0 22px;align-self:flex-end;font-size:12px;letter-spacing:.32em;margin-right:-.32em;color:#a08a57;transition:transform 1.4s cubic-bezier(.22,.7,.2,1)}
   .stage{position:relative;width:100%;height:260px;transition:height 1.2s ease}
   .ease{transition:transform 1.4s cubic-bezier(.22,.7,.2,1),opacity 1s ease}
 
@@ -63,8 +63,8 @@
   .info{position:absolute;z-index:3;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;opacity:0;pointer-events:none;transition:opacity 1s ease .9s;text-align:center}
   .info .t{font-size:14px}
   .info .a{font-size:11px;color:var(--mute)}
-  .info .by{font-family:'Cormorant Garamond',serif;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-top:4px}
-  .info .by:empty{display:none}
+  .credit{position:absolute;z-index:3;font-family:'Cormorant Garamond',serif;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 1s ease .9s}
+  .playing .credit{opacity:1}
   .row{margin-top:10px;display:flex;align-items:center;gap:6px}
   .row .side{min-height:40px;font-style:italic;font-size:11px}
   .row .side.l{margin-right:10px}.row .side.r{margin-left:10px}
@@ -112,11 +112,11 @@
         </button>
       </span>
 
+      <span class="credit" id="songBy"></span>
       <div class="screen" id="screen"><div id="yt"></div></div>
       <div class="info" id="info">
         <span class="t" id="songTitle"></span>
         <span class="a" id="songArtist"></span>
-        <span class="by" id="songBy"></span>
         <span class="row">
           <button type="button" class="btn side l" id="prevSide"></button>
           <button type="button" class="btn icon" id="prevBtn" aria-label="이전 곡"><svg aria-hidden="true" width="13" height="11" viewBox="0 0 13 11"><path d="M12 1 L6.5 5.5 L12 10 Z M6.5 1 L1 5.5 L6.5 10 Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round" fill="none"/></svg></button>
@@ -188,6 +188,7 @@
   /* 레이아웃: 앨범(260) ↔ 재생(화면 폭 정사각) */
   function layout(){
     var W = contentW();
+    var jr;
     if (st.started) {
       var vw = document.documentElement.clientWidth;
       var J = Math.min(vw, 560);                       // 자켓 한 변
@@ -199,12 +200,16 @@
       stage.style.height = J+'px';
       screen.style.left = m+'px'; screen.style.top = (m+32)+'px'; screen.style.width = ew+'px'; screen.style.height = eh+'px';
       info.style.left = m+'px'; info.style.right = m+'px'; info.style.top = (m+32+eh)+'px';
+      var cr=$('songBy'); cr.style.right = m+'px'; cr.style.top = (m+10)+'px';
+      jr = left + J;
     } else {
       sleeve.style.width = '260px'; sleeve.style.height = '260px';
       var gutter = (document.documentElement.clientWidth - W) / 2;
       sleeve.style.transform = 'translateX(' + (st.opened ? -Math.min(24, gutter) : (W-260)/2) + 'px)';
       stage.style.height = '260px';
+      jr = (st.opened ? -Math.min(24, gutter) : (W-260)/2) + 260;
     }
+    document.querySelector('.kicker').style.transform = 'translateX('+(jr - W)+'px)';
     var rx = st.opened && st.out && !st.started ? 118 : (st.opened ? 40 : (W-260)/2 + 48);
     record.style.transform = 'translateX('+rx+'px)';
   }
