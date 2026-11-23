@@ -42,6 +42,8 @@
 
   /* sleeve */
   .sleeve{position:absolute;left:0;top:0;width:260px;height:260px;z-index:2;background:var(--sleeve);box-shadow:0 1px 0 rgba(43,42,38,.05),0 10px 24px rgba(43,42,38,.10);transition:transform 1.4s cubic-bezier(.22,.7,.2,1),width 1.2s ease,height 1.2s ease}
+  .sleeve .art{position:absolute;inset:0;background:url(jacket-winter.jpg) center/cover no-repeat;opacity:0;transition:opacity 2.7s ease;pointer-events:none}
+  .sleeve .art.on{opacity:1}
   .sleeve .spine{position:absolute;right:0;top:0;bottom:0;width:1px;background:rgba(43,42,38,.12)}
   .corner{position:absolute;right:18px;top:16px;font-size:10px;color:var(--mute);transition:opacity .6s ease}
   .title{position:absolute;left:18px;right:18px;top:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;transition:opacity .8s ease;pointer-events:none}
@@ -112,6 +114,7 @@
     </div>
 
     <div class="sleeve" id="sleeve">
+      <span class="art" id="art" aria-hidden="true"></span>
       <span class="corner" id="corner">LP</span>
       <span class="title" id="title">
         <span class="sidelabel" id="sideLabel">Side A</span>
@@ -153,7 +156,7 @@
 (function(){
   /* ── 면 데이터 ─────────────────────────────── */
   var SIDES = [
-    { side:'A', name:'발라디즘 · 겨울', corner:'', songs:[
+    { side:'A', name:'발라디즘 · 겨울', corner:'', art:true, songs:[
       { title:'나의 겨울 여행', artist:'스텔라장', yt:'PPS0mI6BOU4' },
       { title:'Melody', artist:'안전지대', yt:'3eqPoV1lJa4' },
       { title:'1994년 어느 늦은 밤', artist:'장혜진', yt:'LZEggT36REM' },
@@ -246,6 +249,7 @@
     $('sideName').textContent = sd.name;
     $('labelLetter').textContent = sd.side;
     $('sideLabel').textContent = 'Side '+sd.side;
+    $('art').classList.toggle('on', !!sd.art);
     var o = SIDES[(st.s+1)%SIDES.length];
     $('flipBtn').textContent = 'Side '+o.side; $('flipBtn').setAttribute('aria-label', o.side+'면 '+o.name+'으로 바꾸기');
     corner.textContent = sd.corner;
