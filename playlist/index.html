@@ -56,6 +56,8 @@
   .playing .title .play,.playing .title .flip{pointer-events:none}
   .back{position:absolute;z-index:4;width:44px;height:32px;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 1s ease .9s,color .3s ease}
   .playing .back{opacity:1;pointer-events:auto}
+  .ghost{pointer-events:none !important;transition:opacity .9s ease,filter .9s ease !important}
+  .ghost *{pointer-events:none !important}
   .opener{position:absolute;inset:0;border:none;background:transparent;cursor:pointer;z-index:3}
   .sides{display:none !important;position:absolute;right:14px;bottom:8px;z-index:4;display:flex;align-items:center;gap:4px;font-size:10px;color:var(--mute);transition:opacity .6s ease}
   .sides .btn{min-width:22px;min-height:26px;font-style:italic;font-size:12px;color:var(--faint)}
@@ -66,12 +68,12 @@
   /* player inside the jacket */
   .screen{position:absolute;z-index:3;background:var(--vinyl);box-shadow:0 0 0 .5px rgba(43,42,38,.25);opacity:0;pointer-events:none;transition:opacity 1s ease .6s}
   .screen #yt,.screen iframe{width:100%;height:100%;display:block;border:0}
-  .info{position:absolute;z-index:3;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;opacity:0;pointer-events:none;transition:opacity 1s ease .9s;text-align:center}
+  .info{position:absolute;z-index:3;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:20px;gap:4px;opacity:0;pointer-events:none;transition:opacity 1s ease .9s;text-align:center}
   .info .t{font-size:14px}
   .info .a{font-size:11px;color:var(--mute)}
   .credit{position:absolute;z-index:3;font-family:'Cormorant Garamond',serif;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 1s ease .9s}
   .playing .credit{opacity:1}
-  .row{margin-top:10px;display:flex;align-items:center;gap:6px}
+  .row{margin-top:22px;display:flex;align-items:center;gap:6px}
   .row .side{min-height:40px;font-style:italic;font-size:11px}
   .row .side.l{margin-right:10px}.row .side.r{margin-left:10px}
   .playing .screen,.playing .info{opacity:1;pointer-events:auto}
@@ -210,7 +212,7 @@
       screen.style.left = m+'px'; screen.style.top = (m+32)+'px'; screen.style.width = ew+'px'; screen.style.height = eh+'px';
       info.style.left = m+'px'; info.style.right = m+'px'; info.style.top = (m+32+eh)+'px';
       var cr=$('songBy'); cr.style.right = m+'px'; cr.style.top = (m+10)+'px';
-      var bk=$('backBtn'); bk.style.left = (m-14)+'px'; bk.style.top = m+'px';
+      var bk=$('backBtn'); bk.style.left = (m-14)+'px'; bk.style.top = Math.max(0, m-10)+'px';
       jr = left + J;
     } else {
       sleeve.style.width = '260px'; sleeve.style.height = '260px';
@@ -281,9 +283,27 @@
     clearTimeout(t2); t2 = setTimeout(function(){ st.out = true; render(); }, 700);
   }
 
+  /* 자켓 글씨를 디졸브로 바꾼다: 옛 글씨는 흐려지며 사라지고 새 글씨가 떠오른다 */
+  function dissolve(change){
+    var olds = [title, corner].map(function(el){
+      var g = el.cloneNode(true);
+      g.removeAttribute('id'); g.querySelectorAll('[id]').forEach(function(n){ n.removeAttribute('id'); });
+      g.classList.add('ghost'); g.style.opacity = getComputedStyle(el).opacity;
+      el.parentNode.insertBefore(g, el);
+      return g;
+    });
+    [title, corner].forEach(function(el){ el.style.transition = 'none'; el.style.opacity = 0; el.style.filter = 'blur(3px)'; });
+    change();
+    [title, corner].forEach(function(el){ el.style.opacity = 0; void el.offsetWidth; el.style.transition = 'opacity 1.1s ease .15s, filter 1.1s ease .15s'; el.style.opacity = 1; el.style.filter = 'blur(0)'; });
+    requestAnimationFrame(function(){ olds.forEach(function(g){ g.style.opacity = 0; g.style.filter = 'blur(3px)'; }); });
+    setTimeout(function(){ olds.forEach(function(g){ g.remove(); }); [title, corner].forEach(function(el){ el.style.transition = ''; el.style.filter = ''; }); }, 1400);
+  }
+
   function swapTo(i){
-    st.out = false; st.hinted = true; title.style.opacity = 0; render();
-    clearTimeout(t1); t1 = setTimeout(function(){ st.s = i; st.cur = 0; st.out = true; render(); }, 800);
+    st.out = false; st.hinted = true; render();
+    clearTimeout(t1);
+    setTimeout(function(){ dissolve(function(){ st.s = i; st.cur = 0; render(); }); }, 350);
+    t1 = setTimeout(function(){ st.out = true; render(); }, 900);
   }
 
   /* ── YouTube ─────────────────────────────── */
@@ -334,8 +354,7 @@
     e.stopPropagation();
     var i = (st.s+1) % SIDES.length;
     if (st.opened) { swapTo(i); return; }
-    title.style.opacity = 0;
-    clearTimeout(t1); t1 = setTimeout(function(){ st.s = i; st.cur = 0; render(); }, 450);
+    dissolve(function(){ st.s = i; st.cur = 0; render(); });
   };
   $('backBtn').onclick = function(){
     if (player && player.pauseVideo) player.pauseVideo();
