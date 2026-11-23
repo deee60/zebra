@@ -28,7 +28,7 @@
   html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Noto Serif KR',serif;-webkit-font-smoothing:antialiased}
   body{min-height:100vh;display:flex;justify-content:center;overflow-x:hidden}
   .page{width:356px;max-width:calc(100vw - 24px);padding:40px 0 22px;display:flex;flex-direction:column;min-height:100vh;min-height:100dvh}
-  .kicker{margin:0 0 16px;align-self:flex-end;font-size:12px;letter-spacing:.32em;margin-right:-.32em;color:var(--soft);transition:transform 1.4s cubic-bezier(.22,.7,.2,1)}
+  .kicker{margin:0 0 6px;align-self:flex-end;font-size:12px;letter-spacing:.32em;margin-right:-.32em;color:var(--soft);transition:transform 1.4s cubic-bezier(.22,.7,.2,1)}
   .stage{position:relative;width:100%;height:260px;transition:height 1.2s ease,margin-bottom 1.2s ease}
   .ease{transition:transform 1.4s cubic-bezier(.22,.7,.2,1),opacity 1s ease}
 
@@ -105,7 +105,7 @@
     -webkit-mask-image:linear-gradient(#000 0%,#000 40%,transparent 88%);mask-image:linear-gradient(#000 0%,#000 40%,transparent 88%)}
   #snow{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
   body.tight .page{padding-top:18px;padding-bottom:12px}
-  body.tight .kicker{margin-bottom:10px}
+  body.tight .kicker{margin-bottom:4px}
   body.tight footer{padding-top:14px}
 </style>
 </head>
@@ -256,7 +256,9 @@
   function contentW(){ return stage.getBoundingClientRect().width; }
 
   /* 레이아웃: 앨범(260) ↔ 재생(화면 폭 정사각) */
+  function fitPage(){ var pg=document.querySelector('.page'); if(pg) pg.style.minHeight = window.innerHeight+'px'; }
   function layout(){
+    fitPage();
     var W = contentW();
     var jr;
     if (st.started) {
