@@ -283,6 +283,11 @@
   .menu-list a{font-family:'Cormorant Garamond','Noto Serif KR',serif;font-size:12px;letter-spacing:.14em;color:var(--soft);text-decoration:none;padding:7px 0;transition:color .25s}
   .menu-list a.bside{font-family:'Cormorant SC',serif;font-weight:500;letter-spacing:.2em;font-size:12px}
   .menu-list a:hover{color:var(--gold)}
+  /* 페이지 사이를 디졸브로 (랜딩 · 모두의 큐레이션 · B-SIDE · 취향의 발견 · 플레이리스트) */
+  @view-transition{navigation:auto}
+  ::view-transition-old(root),::view-transition-new(root){animation-duration:.9s;animation-timing-function:ease}
+  @supports not (view-transition-name:none){ body{animation:zbFadeIn .9s ease both} }
+  @keyframes zbFadeIn{from{opacity:0}to{opacity:1}}
 </style>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"지브라 베타","alternateName":"Zebra Beta","url":"https://zebrabeta.kr","logo":"https://zebrabeta.kr/zebra-logo.png","sameAs":["https://instagram.com/zebrabeta26","https://brunch.co.kr/@zebrabeta"]}</script>
 </head>

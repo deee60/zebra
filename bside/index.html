@@ -210,6 +210,11 @@
   /* copy guard (same as issue pages): block text selection; right-click/copy via script below */
   html,body{ -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; -webkit-touch-callout:none; }
   a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
+  /* 페이지 사이를 디졸브로 (랜딩 · 모두의 큐레이션 · B-SIDE · 취향의 발견 · 플레이리스트) */
+  @view-transition{navigation:auto}
+  ::view-transition-old(root),::view-transition-new(root){animation-duration:.9s;animation-timing-function:ease}
+  @supports not (view-transition-name:none){ body{animation:zbFadeIn .9s ease both} }
+  @keyframes zbFadeIn{from{opacity:0}to{opacity:1}}
   /* 겨울 배경: 랜딩과 같은 서리 숲(아이보리) + 흰 눈 */
   html{background:#eeece7}
   html body{background:transparent}
