@@ -198,7 +198,7 @@ WINTER_CSS = r'''  /* 겨울 배경: 랜딩과 같은 서리 숲(아이보리) +
   html{background:#efece4}
   html body{background:transparent}
   body::before{content:'';position:fixed;left:0;right:0;top:0;height:100vh;z-index:-1;pointer-events:none;
-    background:url(/frost-winter.jpg) center top/cover no-repeat;
+    background:url(/frost-winter-v2.jpg) center top/cover no-repeat;
     -webkit-mask-image:linear-gradient(#000 0%,#000 40%,transparent 88%);mask-image:linear-gradient(#000 0%,#000 40%,transparent 88%)}
   #snow{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
 '''
