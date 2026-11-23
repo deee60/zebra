@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B0TNF05GFQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-B0TNF05GFQ');
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>플레이리스트 · 지브라 베타</title>
+<meta name="description" content="지브라 베타 플레이리스트 — 발라디즘, 모두의 큐레이션">
+<link rel="canonical" href="https://zebrabeta.kr/playlist/">
+<meta property="og:title" content="플레이리스트 · 지브라 베타">
+<meta property="og:description" content="발라디즘 — 겨울 · 모두의 큐레이션">
+<meta property="og:image" content="https://zebrabeta.kr/zebra-og.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://zebrabeta.kr/playlist/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#efece4;--sleeve:#e3ddd0;--ink:#2b2a26;--mute:#6f6b61;--soft:#8b877c;--faint:#a39d8f;--gold:#b89a5a;--wine:#8a6d32;--vinyl:#1c1b18}
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Noto Serif KR',serif;-webkit-font-smoothing:antialiased}
+  body{min-height:100vh;display:flex;justify-content:center;overflow-x:hidden}
+  .page{width:356px;max-width:calc(100vw - 24px);padding:56px 0 36px;display:flex;flex-direction:column;min-height:100vh}
+  .kicker{margin:0 0 22px;align-self:flex-end;font-size:10px;letter-spacing:.32em;margin-right:-.32em;color:#a08a57}
+  .stage{position:relative;width:100%;height:260px;transition:height 1.2s ease}
+  .ease{transition:transform 1.4s cubic-bezier(.22,.7,.2,1),opacity 1s ease}
+
+  /* record */
+  .record{position:absolute;left:0;top:10px;width:240px;height:240px;z-index:1}
+  .disc{width:240px;height:240px}
+  .spin{animation:spin 6s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .label{position:absolute;left:86px;top:86px;width:68px;height:68px;border-radius:50%;overflow:hidden;pointer-events:none;color:var(--wine);text-shadow:0 .6px 0 #fff}
+  .label .big{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Pinyon Script',cursive;font-size:66px;line-height:1;padding-top:4px;opacity:.85}
+
+  /* sleeve */
+  .sleeve{position:absolute;left:0;top:0;width:260px;height:260px;z-index:2;background:var(--sleeve);box-shadow:0 1px 0 rgba(43,42,38,.05),0 10px 24px rgba(43,42,38,.10);transition:transform 1.4s cubic-bezier(.22,.7,.2,1),width 1.2s ease,height 1.2s ease}
+  .sleeve .spine{position:absolute;right:0;top:0;bottom:0;width:1px;background:rgba(43,42,38,.12)}
+  .corner{position:absolute;right:18px;top:16px;font-size:10px;color:var(--mute);transition:opacity .6s ease}
+  .title{position:absolute;left:18px;right:18px;top:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;transition:opacity .8s ease;pointer-events:none}
+  .title .name{font-size:22px;line-height:1.3;letter-spacing:.01em}
+  .btn{border:none;background:transparent;cursor:pointer;color:var(--mute);font-family:'Noto Serif KR',serif;padding:0;transition:color .3s ease;-webkit-tap-highlight-color:transparent}
+  .btn:hover{color:var(--ink)}
+  .icon{width:44px;height:40px;display:flex;align-items:center;justify-content:center}
+  .title .play{pointer-events:auto;position:relative;z-index:4;width:44px;height:36px}
+  .opener{position:absolute;inset:0;border:none;background:transparent;cursor:pointer;z-index:3}
+  .sides{position:absolute;right:14px;bottom:8px;z-index:4;display:flex;align-items:center;gap:4px;font-size:10px;color:var(--mute);transition:opacity .6s ease}
+  .sides .btn{min-width:22px;min-height:26px;font-style:italic;font-size:12px;color:var(--faint)}
+  .sides .btn[aria-selected="true"]{color:var(--wine)}
+  .hint{animation:hint 2.4s ease-in-out 1.6s 1 both}
+  @keyframes hint{0%,100%{color:var(--faint)}40%,60%{color:var(--wine)}}
+
+  /* player inside the jacket */
+  .screen{position:absolute;z-index:3;background:var(--vinyl);box-shadow:0 0 0 .5px rgba(43,42,38,.25);opacity:0;pointer-events:none;transition:opacity 1s ease .6s}
+  .screen #yt,.screen iframe{width:100%;height:100%;display:block;border:0}
+  .info{position:absolute;z-index:3;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;opacity:0;pointer-events:none;transition:opacity 1s ease .9s;text-align:center}
+  .info .t{font-size:14px}
+  .info .a{font-size:11px;color:var(--mute)}
+  .info .by{font-style:italic;margin-left:8px}
+  .row{margin-top:10px;display:flex;align-items:center;gap:6px}
+  .row .side{min-height:40px;font-style:italic;font-size:11px}
+  .row .side.l{margin-right:10px}.row .side.r{margin-left:10px}
+  .playing .screen,.playing .info{opacity:1;pointer-events:auto}
+
+  footer{margin-top:auto;padding-top:28px;display:flex;flex-direction:column;align-items:center;gap:14px}
+  .home{min-height:32px;display:flex;align-items:center;font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:.14em;color:var(--soft);text-decoration:none;transition:color .25s}
+  .home:hover{color:var(--gold)}
+  .colophon{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;letter-spacing:.1em;color:var(--soft)}
+  @media (prefers-reduced-motion:reduce){.ease,.sleeve,.stage{transition:none}.spin{animation:none}}
+</style>
+</head>
+<body>
+<div class="page">
+  <p class="kicker">플레이리스트</p>
+
+  <div class="stage" id="stage">
+    <div class="record ease" id="record">
+      <div class="disc" id="disc">
+        <svg aria-hidden="true" width="240" height="240" viewBox="0 0 240 240">
+          <circle cx="120" cy="120" r="119" fill="#1c1b18"/>
+          <circle cx="120" cy="120" r="112" fill="none" stroke="#34312c" stroke-width=".6" opacity=".9"/>
+          <circle cx="120" cy="120" r="104" fill="none" stroke="#34312c" stroke-width=".6" opacity=".6"/>
+          <circle cx="120" cy="120" r="96" fill="none" stroke="#34312c" stroke-width=".6" opacity=".8"/>
+          <circle cx="120" cy="120" r="86" fill="none" stroke="#34312c" stroke-width=".6" opacity=".5"/>
+          <circle cx="120" cy="120" r="77" fill="none" stroke="#34312c" stroke-width=".6" opacity=".7"/>
+          <circle cx="120" cy="120" r="68" fill="none" stroke="#34312c" stroke-width=".6" opacity=".5"/>
+          <circle cx="120" cy="120" r="58" fill="none" stroke="#34312c" stroke-width=".6" opacity=".6"/>
+          <circle cx="120" cy="120" r="49" fill="none" stroke="#34312c" stroke-width=".6" opacity=".4"/>
+          <path d="M52 70 C70 44 100 30 132 31" fill="none" stroke="#5a564d" stroke-width=".8" opacity=".5"/>
+          <circle cx="120" cy="120" r="36" fill="#f3efe6"/>
+          <circle cx="120" cy="120" r="33.5" fill="none" stroke="#b89a5a" stroke-width=".5" opacity=".7"/>
+          <circle cx="120" cy="120" r="3" fill="#efece4"/>
+        </svg>
+      </div>
+      <span class="label" aria-hidden="true"><span class="big" id="labelLetter">A</span></span>
+    </div>
+
+    <div class="sleeve" id="sleeve">
+      <span class="corner" id="corner">LP</span>
+      <span class="title" id="title">
+        <span class="name" id="sideName">발라디즘</span>
+        <button type="button" class="btn play" id="playBtn" aria-label="재생">
+          <svg aria-hidden="true" width="11" height="13" viewBox="0 0 11 13"><path d="M1 1 L10 6.5 L1 12 Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round" fill="none"/></svg>
+        </button>
+      </span>
+
+      <div class="screen" id="screen"><div id="yt"></div></div>
+      <div class="info" id="info">
+        <span class="t" id="songTitle"></span>
+        <span class="a"><span id="songArtist"></span><span class="by" id="songBy"></span></span>
+        <span class="row">
+          <button type="button" class="btn side l" id="prevSide"></button>
+          <button type="button" class="btn icon" id="prevBtn" aria-label="이전 곡"><svg aria-hidden="true" width="13" height="11" viewBox="0 0 13 11"><path d="M12 1 L6.5 5.5 L12 10 Z M6.5 1 L1 5.5 L6.5 10 Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round" fill="none"/></svg></button>
+          <button type="button" class="btn icon" id="toggleBtn" aria-label="일시정지"></button>
+          <button type="button" class="btn icon" id="nextBtn" aria-label="다음 곡"><svg aria-hidden="true" width="13" height="11" viewBox="0 0 13 11"><path d="M1 1 L6.5 5.5 L1 10 Z M6.5 1 L12 5.5 L6.5 10 Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round" fill="none"/></svg></button>
+          <button type="button" class="btn side r" id="nextSide"></button>
+        </span>
+      </div>
+
+      <span class="sides" id="sides" role="tablist" aria-label="면" style="opacity:0;pointer-events:none">Side</span>
+      <button type="button" class="opener" id="opener" aria-label="앨범 열기"></button>
+      <span class="spine" aria-hidden="true"></span>
+    </div>
+  </div>
+
+  <footer>
+    <a class="home" href="/#home">HOME</a>
+    <span class="colophon">zebra beta movement 2.</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  /* ── 면 데이터 ─────────────────────────────── */
+  var SIDES = [
+    { side:'A', name:'발라디즘', corner:'겨울', songs:[
+      { title:'나의 겨울 여행', artist:'스텔라장', yt:'PPS0mI6BOU4' },
+      { title:'Melody', artist:'안전지대', yt:'3eqPoV1lJa4' },
+      { title:'나의 옛날이야기', artist:'조덕배', yt:'9QUYZO1Xra8' },
+      { title:'Antifreeze', artist:'백예린', yt:'74_yqNBhQbA' },
+      { title:'1994년 어느 늦은 밤', artist:'장혜진', yt:'LZEggT36REM' },
+      { title:'취중진담', artist:'전람회', yt:'2gBMIWt6rHo' },
+      { title:'겨울바다', artist:'푸른하늘', yt:'UyyVHjKZ5wQ' },
+      { title:'사랑이 떠나가네', artist:'김건모', yt:'g4sNE3hSlkk' },
+      { title:'계절은 이렇게 내리네', artist:'박학기', yt:'E0rC_Jh8lfs' },
+      { title:'바람이 분다', artist:'이소라', yt:'Fk__GLYSFMw' },
+      { title:'시간이 들겠지', artist:'로꼬 (feat. Colde)', yt:'tqJwU6Qmeu0' },
+      { title:'사랑의 시', artist:'엠씨 더 맥스', yt:'N3WGZPdJtCM' },
+      { title:'Chocolate', artist:'안전지대', yt:'5LGjnCpUG30' }
+    ]},
+    { side:'B', name:'모두의 큐레이션', corner:'요즘', auto:true, songs:[
+      { title:'백야', artist:'짙은', by:'앙', yt:'pyYsTmGJEWY' },
+      { title:'You Must Believe in Spring', artist:'Bill Evans', by:'박준규', yt:'koSoQRfG3wI' },
+      { title:'황금가면', artist:'김동률', by:'캔디', yt:'nbueu_IoIH4' },
+      { title:'Dream of the Return', artist:'Pat Metheny Group', by:'허병국옹', yt:'G0zj5PhZHT4' }
+    ]}
+  ];
+
+  /* 모두의 큐레이션에 발행되면 B면에 저절로 올라간다 (사이트 안에서만 동작) */
+  try {
+    fetch('/everyone/everyone.json', { cache:'no-store' }).then(function(r){ return r.ok ? r.json() : null; }).then(function(list){
+      if (!Array.isArray(list)) return;
+      var songs = list.filter(function(x){ return x.published !== false && x.youtube; })
+        .map(function(x){ return { title:x.title, artist:x.artist, by:x.by, yt:x.youtube }; });
+      if (songs.length) { SIDES[1].songs = songs; if (st.s === 1) renderInfo(); }
+    }).catch(function(){});
+  } catch(e){}
+
+  /* ── 상태 ─────────────────────────────── */
+  var st = { opened:false, out:false, started:false, playing:false, s:0, cur:0, hinted:false };
+  var $ = function(id){ return document.getElementById(id); };
+  var stage=$('stage'), record=$('record'), disc=$('disc'), sleeve=$('sleeve'), title=$('title'), corner=$('corner');
+  var sidesEl=$('sides'), screen=$('screen'), info=$('info'), opener=$('opener');
+  var t1, t2, player=null, ytReady=false, pending=null;
+
+  function contentW(){ return stage.getBoundingClientRect().width; }
+
+  /* 레이아웃: 앨범(260) ↔ 재생(화면 폭 정사각) */
+  function layout(){
+    var W = contentW();
+    if (st.started) {
+      var vw = document.documentElement.clientWidth;
+      var J = Math.min(vw, 560);                       // 자켓 한 변
+      var left = (W - J) / 2;                           // 내용 폭 밖으로 넓힌다
+      var m = Math.max(12, Math.min(32, (J - 356) / 2 + 32)); // 영상 둘레 종이 여백
+      var ew = J - m*2, eh = Math.max(200, Math.round(ew * 9 / 16));
+      sleeve.style.width = J+'px'; sleeve.style.height = J+'px';
+      sleeve.style.transform = 'translateX('+left+'px)';
+      stage.style.height = J+'px';
+      screen.style.left = m+'px'; screen.style.top = (m+32)+'px'; screen.style.width = ew+'px'; screen.style.height = eh+'px';
+      info.style.left = m+'px'; info.style.right = m+'px'; info.style.top = (m+32+eh)+'px';
+    } else {
+      sleeve.style.width = '260px'; sleeve.style.height = '260px';
+      var gutter = (document.documentElement.clientWidth - W) / 2;
+      sleeve.style.transform = 'translateX(' + (st.opened ? -Math.min(24, gutter) : (W-260)/2) + 'px)';
+      stage.style.height = '260px';
+    }
+    var rx = st.opened && st.out && !st.started ? 118 : (st.opened ? 40 : (W-260)/2 + 48);
+    record.style.transform = 'translateX('+rx+'px)';
+  }
+
+  function renderSides(){
+    sidesEl.innerHTML = 'Side';
+    SIDES.forEach(function(sd, i){
+      var b = document.createElement('button');
+      b.type='button'; b.className='btn'; b.setAttribute('role','tab');
+      b.setAttribute('aria-selected', i===st.s ? 'true':'false');
+      b.setAttribute('aria-label', sd.side+'면 '+sd.name);
+      b.textContent = sd.side;
+      if (i===1 && st.s!==1 && st.out && !st.hinted) b.classList.add('hint');
+      b.onclick = function(){ if (i!==st.s) swapTo(i); };
+      sidesEl.appendChild(b);
+    });
+  }
+
+  function renderSide(){
+    var sd = SIDES[st.s];
+    $('sideName').textContent = sd.name;
+    $('labelLetter').textContent = sd.side;
+    corner.textContent = sd.corner;
+    $('playBtn').setAttribute('aria-label', sd.name+' 재생');
+    var n = SIDES[(st.s+1)%SIDES.length], p = SIDES[(st.s-1+SIDES.length)%SIDES.length];
+    $('nextSide').textContent = 'Side '+n.side+' →'; $('nextSide').setAttribute('aria-label','다음 면, '+n.side+'면 '+n.name);
+    $('prevSide').textContent = '← Side '+p.side; $('prevSide').setAttribute('aria-label','이전 면, '+p.side+'면 '+p.name);
+    renderSides(); renderInfo();
+  }
+
+  function renderInfo(){
+    var song = SIDES[st.s].songs[st.cur % SIDES[st.s].songs.length];
+    $('songTitle').textContent = song.title;
+    $('songArtist').textContent = song.artist;
+    $('songBy').textContent = song.by ? 'by '+song.by : '';
+    $('toggleBtn').innerHTML = st.playing
+      ? '<svg aria-hidden="true" width="9" height="11" viewBox="0 0 9 11"><path d="M1.5 1 V10 M7.5 1 V10" stroke="currentColor" stroke-width="1.1" fill="none"/></svg>'
+      : '<svg aria-hidden="true" width="9" height="11" viewBox="0 0 9 11"><path d="M1 1 L8.5 5.5 L1 10 Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round" fill="none"/></svg>';
+    $('toggleBtn').setAttribute('aria-label', st.playing ? '일시정지' : '재생');
+    disc.classList.toggle('spin', st.playing);
+  }
+
+  function render(){
+    title.style.opacity = st.started ? 0 : 1;
+    corner.style.opacity = st.started ? 0 : 1;
+    var showSel = st.opened && !st.started;
+    sidesEl.style.opacity = showSel ? 1 : 0; sidesEl.style.pointerEvents = showSel ? 'auto' : 'none';
+    opener.style.display = st.opened ? 'none' : 'block';
+    sleeve.classList.toggle('playing', st.started);
+    layout(); renderSide();
+  }
+
+  function open(){
+    if (st.opened) return;
+    st.opened = true; render();
+    clearTimeout(t2); t2 = setTimeout(function(){ st.out = true; render(); }, 700);
+  }
+
+  function swapTo(i){
+    st.out = false; st.hinted = true; title.style.opacity = 0; render();
+    clearTimeout(t1); t1 = setTimeout(function(){ st.s = i; st.cur = 0; st.out = true; render(); }, 800);
+  }
+
+  /* ── YouTube ─────────────────────────────── */
+  function loadYT(){
+    if (window.YT && window.YT.Player) { ytReady = true; return; }
+    var tag = document.createElement('script'); tag.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(tag);
+  }
+  window.onYouTubeIframeAPIReady = function(){
+    ytReady = true;
+    if (pending) { var p = pending; pending = null; p(); }
+  };
+  function cue(){
+    var song = SIDES[st.s].songs[st.cur % SIDES[st.s].songs.length];
+    if (!player) {
+      player = new YT.Player('yt', {
+        videoId: song.yt,
+        playerVars: { autoplay:1, playsinline:1, rel:0, modestbranding:1 },
+        events: {
+          onReady: function(e){ e.target.playVideo(); },
+          onStateChange: function(e){
+            if (e.data === YT.PlayerState.ENDED) { next(); }              // 면 안에서 계속 흐른다
+            else if (e.data === YT.PlayerState.PLAYING) { st.playing = true; renderInfo(); }
+            else if (e.data === YT.PlayerState.PAUSED) { st.playing = false; renderInfo(); }
+          },
+          onError: function(){ next(); }                                    // 재생 안 되는 곡은 건너뛴다
+        }
+      });
+    } else {
+      player.loadVideoById(song.yt);
+    }
+    renderInfo();
+  }
+  function withYT(fn){ if (ytReady) fn(); else { pending = fn; loadYT(); } }
+
+  function start(){
+    if (!st.opened) { st.opened = true; }
+    st.started = true; st.out = false; st.playing = true; render();
+    withYT(cue);
+  }
+  function next(){ st.cur = (st.cur + 1) % SIDES[st.s].songs.length; st.playing = true; withYT(cue); }
+  function prev(){ st.cur = (st.cur - 1 + SIDES[st.s].songs.length) % SIDES[st.s].songs.length; st.playing = true; withYT(cue); }
+  function goSide(d){ st.s = (st.s + d + SIDES.length) % SIDES.length; st.cur = 0; st.playing = true; renderSide(); withYT(cue); }
+
+  $('playBtn').onclick = function(e){ e.stopPropagation(); start(); };
+  opener.onclick = open;
+  $('nextBtn').onclick = next;
+  $('prevBtn').onclick = prev;
+  $('nextSide').onclick = function(){ goSide(1); };
+  $('prevSide').onclick = function(){ goSide(-1); };
+  $('toggleBtn').onclick = function(){
+    if (!player) return;
+    if (st.playing) { player.pauseVideo(); st.playing = false; } else { player.playVideo(); st.playing = true; }
+    renderInfo();
+  };
+  window.addEventListener('resize', layout);
+
+  loadYT();
+  render();
+  window.addEventListener('load', layout);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+})();
+</script>
+</body>
+</html>
