@@ -50,8 +50,14 @@
   .btn:hover{color:var(--ink)}
   .icon{width:44px;height:40px;display:flex;align-items:center;justify-content:center}
   .title .play{pointer-events:auto;position:relative;z-index:4;width:44px;height:36px}
+  .sidelabel{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;letter-spacing:.06em;color:var(--wine);margin-bottom:2px}
+  .title .flip{pointer-events:auto;position:relative;z-index:4;min-height:32px;padding:0 10px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;letter-spacing:.06em;color:var(--faint)}
+  .title .flip:hover{color:var(--ink)}
+  .playing .title .play,.playing .title .flip{pointer-events:none}
+  .back{position:absolute;z-index:4;width:44px;height:32px;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 1s ease .9s,color .3s ease}
+  .playing .back{opacity:1;pointer-events:auto}
   .opener{position:absolute;inset:0;border:none;background:transparent;cursor:pointer;z-index:3}
-  .sides{position:absolute;right:14px;bottom:8px;z-index:4;display:flex;align-items:center;gap:4px;font-size:10px;color:var(--mute);transition:opacity .6s ease}
+  .sides{display:none !important;position:absolute;right:14px;bottom:8px;z-index:4;display:flex;align-items:center;gap:4px;font-size:10px;color:var(--mute);transition:opacity .6s ease}
   .sides .btn{min-width:22px;min-height:26px;font-style:italic;font-size:12px;color:var(--faint)}
   .sides .btn[aria-selected="true"]{color:var(--wine)}
   .hint{animation:hint 2.4s ease-in-out 1.6s 1 both}
@@ -106,11 +112,14 @@
     <div class="sleeve" id="sleeve">
       <span class="corner" id="corner">LP</span>
       <span class="title" id="title">
+        <span class="sidelabel" id="sideLabel">Side A</span>
         <span class="name" id="sideName">발라디즘 · 겨울</span>
         <button type="button" class="btn play" id="playBtn" aria-label="재생">
           <svg aria-hidden="true" width="11" height="13" viewBox="0 0 11 13"><path d="M1 1 L10 6.5 L1 12 Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round" fill="none"/></svg>
         </button>
+        <button type="button" class="btn flip" id="flipBtn">Side B</button>
       </span>
+      <button type="button" class="btn back" id="backBtn" aria-label="자켓으로 돌아가기"><svg aria-hidden="true" width="14" height="10" viewBox="0 0 14 10"><path d="M13 5 H1.5 M5.5 1 L1.5 5 L5.5 9" stroke="currentColor" stroke-width="1" fill="none" stroke-linejoin="round" stroke-linecap="round"/></svg></button>
 
       <span class="credit" id="songBy"></span>
       <div class="screen" id="screen"><div id="yt"></div></div>
@@ -201,6 +210,7 @@
       screen.style.left = m+'px'; screen.style.top = (m+32)+'px'; screen.style.width = ew+'px'; screen.style.height = eh+'px';
       info.style.left = m+'px'; info.style.right = m+'px'; info.style.top = (m+32+eh)+'px';
       var cr=$('songBy'); cr.style.right = m+'px'; cr.style.top = (m+10)+'px';
+      var bk=$('backBtn'); bk.style.left = (m-14)+'px'; bk.style.top = m+'px';
       jr = left + J;
     } else {
       sleeve.style.width = '260px'; sleeve.style.height = '260px';
@@ -232,6 +242,9 @@
     var sd = SIDES[st.s];
     $('sideName').textContent = sd.name;
     $('labelLetter').textContent = sd.side;
+    $('sideLabel').textContent = 'Side '+sd.side;
+    var o = SIDES[(st.s+1)%SIDES.length];
+    $('flipBtn').textContent = 'Side '+o.side; $('flipBtn').setAttribute('aria-label', o.side+'면 '+o.name+'으로 바꾸기');
     corner.textContent = sd.corner;
     $('playBtn').setAttribute('aria-label', sd.name+' 재생');
     var n = SIDES[(st.s+1)%SIDES.length], p = SIDES[(st.s-1+SIDES.length)%SIDES.length];
@@ -317,6 +330,18 @@
 
   $('playBtn').onclick = function(e){ e.stopPropagation(); start(); };
   opener.onclick = open;
+  $('flipBtn').onclick = function(e){
+    e.stopPropagation();
+    var i = (st.s+1) % SIDES.length;
+    if (st.opened) { swapTo(i); return; }
+    title.style.opacity = 0;
+    clearTimeout(t1); t1 = setTimeout(function(){ st.s = i; st.cur = 0; render(); }, 450);
+  };
+  $('backBtn').onclick = function(){
+    if (player && player.pauseVideo) player.pauseVideo();
+    st.started = false; st.playing = false; st.opened = false; st.out = false;
+    render();
+  };
   $('nextBtn').onclick = next;
   $('prevBtn').onclick = prev;
   $('nextSide').onclick = function(){ goSide(1); };
