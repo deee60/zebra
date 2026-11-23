@@ -19,8 +19,8 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#EFECE4">
-<meta name="theme-color" content="#EFECE4">
+<meta name="theme-color" content="#EEECE7">
+<meta name="theme-color" content="#EEECE7">
 <meta name="description" content="일상을 함께하는 음악 큐레이션. 지브라 베타.">
 <meta property="og:title" content="지브라 베타 · 음악 큐레이션">
 <meta property="og:description" content="일상을 함께합니다.">
@@ -34,7 +34,7 @@
   @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Cormorant+SC:wght@400;500&display=swap');
   *{box-sizing:border-box;margin:0;padding:0}
   :root{
-    --bg:#efece4;
+    --bg:#eeece7;
     --paper:#f7f5ef;
     --ink:#2b2a26;
     --soft:#8b877c;
@@ -188,6 +188,7 @@
     transform:rotate(45deg);animation:hintBob 2.2s ease-in-out infinite;
   }
   .scroll-hint.hidden{opacity:0 !important}
+  @media(max-width:768px){.scroll-hint{display:none}}
   @keyframes hintIn{to{opacity:.55}}
   @keyframes hintBob{
     0%,100%{transform:rotate(45deg) translate(0,0)}
@@ -223,28 +224,95 @@
     background:var(--paper);color:var(--soft);border:1px solid var(--line);
   }
   .form button.ghost:hover{color:var(--ink);border-color:var(--gold);opacity:1;transform:none}
+
+  /* 미리보기: 서리 숲 사진을 종이색에 녹여 위쪽에만 깐다 */
+  body::before{content:'';position:fixed;left:0;right:0;top:0;height:100vh;z-index:-1;
+    background:url(/frost-winter-v3.jpg) center top/cover no-repeat;
+    -webkit-mask-image:linear-gradient(#000 0%,#000 40%,transparent 88%);mask-image:linear-gradient(#000 0%,#000 40%,transparent 88%);
+    transition:opacity .8s ease}
+  body.nophoto::before{opacity:0}
+  /* 처음부터 세피아 아이보리 */
+  html{background:#eeece7}
+  body{background:transparent !important}
+  /* 로고를 뺀 자리: 지브라 베타 글씨가 숲 안개 한가운데에 오도록 */
+  /* 로고 대신 이름: 조금 키우고 진하게 */
+  .kicker{margin-top:clamp(160px,28vh,280px);font-size:19px;color:#9c8350;letter-spacing:.52em}
+  @media(max-width:480px){.kicker{margin-top:clamp(120px,22vh,200px);font-size:16px;margin-bottom:68px}}
+
+  /* 금색 이퀄라이저 → 플레이리스트 (지브라 베타 위) */
+  .hero .kicker{margin-top:0}
+  .eq-link{display:flex;flex-direction:column;align-items:center;gap:10px;text-decoration:none;color:var(--gold);
+    margin-top:clamp(154px,calc(25vh + 14px),274px);margin-bottom:52px;transition:color .3s}
+  .eq-link:hover{color:#8a6d32}
+  .eq{display:flex;align-items:flex-end;gap:3px;height:20px}
+  .eq i{display:block;width:2px;height:20px;background:currentColor;transform-origin:bottom;transition:transform .5s ease}
+  .eq.lively i{transition:transform .15s linear}
+  .eq-link{position:relative}
+  .eq-label{position:absolute;top:100%;left:50%;transform:translate(-50%,2px);white-space:nowrap;font-size:11px;letter-spacing:.32em;padding-left:.32em;color:#a08a57;opacity:0;transition:opacity .8s ease,transform .8s ease;pointer-events:none}
+  .eq-link.near .eq-label{opacity:1;transform:translate(-50%,6px);transition:opacity 1.6s ease .15s,transform 1.6s ease .15s}
+  @media(max-width:480px){.eq-link{margin-top:clamp(110px,calc(19vh + 10px),190px);margin-bottom:42px}}
+
+  /* 최근 발행물 · 큐레이터 데스크 — 상자 없는 세 가지 안 */
+  .latest .sep{display:none}
+  body.va .latest,body.vb .latest,body.vc .latest{margin-top:56px}
+  body.va .latest{margin-top:14px}
+  body.va .latest-link,body.vb .latest-link,body.vc .latest-link{margin:0}
+  body.va .latest .pick,body.vb .latest .pick,body.vc .latest .pick{border:none;padding:0;background:none;
+    font-family:'Cormorant Garamond','Noto Serif KR',serif;font-size:12px;letter-spacing:.14em;color:var(--soft)}
+  body.va .latest .pick:hover,body.vb .latest .pick:hover,body.vc .latest .pick:hover{background:none;color:var(--gold)}
+  body.va .latest{display:flex;align-items:baseline;justify-content:center;gap:14px}
+  body.va .latest .sep{display:inline;color:#b3aea2;font-size:12px}
+  body.vb .latest,body.vc .latest{display:flex;flex-direction:column;align-items:center;gap:16px}
+  body.vc .latest-link::before,body.vc .latest .pick::before{content:'· ';color:#b3aea2}
+
+  /* 왼쪽 위 메뉴: 두 줄 → 누르면 ×, 아래로 세 코너가 떠오른다 */
+  .menu{position:fixed;left:max(clamp(16px,3vw,36px), calc(50% - 320px));top:clamp(34px,5.5vh,56px);z-index:40;text-align:left;display:flex;align-items:center}
+  .menu-btn{width:44px;height:44px;border:none;background:transparent;cursor:pointer;position:relative;-webkit-tap-highlight-color:transparent}
+  .menu-btn .bar{position:absolute;left:12px;width:20px;height:1px;background:var(--soft);transition:transform .5s ease,top .5s ease,background .3s}
+  .menu-btn .bar:nth-child(1){top:18px}
+  .menu-btn .bar:nth-child(2){top:25px}
+  .menu-btn:hover .bar{background:var(--gold)}
+  .menu.open .bar:nth-child(1){top:22px;transform:rotate(45deg) scaleX(.5)}
+  .menu.open .bar:nth-child(2){top:22px;transform:rotate(-45deg) scaleX(.5)}
+  /* 펼치면 화면 위쪽 가운데에 한 줄로 선다 (예전 메뉴 자리) */
+  .menu-list{position:fixed;left:50%;top:clamp(34px,5.5vh,56px);height:44px;display:flex;flex-direction:row;align-items:center;gap:22px;white-space:nowrap;
+    opacity:0;transform:translate(-50%,-6px);pointer-events:none;transition:opacity .6s ease,transform .6s ease}
+  .menu.open .menu-list{transform:translate(-50%,0)}
+  @media(max-width:480px){.menu-list{gap:14px}.menu-list a{letter-spacing:.08em}}
+  .menu.open .menu-list{opacity:1;pointer-events:auto}
+  .menu-list a{font-family:'Cormorant Garamond','Noto Serif KR',serif;font-size:12px;letter-spacing:.14em;color:var(--soft);text-decoration:none;padding:7px 0;transition:color .25s}
+  .menu-list a.bside{font-family:'Cormorant SC',serif;font-weight:500;letter-spacing:.2em;font-size:12px}
+  .menu-list a:hover{color:var(--gold)}
 </style>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"지브라 베타","alternateName":"Zebra Beta","url":"https://zebrabeta.kr","logo":"https://zebrabeta.kr/zebra-logo.png","sameAs":["https://instagram.com/zebrabeta26","https://brunch.co.kr/@zebrabeta"]}</script>
 </head>
-<body>
-  <div class="wrap">
-    <div class="recent-row">
-      <a class="recent" href="everyone/">모두의 큐레이션</a>
-      <a class="recent bside" href="bside/">B-SIDE</a>
-      <a class="recent" href="taste/">취향의 발견<span class="misc"> (미셀러니)</span></a>
+<body class="va">
+  <nav class="menu" id="menu">
+    <button type="button" class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuList" aria-label="메뉴">
+      <span class="bar"></span><span class="bar"></span>
+    </button>
+    <div class="menu-list" id="menuList">
+      <a href="everyone/">모두의 큐레이션</a>
+      <a class="bside" href="bside/">B-SIDE</a>
+      <a href="taste/">취향의 발견</a>
     </div>
+  </nav>
+  <div class="wrap">
 
     <div class="hero">
-    <div class="logo"><img src="zebra-logo.png" alt="ZEBRA BETA"></div>
+
+    <a class="eq-link" id="eqLink" href="playlist/" title="플레이리스트 듣기" aria-label="플레이리스트 듣기">
+      <span class="eq" id="eq"><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="eq-label" id="eqLabel">플레이리스트</span>
+    </a>
 
     <div class="kicker">Zebra Beta</div>
 
-    <h1>당신의 하루에<br>함께 머물 수 있는 순간을 담습니다.</h1>
+
 
 
     <div class="latest">
-      <a class="recent latest-link" href="issue/gayo04/">최근 발행물 보기</a>
-      <a class="pick" href="curator/latesummer/">큐레이터 데스크</a>
+      <a class="recent latest-link" href="issue/gayo04/">최근 발행물 보기</a><span class="sep" aria-hidden="true">·</span><a class="pick" href="curator/latesummer/">큐레이터 데스크</a>
     </div>
     </div>
 
@@ -259,6 +327,64 @@
 
   <div class="scroll-hint" id="scrollHint" aria-hidden="true"><span class="chev"></span></div>
 
+
+
+<script>
+  (function(){
+    var m=document.getElementById('menu'), b=document.getElementById('menuBtn');
+    b.onclick=function(e){ e.stopPropagation(); var o=m.classList.toggle('open'); b.setAttribute('aria-expanded', o?'true':'false'); };
+    document.addEventListener('click', function(e){ if(!m.contains(e.target)){ m.classList.remove('open'); b.setAttribute('aria-expanded','false'); } });
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ m.classList.remove('open'); b.setAttribute('aria-expanded','false'); } });
+  })();
+</script>
+<script>
+  /* 이퀄라이저: 처음 2.4초와 커서가 가까이 올 때만 실제 음원 레벨로 뛰고, 평소엔 멈춰 있다 */
+  (function(){
+    var F=[[0.15,0.93,0.78,0.66,0.56,0.53,0.48,0.43,0.42,0.38,0.4,0.96,0.85,0.68,0.67,0.61,0.54,0.47,0.32,0.25,0.2,0.85,0.79,0.55,0.42,0.58,0.56,0.53,0.63,0.62,0.57,0.54,0.48,0.52,0.53,0.49,0.33,0.25,0.21,0.21,0.42,0.42,0.4,0.39,0.4,0.29,0.23,0.57,0.48,0.39,0.28,0.43,0.55,0.52,0.53,0.66,0.63,0.6,0.57,0.5,0.53,0.71,0.68,0.64,0.57,0.52,0.5,0.47,0.47,0.46,0.47,0.47,0.48,0.48,0.49,0.49,0.48,0.48,0.47,0.47,0.46,0.45,0.44,0.43,0.42,0.4,0.39,0.37,0.35,0.34,0.32,0.31,0.29,0.28,0.26,0.25,0.23,0.22,0.2,0.19,0.17,0.16,0.16,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15],[0.41,0.94,0.89,0.68,0.51,0.59,0.61,0.55,0.54,0.53,0.66,0.81,0.79,0.78,0.74,0.65,0.58,0.58,0.72,0.67,0.67,0.61,0.77,0.76,0.72,0.61,0.51,0.48,0.51,0.47,0.41,0.43,0.56,0.53,0.5,0.55,0.48,0.34,0.25,0.47,0.44,0.44,0.44,0.43,0.38,0.28,0.22,0.83,0.7,0.59,0.52,0.42,0.39,0.36,0.43,0.41,0.4,0.43,0.37,0.36,0.32,0.51,0.48,0.5,0.59,0.58,0.53,0.46,0.38,0.28,0.22,0.19,0.22,0.22,0.19,0.17,0.16,0.16,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.19,0.22,0.26,0.3,0.34,0.37],[0.36,0.81,0.93,0.96,1.0,0.98,0.98,0.94,0.94,0.97,0.91,0.85,0.8,0.71,0.61,0.54,0.43,0.37,0.63,0.54,0.53,0.47,0.42,0.39,0.34,0.31,0.29,0.29,0.68,0.57,0.52,0.51,0.59,0.52,0.48,0.43,0.37,0.29,0.26,0.6,0.56,0.51,0.42,0.35,0.29,0.23,0.23,0.46,0.35,0.27,0.35,0.34,0.33,0.27,0.22,0.26,0.21,0.3,0.25,0.21,0.18,0.26,0.46,0.42,0.43,0.36,0.28,0.23,0.2,0.18,0.16,0.16,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.18,0.21,0.24,0.27,0.3,0.33],[0.42,0.71,0.83,0.8,0.76,0.76,0.73,0.7,0.84,0.84,0.84,0.79,0.72,0.66,0.55,0.5,0.38,0.31,0.53,0.54,0.49,0.5,0.47,0.39,0.34,0.37,0.34,0.32,0.63,0.6,0.54,0.52,0.64,0.63,0.58,0.55,0.52,0.45,0.41,0.52,0.65,0.58,0.51,0.43,0.35,0.27,0.25,0.57,0.48,0.44,0.45,0.62,0.54,0.46,0.42,0.52,0.49,0.47,0.39,0.36,0.36,0.34,0.37,0.44,0.4,0.39,0.35,0.31,0.27,0.23,0.2,0.17,0.16,0.16,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.19,0.23,0.27,0.3,0.34,0.38],[0.62,0.91,0.75,0.62,0.57,0.55,0.5,0.63,0.75,0.68,0.64,0.6,0.57,0.51,0.46,0.53,0.41,0.41,0.6,0.55,0.45,0.7,0.68,0.58,0.48,0.44,0.48,0.39,0.67,0.64,0.56,0.56,0.67,0.6,0.56,0.5,0.48,0.44,0.42,0.55,0.54,0.51,0.45,0.41,0.38,0.33,0.39,0.53,0.46,0.43,0.43,0.54,0.48,0.43,0.43,0.6,0.5,0.42,0.37,0.36,0.4,0.39,0.37,0.37,0.36,0.35,0.29,0.24,0.2,0.18,0.17,0.16,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.22,0.28,0.35,0.42,0.49,0.55]], R=[0.45,0.8,0.32,0.65,0.5];
+    var eq=document.getElementById('eq'), bars=eq.querySelectorAll('i'), f=0, intro=true, near=false;
+    var link=document.getElementById('eqLink');
+    function paint(){ var live=intro||near; eq.classList.toggle('lively',live); link.classList.toggle('near',live); for(var j=0;j<5;j++) bars[j].style.transform='scaleY('+(live?F[j][f]:R[j])+')'; }
+    paint(); setTimeout(function(){ intro=false; paint(); },2400);
+    setInterval(function(){ if(intro||near){ f=(f+1)%F[0].length; paint(); } },150);
+    document.addEventListener('mousemove',function(e){ var r=eq.getBoundingClientRect(); var d=Math.hypot(e.clientX-(r.left+r.width/2),e.clientY-(r.top+r.height/2)); var n=d<90; if(n!==near){ near=n; paint(); } });
+  })();
+</script>
+<canvas id="snow" aria-hidden="true" style="position:fixed;inset:0;width:100%;height:100%;z-index:1;pointer-events:none"></canvas>
+<script>
+  /* 흰 눈: 스텔라장 「나의 겨울 여행」처럼 — 작고 또렷한 눈송이와 크고 흐린 눈송이(초점 밖)가 섞여 천천히 */
+  (function(){
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var c=document.getElementById('snow'), x=c.getContext('2d'), W, H, dpr=Math.min(2, window.devicePixelRatio||1), flakes=[];
+    function size(){ W=c.clientWidth||innerWidth; H=c.clientHeight||innerHeight; c.width=W*dpr; c.height=H*dpr; x.setTransform(dpr,0,0,dpr,0,0); }
+    var t0 = Date.now();
+    function mk(top){
+      var big = top && (Date.now() - t0 > 4000) && Math.random() < .14, r = big ? 5+Math.random()*7 : 2+Math.random()*2.6;
+      return { x:Math.random(), y: top ? -r*2 : Math.random()*H, r:r, big:big,
+               v: big ? .35+Math.random()*.45 : .45+Math.random()*.7,   // 큰 송이는 가까워서 느리고 흐리다
+               a: Math.random()*6.28, s: .003+Math.random()*.007, w: .25+Math.random()*.5,
+               o: big ? .38+Math.random()*.25 : .85+Math.random()*.15 };
+    }
+    function draw(f){
+      var px = f.x*W; var g = x.createRadialGradient(px, f.y, 0, px, f.y, f.r);
+      if (f.big){ g.addColorStop(0,'rgba(255,255,255,'+f.o+')'); g.addColorStop(.55,'rgba(255,255,255,'+(f.o*.7)+')'); g.addColorStop(1,'rgba(255,255,255,0)'); }
+      else { g.addColorStop(0,'rgba(255,255,255,'+f.o+')'); g.addColorStop(.35,'rgba(255,255,255,'+(f.o*.75)+')'); g.addColorStop(1,'rgba(255,255,255,0)'); }
+      x.shadowColor = f.big ? 'rgba(110,100,85,.18)' : 'rgba(100,90,75,.32)'; x.shadowBlur = f.big ? 10 : 6;
+      x.beginPath(); x.arc(px, f.y, f.r, 0, 6.283); x.fillStyle = g; x.fill();
+    }
+    size(); var n = W < 600 ? 34 : 60; for (var i=0;i<n;i++) flakes.push(mk(false));
+    addEventListener('resize', size);
+    (function tick(){
+      if (c.clientWidth && (Math.abs(c.clientWidth-W)>2 || Math.abs(c.clientHeight-H)>2)) size();
+      x.clearRect(0,0,W,H);
+      for (var i=0;i<flakes.length;i++){
+        var f=flakes[i]; f.y+=f.v; f.a+=f.s; f.x+=Math.sin(f.a)*f.w/(W||1000);
+        if (f.y>H+f.r*2){ flakes[i]=mk(true); continue; }
+        draw(f);
+      }
+      requestAnimationFrame(tick);
+    })();
+  })();
+</script>
 <script>
   var hint=document.getElementById('scrollHint');
   if(hint){
@@ -267,137 +393,7 @@
       else hint.classList.remove('hidden');
     },{passive:true});
   }
-
-</script>
-<!-- 할로윈 스페셜 잉크 (2026-10-29 16:00 ~ 10-31 23:59:59 KST, 방문자당 첫 방문 1회). 기간이 지나면 저절로 꺼진다. #ink 로 다시 보기.
-     WebGL 액체 잉크가 다 덮이면 스페셜 지면으로 이동. WebGL 이 없는 기기는 잉크 없이 바로 이동 -->
-<style>
-  #zbInk{position:fixed;inset:0;z-index:999;pointer-events:none;display:none}
-  #zbInk.on{display:block;pointer-events:auto}
-  #zbInk canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-  #zbInk .veil{position:absolute;inset:0;background:#1c1b18;opacity:0;transition:opacity 1.2s ease}
-  #zbInk.close .veil{opacity:1}
-</style>
-<div id="zbInk" aria-hidden="true">
-  <div class="veil"></div>
-</div>
-<script>
-(function(){
-  var START=new Date("2026-10-29T16:00:00+09:00").getTime(),
-      END=new Date("2026-10-31T23:59:59+09:00").getTime(),
-      DEST="issue/halloween26/", KEY="zb_ink_halloween26";
-  var force=location.hash==="#ink", now=Date.now();
-  /* 스페셜 지면의 HOME(#home)으로 돌아온 경우엔 잉크 없이 랜딩 */
-  if(location.hash==="#home"){ try{ history.replaceState(null,"",location.pathname+location.search); }catch(e){} return; }
-  if(!force && (now<START || now>END)) return;
-  /* 방문자당 첫 방문 한 번만. 그 뒤로는 평소 랜딩 */
-  if(!force){ try{ if(localStorage.getItem(KEY)) return; }catch(e){} }
-  if(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches && !force) return;
-
-  function r(a,b){ return a+(b-a)*Math.random(); }
-  var box=document.getElementById("zbInk");
-
-  function begin(){
-    try{ localStorage.setItem(KEY,"1"); }catch(e){}
-    box.classList.add("on"); document.documentElement.style.overflow="hidden";
-  }
-  function finish(closeAt){
-    setTimeout(function(){ box.classList.add("close"); }, closeAt);
-    setTimeout(function(){ location.replace(DEST); }, closeAt+1200);
-  }
-
-  /* ── 기본: WebGL 액체 잉크 ── 한 줄기가 먼저 떨어져 멈추고, 위쪽 막이 들쭉날쭉 쏟아지며 중간 줄기 넷이 빠져나온다 */
-  function startGL(){
-    var cv=document.createElement("canvas");
-    box.insertBefore(cv, box.firstChild);
-    var gl=cv.getContext("webgl2",{premultipliedAlpha:true,alpha:true,antialias:false});
-    if(!gl){ box.removeChild(cv); return false; }
-    var MAXF=8;
-    var VS="#version 300 es\nin vec2 a;void main(){gl_Position=vec4(a,0.,1.);}";
-    var FS=[
-    "#version 300 es","precision highp float;",
-    "uniform vec2 uRes;uniform float uT;uniform float uSeed;uniform int uN;uniform vec4 uF["+MAXF+"];",
-    "out vec4 o;",
-    "float h1(float n){return fract(sin(n)*43758.5453);}",
-    "float vn(float x){float i=floor(x),f=fract(x);float u=f*f*(3.-2.*f);return mix(h1(i),h1(i+1.),u);}",
-    "float smin(float a,float b,float k){float h=clamp(.5+.5*(b-a)/k,0.,1.);return mix(b,a,h)-k*h*(1.-h);}",
-    "void main(){",
-    " float H=uRes.y; vec2 p=vec2(gl_FragCoord.x/H, 1.-gl_FragCoord.y/H);",
-    " float t=uT;",
-    " float st0=2.35+0.6*vn(p.x*1.9+uSeed*1.7)+0.25*vn(p.x*7.+uSeed);",
-    " float g=0.36+0.3*vn(p.x*2.7+uSeed*3.3)*vn(p.x*8.+uSeed);",
-    " float ts=max(t-st0,0.);",
-    " float F=-0.035+0.016*vn(p.x*6.+uSeed)+0.008*vn(p.x*23.+uSeed*2.)+0.03*vn(p.x*14.+uSeed*5.)*min(ts,1.)+0.5*g*ts*ts;",
-    " float d=p.y-F;",
-    " for(int i=0;i<"+MAXF+";i++){",
-    "  if(i>=uN)break; vec4 f=uF[i]; float st=t-f.z; if(st<=0.)continue;",
-    "  float acc=f.w<0.?0.026:f.w;",
-    "  float L=0.012*st+0.5*acc*st*st;",
-    "  if(f.w<0.){float m=-f.w; L=m*(1.-exp(-L/m));}",
-    "  float tip=max(F,0.)+L;",
-    "  if(p.y>tip+0.03||abs(p.x-f.x)>0.08)continue;",
-    "  float w=f.y*mix(0.5,1.0,1.-clamp((tip-p.y)/0.32,0.,1.));",
-    "  w*=1.+0.32*(vn(p.y*16.+f.x*37.)-.5)+0.14*(vn(p.y*47.+f.x*91.)-.5);",
-    "  w*=pow(clamp((tip-p.y)/(f.y*3.2),0.,1.),0.62);",
-    "  float cx=f.x+0.0011*sin(p.y*9.+f.x*51.);",
-    "  float df=max(abs(p.x-cx)-w,p.y-tip);",
-    "  d=smin(d,df,0.010);",
-    " }",
-    " float aa=1.2/H;",
-    " float a=1.-smoothstep(-aa,aa,d);",
-    " vec3 ink=vec3(0.110,0.106,0.094);",
-    " float rim=(1.-smoothstep(0.,0.010,-d))*a;",
-    " vec3 col=ink+rim*vec3(0.05,0.048,0.042);",
-    " o=vec4(col*a,a);",
-    "}"].join("\n");
-    function sh(type,src){ var s=gl.createShader(type); gl.shaderSource(s,src); gl.compileShader(s); if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)) throw gl.getShaderInfoLog(s); return s; }
-    var loc={};
-    try{
-      var prog=gl.createProgram(); gl.attachShader(prog,sh(gl.VERTEX_SHADER,VS)); gl.attachShader(prog,sh(gl.FRAGMENT_SHADER,FS)); gl.linkProgram(prog);
-      if(!gl.getProgramParameter(prog,gl.LINK_STATUS)) throw gl.getProgramInfoLog(prog);
-      gl.useProgram(prog);
-      var b=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,b); gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
-      var al=gl.getAttribLocation(prog,"a"); gl.enableVertexAttribArray(al); gl.vertexAttribPointer(al,2,gl.FLOAT,false,0,0);
-      ["uRes","uT","uSeed","uN","uF"].forEach(function(n){ loc[n]=gl.getUniformLocation(prog,n); });
-      gl.enable(gl.BLEND); gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_ALPHA);
-    }catch(e){ box.removeChild(cv); return false; }
-
-    function size(){ var dpr=Math.min(window.devicePixelRatio||1,1.5); cv.width=Math.round(innerWidth*dpr); cv.height=Math.round(innerHeight*dpr); gl.viewport(0,0,cv.width,cv.height); }
-    size(); window.addEventListener("resize", size);
-    var aspect=cv.width/cv.height;
-    var x1=r(0.22,0.42), x2=r(0.56,0.78), x3=(x1+x2)/2+r(-0.1,0.1);
-    var P=[
-      [aspect*x1,r(0.0018,0.0021),0,-r(0.36,0.5)],
-      [aspect*x2,r(0.0028,0.0032),r(2.8,3.0),r(0.45,0.55)],
-      [aspect*x3,r(0.0022,0.0025),r(3.4,3.6),r(0.45,0.55)],
-      [aspect*r(0.86,0.94),r(0.0033,0.0037),3.2,0.5],
-      [aspect*r(0.06,0.14),r(0.0020,0.0023),3.7,0.5]
-    ];
-    var arr=new Float32Array(MAXF*4); P.forEach(function(f,i){ arr.set(f,i*4); });
-    gl.uniform4fv(loc.uF,arr); gl.uniform1i(loc.uN,P.length); gl.uniform1f(loc.uSeed,r(0,100));
-
-    begin();
-    var t0=0, DUR=7.6;
-    function frame(now){
-      if(!t0) t0=now;
-      var t=(now-t0)/1000;
-      gl.uniform2f(loc.uRes,cv.width,cv.height); gl.uniform1f(loc.uT,t);
-      gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT); gl.drawArrays(gl.TRIANGLES,0,3);
-      if(t<DUR) requestAnimationFrame(frame);
-    }
-    setTimeout(function(){ requestAnimationFrame(frame); }, 900);
-    finish(900+5600);
-    return true;
-  }
-
-  /* WebGL 을 못 쓰는 기기: 잉크 없이 바로 스페셜 지면으로 */
-  function skip(){ try{ localStorage.setItem(KEY,"1"); }catch(e){} location.replace(DEST); }
-
-  function start(){ if(!startGL()) skip(); }
-
-  // 지면이 실제로 올라가 있을 때만 (발행 전·실패 시 랜딩 그대로)
-  fetch(DEST,{method:"HEAD",cache:"no-store"}).then(function(res){ if(res.ok) start(); }).catch(function(){});
-})();
+  if(location.hash==="#home"){ try{ history.replaceState(null,"",location.pathname+location.search); }catch(e){} }
 </script>
 </body>
 </html>
