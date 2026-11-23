@@ -236,7 +236,7 @@
     $('playBtn').setAttribute('aria-label', sd.name+' 재생');
     var n = SIDES[(st.s+1)%SIDES.length], p = SIDES[(st.s-1+SIDES.length)%SIDES.length];
     $('nextSide').textContent = 'Side '+n.side+' →'; $('nextSide').setAttribute('aria-label','다음 면, '+n.side+'면 '+n.name);
-    $('prevSide').textContent = '← Side '+p.side; $('prevSide').style.display = SIDES.length > 2 ? '' : 'none'; $('prevSide').setAttribute('aria-label','이전 면, '+p.side+'면 '+p.name);
+    $('prevSide').textContent = '← Side '+p.side; $('prevSide').style.visibility = SIDES.length > 2 ? '' : 'hidden'; $('prevSide').setAttribute('aria-label','이전 면, '+p.side+'면 '+p.name);
     renderSides(); renderInfo();
   }
 
