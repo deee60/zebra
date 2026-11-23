@@ -260,17 +260,19 @@
       var vw = document.documentElement.clientWidth;
       var J = Math.min(vw, 560);                       // 자켓 한 변
       var left = (W - J) / 2;                           // 내용 폭 밖으로 넓힌다
-      var m = Math.max(12, Math.min(32, (J - 356) / 2 + 32)); // 영상 둘레 종이 여백
+      var small = J < 480;                              // 휴대폰: 여백을 줄여 HOME까지 한 화면에
+      var m = small ? 16 : Math.max(12, Math.min(32, (J - 356) / 2 + 32)); // 영상 둘레 종이 여백
+      var band = small ? 26 : 32;                       // 영상 위 띠(뒤로 화살표·추천인 자리)
       var ew = J - m*2, eh = Math.max(200, Math.round(ew * 9 / 16));
-      screen.style.left = m+'px'; screen.style.top = (m+32)+'px'; screen.style.width = ew+'px'; screen.style.height = eh+'px';
-      info.style.left = m+'px'; info.style.right = m+'px'; info.style.top = (m+32+eh)+'px'; info.style.bottom = 'auto';
+      screen.style.left = m+'px'; screen.style.top = (m+band)+'px'; screen.style.width = ew+'px'; screen.style.height = eh+'px';
+      info.style.left = m+'px'; info.style.right = m+'px'; info.style.top = (m+band+eh)+'px'; info.style.bottom = 'auto';
       // 좁은 화면에서는 곡 정보·버튼이 자켓 밖으로 넘치지 않게 자켓을 그만큼 늘린다
-      var H = Math.max(J, m + 32 + eh + info.offsetHeight + Math.max(m, 24));
+      var H = Math.max(J, m + band + eh + info.offsetHeight + (small ? 18 : Math.max(m, 24)));
       sleeve.style.width = J+'px'; sleeve.style.height = H+'px';
       sleeve.style.transform = 'translateX('+left+'px)';
       stage.style.height = H+'px'; stage.style.marginBottom = '18px';
-      var cr=$('songBy'); cr.style.right = m+'px'; cr.style.top = (m+10)+'px';
-      var bk=$('backBtn'); bk.style.left = (m-14)+'px'; bk.style.top = Math.round(m/2)+'px';
+      var cr=$('songBy'); cr.style.right = m+'px'; cr.style.top = (m+Math.round((band-12)/2))+'px';
+      var bk=$('backBtn'); bk.style.left = (m-14)+'px'; bk.style.top = Math.max(0, Math.round((m+band-32)/2))+'px';
       jr = Math.min(left + J, W + (vw - W) / 2 - 16);   // 화면 끝에 붙어 잘리지 않게
     } else {
       sleeve.style.width = '260px'; sleeve.style.height = '260px';
