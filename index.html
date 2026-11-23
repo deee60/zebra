@@ -355,7 +355,7 @@
       var x = eq.getBoundingClientRect().left * d, off = (Math.round(x) - x) / d;
       eq.style.marginLeft = off + 'px';
     }
-    snap(); addEventListener('resize', snap); if (document.fonts && document.fonts.ready) document.fonts.ready.then(snap);
+    snap(); setTimeout(snap, 1800); addEventListener('resize', snap); if (document.fonts && document.fonts.ready) document.fonts.ready.then(snap);
     var link=document.getElementById('eqLink');
     function paint(){ var live=intro||near; eq.classList.toggle('lively',live); link.classList.toggle('near',live); for(var j=0;j<5;j++) bars[j].style.transform='scaleY('+(live?F[j][f]:R[j])+')'; }
     paint(); setTimeout(function(){ intro=false; paint(); },2400);
