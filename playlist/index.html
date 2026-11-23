@@ -29,7 +29,7 @@
   body{min-height:100vh;display:flex;justify-content:center;overflow-x:hidden}
   .page{width:356px;max-width:calc(100vw - 24px);padding:56px 0 36px;display:flex;flex-direction:column;min-height:100vh}
   .kicker{margin:0 0 22px;align-self:flex-end;font-size:12px;letter-spacing:.32em;margin-right:-.32em;color:#a08a57;transition:transform 1.4s cubic-bezier(.22,.7,.2,1)}
-  .stage{position:relative;width:100%;height:260px;transition:height 1.2s ease}
+  .stage{position:relative;width:100%;height:260px;transition:height 1.2s ease,margin-bottom 1.2s ease}
   .ease{transition:transform 1.4s cubic-bezier(.22,.7,.2,1),opacity 1s ease}
 
   /* record */
@@ -197,7 +197,7 @@
       var ew = J - m*2, eh = Math.max(200, Math.round(ew * 9 / 16));
       sleeve.style.width = J+'px'; sleeve.style.height = J+'px';
       sleeve.style.transform = 'translateX('+left+'px)';
-      stage.style.height = J+'px';
+      stage.style.height = J+'px'; stage.style.marginBottom = '48px';
       screen.style.left = m+'px'; screen.style.top = (m+32)+'px'; screen.style.width = ew+'px'; screen.style.height = eh+'px';
       info.style.left = m+'px'; info.style.right = m+'px'; info.style.top = (m+32+eh)+'px';
       var cr=$('songBy'); cr.style.right = m+'px'; cr.style.top = (m+10)+'px';
@@ -206,7 +206,7 @@
       sleeve.style.width = '260px'; sleeve.style.height = '260px';
       var gutter = (document.documentElement.clientWidth - W) / 2;
       sleeve.style.transform = 'translateX(' + (st.opened ? -Math.min(24, gutter) : (W-260)/2) + 'px)';
-      stage.style.height = '260px';
+      stage.style.height = '260px'; stage.style.marginBottom = '0px';
       jr = (st.opened ? -Math.min(24, gutter) : (W-260)/2) + 260;
     }
     document.querySelector('.kicker').style.transform = 'translateX('+(jr - W)+'px)';
@@ -236,7 +236,7 @@
     $('playBtn').setAttribute('aria-label', sd.name+' 재생');
     var n = SIDES[(st.s+1)%SIDES.length], p = SIDES[(st.s-1+SIDES.length)%SIDES.length];
     $('nextSide').textContent = 'Side '+n.side+' →'; $('nextSide').setAttribute('aria-label','다음 면, '+n.side+'면 '+n.name);
-    $('prevSide').textContent = '← Side '+p.side; $('prevSide').setAttribute('aria-label','이전 면, '+p.side+'면 '+p.name);
+    $('prevSide').textContent = '← Side '+p.side; $('prevSide').style.display = SIDES.length > 2 ? '' : 'none'; $('prevSide').setAttribute('aria-label','이전 면, '+p.side+'면 '+p.name);
     renderSides(); renderInfo();
   }
 
