@@ -63,7 +63,8 @@
   .info{position:absolute;z-index:3;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;opacity:0;pointer-events:none;transition:opacity 1s ease .9s;text-align:center}
   .info .t{font-size:14px}
   .info .a{font-size:11px;color:var(--mute)}
-  .info .by{font-style:italic;margin-left:8px}
+  .info .by{font-family:'Cormorant Garamond',serif;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-top:4px}
+  .info .by:empty{display:none}
   .row{margin-top:10px;display:flex;align-items:center;gap:6px}
   .row .side{min-height:40px;font-style:italic;font-size:11px}
   .row .side.l{margin-right:10px}.row .side.r{margin-left:10px}
@@ -114,7 +115,8 @@
       <div class="screen" id="screen"><div id="yt"></div></div>
       <div class="info" id="info">
         <span class="t" id="songTitle"></span>
-        <span class="a"><span id="songArtist"></span><span class="by" id="songBy"></span></span>
+        <span class="a" id="songArtist"></span>
+        <span class="by" id="songBy"></span>
         <span class="row">
           <button type="button" class="btn side l" id="prevSide"></button>
           <button type="button" class="btn icon" id="prevBtn" aria-label="이전 곡"><svg aria-hidden="true" width="13" height="11" viewBox="0 0 13 11"><path d="M12 1 L6.5 5.5 L12 10 Z M6.5 1 L1 5.5 L6.5 10 Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round" fill="none"/></svg></button>
@@ -237,7 +239,7 @@
     var song = SIDES[st.s].songs[st.cur % SIDES[st.s].songs.length];
     $('songTitle').textContent = song.title;
     $('songArtist').textContent = song.artist;
-    $('songBy').textContent = song.by ? 'by '+song.by : '';
+    $('songBy').textContent = song.by ? 'Curated by '+song.by : '';
     $('toggleBtn').innerHTML = st.playing
       ? '<svg aria-hidden="true" width="9" height="11" viewBox="0 0 9 11"><path d="M1.5 1 V10 M7.5 1 V10" stroke="currentColor" stroke-width="1.1" fill="none"/></svg>'
       : '<svg aria-hidden="true" width="9" height="11" viewBox="0 0 9 11"><path d="M1 1 L8.5 5.5 L1 10 Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round" fill="none"/></svg>';
