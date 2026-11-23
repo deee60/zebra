@@ -41,7 +41,18 @@
   .label .big{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Pinyon Script',cursive;font-size:66px;line-height:1;padding-top:4px;opacity:.85}
 
   /* sleeve */
-  .sleeve{position:absolute;left:0;top:0;width:260px;height:260px;z-index:2;background:var(--sleeve);box-shadow:0 1px 0 rgba(43,42,38,.05),0 10px 24px rgba(43,42,38,.10);transition:transform 1.4s cubic-bezier(.22,.7,.2,1),width 1.2s ease,height 1.2s ease}
+  .sleeve{position:absolute;left:0;top:0;width:260px;height:260px;z-index:2;background:var(--jk-bg,var(--sleeve));color:var(--jk-ink,var(--ink));box-shadow:0 1px 0 rgba(43,42,38,.05),0 12px 28px rgba(43,42,38,.16);transition:transform 1.4s cubic-bezier(.22,.7,.2,1),width 1.2s ease,height 1.2s ease,background-color 2.7s ease}
+  /* 면마다 자켓 색: A 와인, B 회색 — 면을 바꾸면 디졸브로 넘어간다 */
+  .sleeve[data-theme=wine]{--jk-bg:#4a2a27;--jk-ink:#f1e7da;--jk-accent:#d8b77a;--jk-soft:rgba(241,231,218,.66);--jk-faint:rgba(241,231,218,.45)}
+  .sleeve[data-theme=grey]{--jk-bg:#6e6a64;--jk-ink:#f3eee4;--jk-accent:#e2c58e;--jk-soft:rgba(243,238,228,.7);--jk-faint:rgba(243,238,228,.5)}
+  .sleeve .btn{color:var(--jk-soft,var(--mute))}
+  .sleeve .btn:hover{color:var(--jk-ink,var(--ink))}
+  .sleeve .sidelabel{color:var(--jk-accent,var(--wine))}
+  .sleeve .title .play{color:var(--jk-accent,var(--mute))}
+  .sleeve .title .flip{color:var(--jk-faint,var(--faint))}
+  .sleeve .info .a{color:var(--jk-soft,var(--mute))}
+  .sleeve .credit{color:var(--jk-accent,var(--gold))}
+  .sleeve .corner{color:var(--jk-soft,var(--mute))}
   .sleeve .spine{position:absolute;right:0;top:0;bottom:0;width:1px;background:rgba(43,42,38,.12)}
   .corner{position:absolute;right:18px;top:16px;font-size:10px;color:var(--mute);transition:opacity .6s ease}
   .title{position:absolute;left:18px;right:18px;top:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;transition:opacity .8s ease;pointer-events:none}
@@ -118,7 +129,7 @@
       <span class="label" aria-hidden="true"><span class="big" id="labelLetter">A</span></span>
     </div>
 
-    <div class="sleeve" id="sleeve">
+    <div class="sleeve" id="sleeve" data-theme="wine">
       <span class="corner" id="corner"></span>
       <span class="title" id="title">
         <span class="sidelabel" id="sideLabel">Side A</span>
@@ -196,7 +207,7 @@
 (function(){
   /* ── 면 데이터 ─────────────────────────────── */
   var SIDES = [
-    { side:'A', name:'발라디즘 · 겨울', corner:'', songs:[
+    { side:'A', name:'발라디즘 · 겨울', corner:'', theme:'wine', songs:[
       { title:'나의 겨울 여행', artist:'스텔라장', yt:'PPS0mI6BOU4' },
       { title:'Melody', artist:'안전지대', yt:'3eqPoV1lJa4' },
       { title:'1994년 어느 늦은 밤', artist:'장혜진', yt:'LZEggT36REM' },
@@ -211,7 +222,7 @@
       { title:'사랑의 시', artist:'엠씨 더 맥스', yt:'N3WGZPdJtCM' },
       { title:'Chocolate', artist:'안전지대', yt:'5LGjnCpUG30' }
     ]},
-    { side:'B', name:'모두의 큐레이션', corner:'', auto:true, songs:[
+    { side:'B', name:'모두의 큐레이션', corner:'', theme:'grey', auto:true, songs:[
       { title:'백야', artist:'짙은', by:'앙', yt:'pyYsTmGJEWY' },
       { title:'You Must Believe in Spring', artist:'Bill Evans', by:'박준규', yt:'koSoQRfG3wI' },
       { title:'황금가면', artist:'김동률', by:'캔디', yt:'nbueu_IoIH4' },
@@ -289,6 +300,7 @@
     $('sideName').textContent = sd.name;
     $('labelLetter').textContent = sd.side;
     $('sideLabel').textContent = 'Side '+sd.side;
+    sleeve.setAttribute('data-theme', sd.theme || '');
     var o = SIDES[(st.s+1)%SIDES.length];
     $('flipBtn').textContent = 'Side '+o.side; $('flipBtn').setAttribute('aria-label', o.side+'면 '+o.name+'으로 바꾸기');
     corner.textContent = sd.corner;
