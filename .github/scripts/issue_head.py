@@ -137,7 +137,9 @@ SHARE_HEAD = """<style id="zshare-css">
 
 
 def add_share(html):
-    """아티스트 이름 아래 공유 아이콘(18px). 폰은 공유 창, PC는 주소 복사. 이미 있으면 그대로."""
+    """아티스트 이름 아래 공유 아이콘(18px). 폰은 공유 창, PC는 주소 복사. 이미 있으면 그대로.
+    위치·크기를 바꿀 때: 여기(SHARE_HTML·SHARE_HEAD)를 고친 뒤, 이미 붙은 지면은 zshare-wrap·zshare-css 를
+    지우고 `issue_head.py share all` 로 다시 붙인다. _build/build.py 의 타이틀 구조와 연동."""
     added = False
     if 'class="zshare-wrap"' not in html:
         m = re.search(r'<p class="artist"[^>]*>.*?</p>', html, re.S)
@@ -204,6 +206,12 @@ if __name__ == "__main__":
         if ok: added.append("곡정보")
         html, ok = add_share(html)
         if ok: added.append("공유")
+        # 지면 구조가 바뀌어 붙일 자리를 못 찾으면 발행 기록에 경고를 남긴다(안내 페이지는 제외)
+        if "ZEBRA_EXPIRED_STUB" not in html:
+            if 'class="zshare-wrap"' not in html:
+                print("::warning::공유 아이콘을 붙일 자리(<p class=\"artist\">)를 못 찾음 — 지면 구조가 바뀌었으면 add_share 를 고칠 것")
+            if "application/ld+json" not in html:
+                print("::warning::곡 정보(JSON-LD)를 못 만듦 — h1·artist 구조가 바뀌었으면 add_jsonld 를 고칠 것")
         open(target, "w", encoding="utf-8").write(html)
         print(target, "추가:", ", ".join(added) or "없음")
     elif cmd == "ld":

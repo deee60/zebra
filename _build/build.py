@@ -119,6 +119,10 @@ def build_upper(cfg, layout):
     m = re.match(r"^(.*?)\s*(\([^)]*\))\s*$", cfg["song"])
     if m:
         song_html = f'{esc(m.group(1))} <span class="sub">{esc(m.group(2))}</span>'
+    # ⚠ 연동 주의: 공유 아이콘(18px)은 발행 때 .github/scripts/issue_head.py 의 add_share() 가
+    #   <p class="artist"> 바로 아래에 붙이고, 곡 정보(add_jsonld)도 h1·artist·크레딧 '앨범' 줄을 읽는다.
+    #   이 타이틀 구조(h1, p.artist, 크레딧 class)를 바꾸면 add_share·add_jsonld 도 함께 고칠 것.
+    #   기록: 프로젝트 문서 claude/ZEBRA_지면_공유아이콘_곡정보.md
     titles = (
         '    <div class="titles">\n'
         f'{series_html}'
