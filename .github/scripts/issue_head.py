@@ -8,6 +8,7 @@ head  : GA · 방문 기록(/_z/t.js) · 카톡 꼬리표 · canonical 이 없�
         --live 면 발행 중 지면이라 검색 차단 표시도 없으면 넣는다(템플릿과 같은 값).
         이미 있는 건 건드리지 않는다.
         같은 때 검색엔진용 곡 정보(JSON-LD)도 없으면 넣는다(add_jsonld).
+share : 모든 지면 아티스트 아래에 공유 아이콘이 없으면 넣는다. python3 .github/scripts/issue_head.py share all
 ld    : 모든 지면에 곡 정보(JSON-LD)가 없으면 넣는다.  python3 .github/scripts/issue_head.py ld all
 cover : 지면 폴더의 jpg 중 긴 변 1000px 또는 200KB 를 넘는 것을 줄인다.
         줄이기 전에 원본을 _covers_original/{slug}/ 에 둔다(Pages 공개 제외 폴더).
@@ -108,6 +109,49 @@ def add_jsonld(html, url, entry=None):
     return html[:i] + tag + html[i:], True
 
 
+SHARE_ICON = ('<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" '
+              'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/>'
+              '<path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 11v8.5h14V11"/></svg>')
+SHARE_HTML = ('\n      <p class="zshare-wrap"><a class="zshare" href="#" aria-label="이 지면 공유하기">' + SHARE_ICON +
+              '<span class="zshare-done" aria-live="polite"></span></a></p>')
+SHARE_HEAD = """<style id="zshare-css">
+  .zshare-wrap{margin:16px 0 0;text-align:center;line-height:0}
+  .zshare{position:relative;display:inline-flex;padding:12px;margin:-12px;color:var(--faint,#a9a297);-webkit-tap-highlight-color:transparent}
+  .zshare-done{position:absolute;left:50%;top:100%;transform:translateX(-50%);font-size:11px;letter-spacing:.12em;line-height:1;white-space:nowrap;color:var(--faint,#a9a297)}
+</style>
+<script>
+  /* 지면 공유: 폰은 공유 창, PC는 주소 복사 */
+  document.addEventListener('click', function (ev) {
+    var a = ev.target.closest && ev.target.closest('.zshare'); if (!a) return;
+    ev.preventDefault();
+    var c = document.querySelector('link[rel="canonical"]');
+    var url = c ? c.href : location.origin + location.pathname;
+    var done = a.querySelector('.zshare-done');
+    if (navigator.share) { navigator.share({ title: document.title, url: url }).catch(function () {}); return; }
+    var say = function (t) { done.textContent = t; setTimeout(function () { done.textContent = ''; }, 1600); };
+    if (navigator.clipboard) navigator.clipboard.writeText(url).then(function () { say('복사됨'); }, function () { say(url); });
+    else say(url);
+  });
+</script>
+"""
+
+
+def add_share(html):
+    """아티스트 이름 아래 공유 아이콘(18px). 폰은 공유 창, PC는 주소 복사. 이미 있으면 그대로."""
+    added = False
+    if 'class="zshare-wrap"' not in html:
+        m = re.search(r'<p class="artist"[^>]*>.*?</p>', html, re.S)
+        if not m:
+            return html, False
+        html = html[:m.end()] + SHARE_HTML + html[m.end():]
+        added = True
+    if 'id="zshare-css"' not in html and "</head>" in html:
+        i = html.index("</head>")
+        html = html[:i] + SHARE_HEAD + html[i:]
+        added = True
+    return html, added
+
+
 def entry_for(slug):
     try:
         for e in json.load(open("_data/issue.json", encoding="utf-8")):
@@ -158,6 +202,8 @@ if __name__ == "__main__":
         html, added = fix_head(html, url, live)
         html, ok = add_jsonld(html, url, entry_for(url.rstrip("/").split("/")[-1]) if url else None)
         if ok: added.append("곡정보")
+        html, ok = add_share(html)
+        if ok: added.append("공유")
         open(target, "w", encoding="utf-8").write(html)
         print(target, "추가:", ", ".join(added) or "없음")
     elif cmd == "ld":
@@ -170,5 +216,14 @@ if __name__ == "__main__":
             if ok:
                 open(pg, "w", encoding="utf-8").write(html)
             print(pg, "곡정보", "넣음" if ok else "그대로")
+    elif cmd == "share":
+        import glob
+        pages = sorted(glob.glob("issue/*/index.html")) if target == "all" else [target]
+        for pg in pages:
+            html = open(pg, encoding="utf-8").read()
+            html, ok = add_share(html)
+            if ok:
+                open(pg, "w", encoding="utf-8").write(html)
+            print(pg, "공유", "넣음" if ok else "그대로")
     elif cmd == "cover":
         print(target, "자켓:", "; ".join(shrink_covers(target)) or "줄일 것 없음")

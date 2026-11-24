@@ -283,6 +283,25 @@ a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
   .listen a, .note .credit a{ pointer-events:none; cursor:default; }
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "방랑자 (Feat. 최백호) — 박주원", "inLanguage": "ko", "url": "https://zebrabeta.kr/issue/dryadvisory07/", "author": {"@type": "Organization", "name": "지브라 베타", "url": "https://zebrabeta.kr/"}, "publisher": {"@type": "Organization", "name": "지브라 베타", "url": "https://zebrabeta.kr/"}, "about": {"@type": "MusicRecording", "name": "방랑자 (Feat. 최백호)", "byArtist": {"@type": "MusicGroup", "name": "박주원"}, "inAlbum": {"@type": "MusicAlbum", "name": "슬픔의 피에스타", "datePublished": "2011"}}, "description": "기타리스트 박주원의 2집 《슬픔의 피에스타》(2011)에 수록된 〈방랑자〉는 이국적인 라틴 볼레로¹ 스타일의 곡으로 클래식 기타를…", "datePublished": "2026-10-27T00:00:00+09:00", "articleSection": "건조주의보 07.", "image": "https://zebrabeta.kr/issue/dryadvisory07/dryadvisory07.jpg"}</script>
+<style id="zshare-css">
+  .zshare-wrap{margin:16px 0 0;text-align:center;line-height:0}
+  .zshare{position:relative;display:inline-flex;padding:12px;margin:-12px;color:var(--faint,#a9a297);-webkit-tap-highlight-color:transparent}
+  .zshare-done{position:absolute;left:50%;top:100%;transform:translateX(-50%);font-size:11px;letter-spacing:.12em;line-height:1;white-space:nowrap;color:var(--faint,#a9a297)}
+</style>
+<script>
+  /* 지면 공유: 폰은 공유 창, PC는 주소 복사 */
+  document.addEventListener('click', function (ev) {
+    var a = ev.target.closest && ev.target.closest('.zshare'); if (!a) return;
+    ev.preventDefault();
+    var c = document.querySelector('link[rel="canonical"]');
+    var url = c ? c.href : location.origin + location.pathname;
+    var done = a.querySelector('.zshare-done');
+    if (navigator.share) { navigator.share({ title: document.title, url: url }).catch(function () {}); return; }
+    var say = function (t) { done.textContent = t; setTimeout(function () { done.textContent = ''; }, 1600); };
+    if (navigator.clipboard) navigator.clipboard.writeText(url).then(function () { say('복사됨'); }, function () { say(url); });
+    else say(url);
+  });
+</script>
 </head>
 <body>
 <!-- ZEBRA_EXPIRED_TEASER v6 -->
@@ -299,6 +318,7 @@ a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
       <h1>방랑자 <span class="sub">(Feat. 최백호)</span></h1>
       <p class="romaji"></p>
       <p class="artist">박주원</p>
+      <p class="zshare-wrap"><a class="zshare" href="#" aria-label="이 지면 공유하기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 11v8.5h14V11"/></svg><span class="zshare-done" aria-live="polite"></span></a></p>
     </div>
 
     <div class="void">

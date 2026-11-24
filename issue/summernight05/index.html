@@ -233,6 +233,25 @@ a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
   .listen a, .note .credit a{ pointer-events:none; cursor:default; }
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "좋겠어 — John OFA Rhee", "inLanguage": "ko", "url": "https://zebrabeta.kr/issue/summernight05/", "author": {"@type": "Organization", "name": "지브라 베타", "url": "https://zebrabeta.kr/"}, "publisher": {"@type": "Organization", "name": "지브라 베타", "url": "https://zebrabeta.kr/"}, "about": {"@type": "MusicRecording", "name": "좋겠어", "byArtist": {"@type": "MusicGroup", "name": "John OFA Rhee"}}, "description": "이요한(John OFA Rhee)의 '좋겠어(Wishful Thoughts)'는 부드러운 그루브…", "datePublished": "2026-08-07T00:00:00+09:00", "articleSection": "여름밤 05", "image": "https://zebrabeta.kr/issue/summernight05/summernight05.jpg"}</script>
+<style id="zshare-css">
+  .zshare-wrap{margin:16px 0 0;text-align:center;line-height:0}
+  .zshare{position:relative;display:inline-flex;padding:12px;margin:-12px;color:var(--faint,#a9a297);-webkit-tap-highlight-color:transparent}
+  .zshare-done{position:absolute;left:50%;top:100%;transform:translateX(-50%);font-size:11px;letter-spacing:.12em;line-height:1;white-space:nowrap;color:var(--faint,#a9a297)}
+</style>
+<script>
+  /* 지면 공유: 폰은 공유 창, PC는 주소 복사 */
+  document.addEventListener('click', function (ev) {
+    var a = ev.target.closest && ev.target.closest('.zshare'); if (!a) return;
+    ev.preventDefault();
+    var c = document.querySelector('link[rel="canonical"]');
+    var url = c ? c.href : location.origin + location.pathname;
+    var done = a.querySelector('.zshare-done');
+    if (navigator.share) { navigator.share({ title: document.title, url: url }).catch(function () {}); return; }
+    var say = function (t) { done.textContent = t; setTimeout(function () { done.textContent = ''; }, 1600); };
+    if (navigator.clipboard) navigator.clipboard.writeText(url).then(function () { say('복사됨'); }, function () { say(url); });
+    else say(url);
+  });
+</script>
 </head>
 <body>
 <!-- ZEBRA_EXPIRED_TEASER v6 -->
@@ -248,6 +267,7 @@ a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
       <h1>좋겠어</h1>
       <p class="romaji">wishful thoughts</p>
       <p class="artist">John OFA Rhee</p>
+      <p class="zshare-wrap"><a class="zshare" href="#" aria-label="이 지면 공유하기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M7.5 7.5 12 3l4.5 4.5"/><path d="M5 11v8.5h14V11"/></svg><span class="zshare-done" aria-live="polite"></span></a></p>
     </div>
 
     <div class="void">
