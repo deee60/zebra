@@ -300,8 +300,12 @@
         list = list.filter(function(x){ return isPreview || x.published !== false; });
         if(list.length===0) return;
         DATA = list;
-        current = 0;
-        renderFeature(DATA[0]);
+        /* 들어올 때마다 무작위로 한 곡 — 바로 전에 본 곡은 되도록 피한다 */
+        var last = -1; try { last = +localStorage.getItem('zb_everyone_last'); } catch(_){}
+        current = Math.floor(Math.random()*DATA.length);
+        if (DATA.length > 1 && current === last) current = (current + 1 + Math.floor(Math.random()*(DATA.length-1))) % DATA.length;
+        try { localStorage.setItem('zb_everyone_last', current); } catch(_){}
+        renderFeature(DATA[current]);
         renderStrip();
       })
       .catch(function(e){ console.error('everyone.json load failed', e); });
