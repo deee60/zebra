@@ -188,7 +188,7 @@ input[type=date]{border:1px solid var(--line);border-radius:999px;padding:5px 10
       if (!rows.length) { v.innerHTML = '<p class="muted">기록 없음</p>'; return; }
       var f = rows[0], tot = rows.reduce(function (a, r) { return a + (r.active_ms || 0); }, 0);
       var sess = []; rows.forEach(function (r) { var s = sess[sess.length - 1]; if (!s || s.sid !== r.sid) sess.push(s = { sid: r.sid, rows: [] }); s.rows.push(r); });
-      var head = '<button class="btn" id="back">‹ 목록으로</button>' +
+      var head = '<button class="btn" id="back">‹ 목록으로</button> <button class="btn" id="mine">나 — 빼기</button>' +
         card('이 사람 요약', '<p>' + esc([f.city, f.region, cn(f.country)].filter(Boolean).join(', ')) + ' · ' + esc((DEV[f.device] || f.device) + ' · ' + f.os + ' · ' + f.browser) +
           ' · 화면 ' + f.sw + '×' + f.sh + ' · 언어 ' + esc(f.lang || '-') + ' · ' + esc(f.isp || '') + '</p><p>처음 온 날 ' + kst(f.ts) + ' · 방문 ' + sess.length + '번 · 페이지 ' + rows.length + '개 · 총 머문 시간 ' + dur(tot) + '</p>');
       var body = sess.slice().reverse().map(function (s) {
@@ -201,6 +201,16 @@ input[type=date]{border:1px solid var(--line);border-radius:999px;padding:5px 10
       }).join('');
       v.innerHTML = head + card('방문 기록 <span class="muted">(최근 방문이 위)</span>', body);
       $('#back').onclick = function () { drawTabs(); showTab(); };
+      // two taps: the first asks, the second removes this visitor for good (past records too)
+      var asked = false;
+      $('#mine').onclick = function () {
+        var b = $('#mine');
+        if (!asked) { asked = true; b.textContent = '한 번 더 누르면 기록이 지워집니다'; return; }
+        b.disabled = true; b.textContent = '지우는 중…';
+        fetch('/_z/api/leave?vid=' + encodeURIComponent(vid), { headers: { authorization: 'Bearer ' + tok } }).then(function (r) { return r.json(); }).then(function (o) {
+          if (o && o.ok) { inPerson = false; cache = {}; drawTabs(); load(); } else { b.textContent = '지우지 못했습니다'; }
+        }).catch(function () { b.textContent = '지우지 못했습니다'; });
+      };
     });
   }
 

@@ -18,7 +18,16 @@ const SCHEMA = [
   'CREATE INDEX IF NOT EXISTS pv_ts ON pv(ts)',
   'CREATE INDEX IF NOT EXISTS pv_vid ON pv(vid, ts)',
   'CREATE INDEX IF NOT EXISTS pv_sid ON pv(sid, ts)',
+  // the curator's own browsers: their visits are thrown away
+  'CREATE TABLE IF NOT EXISTS me (vid TEXT PRIMARY KEY, ts INTEGER NOT NULL)',
 ];
+const isMe = async (env, vid) => !!(await env.DB.prepare('SELECT 1 FROM me WHERE vid = ?').bind(vid).first());
+async function leaveOut(env, vid) {
+  await env.DB.batch([
+    env.DB.prepare('INSERT OR IGNORE INTO me (vid, ts) VALUES (?, ?)').bind(vid, Date.now()),
+    env.DB.prepare('DELETE FROM pv WHERE vid = ?').bind(vid),
+  ]);
+}
 let ready = false;
 async function ensure(env) {
   if (ready) return;
@@ -74,6 +83,7 @@ async function hit(req, env) {
   let refHost = null, refPath = null;
   if (b.ref) { try { const u = new URL(b.ref); if (SITE.test(u.hostname)) refPath = cut(u.pathname, 200); else refHost = cut(u.hostname.replace(/^www\./, ''), 100); } catch { /* bad referrer */ } }
   await ensure(env);
+  if (await isMe(env, b.vid)) return ok();
   await env.DB.prepare(`INSERT OR IGNORE INTO pv (id, vid, sid, ts, path, title, ref_host, ref_path, utm_source, utm_medium, utm_campaign, country, region, city, tz, isp,
     device, os, browser, lang, sw, sh, is_new, left_ts) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`).bind(
     b.id, b.vid, b.sid, Date.now(), cut(b.path, 300) || '/', cut(b.title, 200), refHost, refPath,
@@ -98,7 +108,7 @@ async function beat(req, env) {
 async function forget(req, env) {
   const b = await body(req); if (!b || !ID.test(b.vid || '')) return ok();
   await ensure(env);
-  await env.DB.prepare('DELETE FROM pv WHERE vid = ?').bind(b.vid).run();
+  await leaveOut(env, b.vid);
   return ok();
 }
 
@@ -187,6 +197,10 @@ async function api(path, url, env) {
     return all(env, `SELECT id, sid, ts, path, title, ref_host, ref_path, utm_source, utm_medium, utm_campaign, country, region, city, tz, isp, device, os, browser, lang, sw, sh,
       is_new, active_ms, scroll, clicks, left_ts FROM pv WHERE vid = ? ORDER BY ts LIMIT 2000`, vid);
   }
+  if (path === 'leave') {
+    const vid = url.searchParams.get('vid') || ''; if (!ID.test(vid)) return { ok: false };
+    await leaveOut(env, vid); return { ok: true };
+  }
   if (path === 'export') return all(env, `SELECT * FROM pv WHERE ${W} ORDER BY ts LIMIT 50000`, from, to);
   return null;
 }
@@ -195,7 +209,7 @@ export default {
   async fetch(req, env) {
     const url = new URL(req.url); const p = url.pathname;
     try {
-      if (p === '/_z/t.js') return new Response(TRACKER, { headers: { 'content-type': 'text/javascript; charset=utf-8', 'cache-control': 'public, max-age=3600' } });
+      if (p === '/_z/t.js') return new Response(TRACKER, { headers: { 'content-type': 'text/javascript; charset=utf-8', 'cache-control': 'public, max-age=600' } });
       if (p === '/_z/hit' && req.method === 'POST') return await hit(req, env);
       if (p === '/_z/beat' && req.method === 'POST') return await beat(req, env);
       if (p === '/_z/forget' && req.method === 'POST') return await forget(req, env);
