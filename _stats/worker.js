@@ -94,6 +94,14 @@ async function beat(req, env) {
   return ok();
 }
 
+// the curator's own browser asks to be left out: delete everything recorded under its own id
+async function forget(req, env) {
+  const b = await body(req); if (!b || !ID.test(b.vid || '')) return ok();
+  await ensure(env);
+  await env.DB.prepare('DELETE FROM pv WHERE vid = ?').bind(b.vid).run();
+  return ok();
+}
+
 // ---------- admin ----------
 function authed(req, env) {
   const t = (req.headers.get('authorization') || '').replace(/^Bearer\s+/i, '');
@@ -190,6 +198,7 @@ export default {
       if (p === '/_z/t.js') return new Response(TRACKER, { headers: { 'content-type': 'text/javascript; charset=utf-8', 'cache-control': 'public, max-age=3600' } });
       if (p === '/_z/hit' && req.method === 'POST') return await hit(req, env);
       if (p === '/_z/beat' && req.method === 'POST') return await beat(req, env);
+      if (p === '/_z/forget' && req.method === 'POST') return await forget(req, env);
       if (p === '/_z/admin' || p === '/_z/admin/') return new Response(ADMIN_HTML, { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'x-robots-tag': 'noindex', 'referrer-policy': 'no-referrer' } });
       if (p.startsWith('/_z/api/')) {
         if (!authed(req, env)) return json({ error: 'auth' }, 401);

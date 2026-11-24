@@ -47,6 +47,7 @@ input[type=date]{border:1px solid var(--line);border-radius:999px;padding:5px 10
   <button class="btn" id="reload">새로고침</button>
   <button class="btn" id="csv">CSV 내려받기</button>
   <button class="btn" id="out">로그아웃</button>
+  <span class="muted" id="me">이 기기는 기록에서 빠져 있습니다</span>
 </header>
 <main>
   <div class="tiles" id="tiles"></div>
@@ -212,7 +213,15 @@ input[type=date]{border:1px solid var(--line);border-radius:999px;padding:5px 10
     });
   }
 
-  function start() { $('#login').hidden = true; $('#app').hidden = false; drawTabs(); load(); }
+  // this browser is the curator's: stop counting it and delete what it left before
+  function leaveOut() {
+    try {
+      localStorage.setItem('zx', '1');
+      var mine = localStorage.getItem('zv');
+      if (mine) fetch('/_z/forget', { method: 'POST', body: JSON.stringify({ vid: mine }), headers: { 'content-type': 'text/plain' } }).catch(function () {});
+    } catch (e) {}
+  }
+  function start() { leaveOut(); $('#login').hidden = true; $('#app').hidden = false; drawTabs(); load(); }
   $('#go').onclick = function () { tok = $('#tok').value.trim(); fetch('/_z/api/summary?from=0&to=1', { headers: { authorization: 'Bearer ' + tok } }).then(function (r) {
     if (r.ok) { localStorage.setItem(KEY, tok); start(); } else { $('#err').textContent = '토큰이 맞지 않습니다.'; } }); };
   $('#tok').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('#go').click(); });

@@ -3,6 +3,15 @@
   try {
     if (navigator.webdriver || /bot|crawl|spider|preview|headless/i.test(navigator.userAgent)) return;
     var ls = window.localStorage, ss = window.sessionStorage;
+    // the curator's own devices are not counted: any browser that opened the admin, or opened a page with ?zme=1
+    try {
+      if (/[?&]zme=1/.test(location.search)) {
+        ls.setItem('zx', '1');
+        var mine = ls.getItem('zv');
+        if (mine) navigator.sendBeacon('/_z/forget', new Blob([JSON.stringify({ vid: mine })], { type: 'text/plain' }));
+      }
+      if (ls.getItem('zx') === '1' || ls.getItem('za')) return;
+    } catch (e) {}
     var rid = function () { return (Date.now().toString(36) + Math.random().toString(36).slice(2, 12)).slice(0, 20); };
     var isNew = 0, vid = '', sid = '', now = Date.now();
     try { vid = ls.getItem('zv') || ''; if (!vid) { vid = rid(); ls.setItem('zv', vid); isNew = 1; } } catch (e) { vid = rid(); isNew = 1; }
