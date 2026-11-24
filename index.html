@@ -292,6 +292,8 @@
   ::view-transition-old(root),::view-transition-new(root){animation-duration:.9s;animation-timing-function:ease}
   @supports not (view-transition-name:none){ body{animation:zbFadeIn .9s ease both} }
   @keyframes zbFadeIn{from{opacity:0}to{opacity:1}}
+  /* 화면에는 안 보이고 검색엔진·화면낭독기만 읽는 제목 (2026-11-24) */
+  .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 </style>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"지브라 베타","alternateName":"Zebra Beta","url":"https://zebrabeta.kr","logo":"https://zebrabeta.kr/zebra-logo.png","sameAs":["https://instagram.com/zebrabeta26","https://brunch.co.kr/@zebrabeta"]}</script>
 </head>
@@ -315,6 +317,7 @@
       <span class="eq-label" id="eqLabel">들어보기</span>
     </a>
 
+    <h1 class="sr-only">지브라 베타 · 음악 큐레이션</h1>
     <div class="kicker">Zebra Beta</div>
 
 
