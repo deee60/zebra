@@ -402,24 +402,27 @@
     ytReady = true;
     if (pending) { var p = pending; pending = null; p(); }
   };
+  /* 자막(CC)은 기본으로 끈다 — 곡마다 재생이 시작될 때 한 번 끄고, 듣는 사람이 켜면 그대로 둔다 */
+  var ccDone = false;
+  function ccOff(p){ if (ccDone) return; ccDone = true; try{ p.unloadModule('captions'); p.unloadModule('cc'); }catch(_){} }
   function cue(){
     var song = SIDES[st.s].songs[st.cur % SIDES[st.s].songs.length];
     if (!player) {
       player = new YT.Player('yt', {
         videoId: song.yt,
-        playerVars: { autoplay:1, playsinline:1, rel:0, modestbranding:1 },
+        playerVars: { autoplay:1, playsinline:1, rel:0, modestbranding:1, cc_load_policy:0 },
         events: {
           onReady: function(e){ e.target.playVideo(); },
           onStateChange: function(e){
             if (e.data === YT.PlayerState.ENDED) { next(); }              // 면 안에서 계속 흐른다
-            else if (e.data === YT.PlayerState.PLAYING) { st.playing = true; renderInfo(); }
+            else if (e.data === YT.PlayerState.PLAYING) { ccOff(e.target); st.playing = true; renderInfo(); }
             else if (e.data === YT.PlayerState.PAUSED) { st.playing = false; renderInfo(); }
           },
           onError: function(){ next(); }                                    // 재생 안 되는 곡은 건너뛴다
         }
       });
     } else {
-      player.loadVideoById(song.yt);
+      ccDone = false; player.loadVideoById(song.yt);
     }
     renderInfo();
   }
