@@ -1,30 +1,34 @@
 """만료된 issue 지면 처리 (archive-expired 워크플로가 매일 03:00 KST 실행)
 
-1) issue/{slug}/ 를 archive/{series}/{번호}/ 로 복사 (사본이 없을 때만, 원본일 때만)
-2) issue/{slug}/index.html 을 '맛보기' 페이지로 바꾼다 (아카이브 사본에서 만든다)
-   - 자켓 · 압인 · 곡명 · 연주자 · 노트 첫 문단(흐리게) · "아카이브로 이관되었습니다" · 지브라 베타 링크
+전문 보관은 비공개 금고(deee60/zebra-vault)가 한다 (2026-11-24부터). 이 저장소는 공개라 사본을 두지 않는다.
+금고 작업(keep-site-originals)이 3시간마다 이 저장소를 읽어 전문을 복사하고, 보관한 지면의 지문을 사이트에 알린다.
+
+1) issue/{slug}/index.html 이 아직 전문이고, 금고에 같은 지문의 사본이 있으면
+2) '맛보기' 페이지로 바꾼다
+   - 자켓 · 압인 · 곡명 · 연주자 · 노트 첫 문단(흐리게) · "아카이브로 이관되었습니다" · 최근 발행물 보기
    - 크레딧 중간부터 스트리밍까지 이어서 흐리게, 스트리밍 버튼은 보이되 주소를 지워 눌리지 않게
-   - 영상 · 노트 나머지 · 덧붙임은 넣지 않는다 (아카이브에만)
+   - 영상 · 노트 나머지 · 덧붙임은 넣지 않는다 (금고에만)
    - 검색 허용(index), 제목 · 설명 · canonical 을 검색용으로
    노트가 없는 지면(예: halloween26)은 '이관 안내'만 두고 검색 금지
 3) 맛보기 페이지 목록으로 sitemap-issue.xml 을 다시 쓴다
 
 안전장치
 - 발행 중(만료 전) 지면은 절대 건드리지 않는다
-- 원본을 바꾸기 전에 아카이브 사본의 스트리밍 링크 수 · 영상 수 · 노트가 원본과 같은지 대조한다. 다르면 멈춘다
-- 맛보기/안내 페이지는 절대 아카이브로 복사하지 않는다 (표식으로 구분)
+- 금고에 같은 판의 사본이 없으면(목록을 못 읽은 경우 포함) 맛보기로 바꾸지 않고 전문을 하루 더 둔다
+- 이미 맛보기·안내인 페이지는 다시 만들지 않는다. 맛보기 모양을 바꾸려면 금고 사본으로 손으로 다시 만든다
 - 새 내용을 다 만든 뒤에 파일을 쓴다 (도중 실패해도 원본이 비지 않게)
 """
-import html as H, json, os, re, shutil, sys
+import hashlib, html as H, json, os, re, shutil, sys, urllib.request
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from issue_head import fix_head
 from datetime import datetime, timezone, timedelta
 
 KST = timezone(timedelta(hours=9))
 SITE = "https://zebrabeta.kr"
+VAULT_HELD = SITE + "/_z/vault-held"
 STUB = "<!-- ZEBRA_EXPIRED_STUB -->"
 TEASER_TAG = "ZEBRA_EXPIRED_TEASER"
-TEASER = "<!-- ZEBRA_EXPIRED_TEASER v6 -->"   # 모양을 바꾸면 v 숫자를 올린다 → 다음 실행 때 전부 아카이브 사본에서 다시 만듦
+TEASER = "<!-- ZEBRA_EXPIRED_TEASER v6 -->"   # 맛보기 표식. 모양을 바꾸면 v 숫자를 올리고 금고 사본으로 다시 만든다
 NOINDEX = '<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">'
 INDEX = '<meta name="robots" content="index, follow">'
 DEFAULT_MOVED = """
@@ -188,6 +192,11 @@ def main():
     now = datetime.now(KST)
     items = json.load(open("_data/issue.json", encoding="utf-8"))
     log, teasers = [], []
+    # 금고(비공개 zebra-vault)가 보관한 전문의 지문 목록. 금고 작업이 3시간마다 사이트 어드민에 알린다.
+    try:
+        held = json.load(urllib.request.urlopen(urllib.request.Request(VAULT_HELD, headers={"user-agent": "zebra-bot"}), timeout=20)).get("held") or {}
+    except Exception as x:
+        print(f"::warning::금고 목록을 못 읽음({x}) — 오늘은 맛보기로 바꾸지 않음"); held = {}
     for e in items:
         exp = e.get("expires")
         if not exp:
@@ -209,35 +218,21 @@ def main():
             print(f"::warning::{slug}: 원본 HTML 이상 — 건너뜀"); continue
         is_original = STUB not in cur and TEASER_TAG not in cur
 
-        # 1) 아카이브 사본
-        if not os.path.isfile(apage):
-            if not is_original:
-                print(f"::warning::{slug}: 원본이 이미 바뀌었는데 아카이브 사본이 없음 — 건너뜀"); continue
-            os.makedirs(dst, exist_ok=True)
-            for f in os.listdir(src):
-                # 발행 때 줄인 자켓은 원본(_covers_original/)을 아카이브 사본으로 쓴다 (2026-11-24)
-                orig = os.path.join("_covers_original", slug, f)
-                shutil.copy2(orig if os.path.isfile(orig) else os.path.join(src, f), os.path.join(dst, f))
-            log.append(f"{slug} -> {dst}")
-        arch = open(apage, encoding="utf-8").read()
-        if STUB in arch or TEASER_TAG in arch or "<body" not in arch:
-            print(f"::warning::{slug}: 아카이브 사본이 온전하지 않음 — 원본 유지"); continue
-        if is_original:
-            checks = [(listen_links(cur), listen_links(arch), "스트리밍 링크"),
-                      (film_count(cur), film_count(arch), "영상"),
-                      (plain(note_inner(cur) or ""), plain(note_inner(arch) or ""), "노트")]
-            bad = [n for a, b, n in checks if a != b]
-            if bad:
-                print(f"::warning::{slug}: 아카이브 사본과 원본이 다름({', '.join(bad)}) — 원본 유지"); continue
+        # 이미 맛보기·안내면 그대로 둔다 (전문은 금고에만 있으므로 여기서 다시 만들지 않는다)
+        if not is_original:
+            if TEASER_TAG in cur:
+                teasers.append(e)
+            continue
+
+        # 1) 금고에 이 판의 전문이 들어갔는지 확인 — 같은 지문일 때만 맛보기로 바꾼다
+        want = hashlib.sha1(open(page, "rb").read()).hexdigest()
+        if held.get(slug) != want:
+            print(f"::warning::{slug}: 금고에 이 판의 사본이 아직 없음 — 오늘은 전문 유지(다음 날 다시)"); continue
 
         # 2) 맛보기 (노트 없으면 안내)
-        if TEASER in cur:
-            teasers.append(e); continue
-        out = make_teaser(arch, e)
+        out = make_teaser(cur, e)
         if out is None:
-            if STUB in cur:
-                continue
-            out = make_stub(arch); kind = "stub"
+            out = make_stub(cur); kind = "stub"
         else:
             kind = "teaser"; teasers.append(e)
         with open(page, "w", encoding="utf-8") as fh:

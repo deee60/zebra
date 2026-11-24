@@ -1,7 +1,7 @@
 name: archive-expired
 
-# 만료된 지면을 archive/{series_id}/{번호}/ 에 사본으로 복사한다.
-# 사본 확인 뒤 issue/ 원본은 검색용 '맛보기' 페이지로 바꾸고 sitemap-issue.xml 을 갱신한다.
+# 만료된 지면을 검색용 '맛보기' 페이지로 바꾸고 sitemap-issue.xml 을 갱신한다.
+# 전문은 비공개 금고(deee60/zebra-vault)가 보관한다. 금고에 같은 판이 들어간 지면만 바꾼다.
 # 매일 새벽 3시(KST) 자동 + 수동 실행 가능.
 
 on:
@@ -18,14 +18,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Copy expired issues to archive/ and turn originals into preview pages
+      - name: Turn expired issues into preview pages (only those the vault has kept)
         run: python3 .github/scripts/archive_expired.py
       - name: Commit
         run: |
-          if [ -n "$(git status --porcelain archive issue sitemap-issue.xml)" ]; then
+          if [ -n "$(git status --porcelain issue sitemap-issue.xml)" ]; then
             git config user.name  "zebra-bot"
             git config user.email "bot@zebrabeta.kr"
-            git add archive issue sitemap-issue.xml
+            git add issue sitemap-issue.xml
             git commit -m "archive: $(tr '\n' ',' < /tmp/copied.txt)"
             git push
           else
