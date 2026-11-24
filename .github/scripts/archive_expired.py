@@ -210,7 +210,9 @@ def main():
                 print(f"::warning::{slug}: 원본이 이미 바뀌었는데 아카이브 사본이 없음 — 건너뜀"); continue
             os.makedirs(dst, exist_ok=True)
             for f in os.listdir(src):
-                shutil.copy2(os.path.join(src, f), os.path.join(dst, f))
+                # 발행 때 줄인 자켓은 원본(_covers_original/)을 아카이브 사본으로 쓴다 (2026-11-24)
+                orig = os.path.join("_covers_original", slug, f)
+                shutil.copy2(orig if os.path.isfile(orig) else os.path.join(src, f), os.path.join(dst, f))
             log.append(f"{slug} -> {dst}")
         arch = open(apage, encoding="utf-8").read()
         if STUB in arch or TEASER_TAG in arch or "<body" not in arch:

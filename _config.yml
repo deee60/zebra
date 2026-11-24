@@ -7,3 +7,4 @@ exclude:
   - _queue
   - _build
   - _stats
+  - _covers_original

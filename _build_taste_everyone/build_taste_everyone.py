@@ -322,6 +322,7 @@ def build_sitemap(item_urls):
         (f"{SITE}/everyone/", "weekly", "0.8"),
         (f"{SITE}/taste/", "weekly", "0.8"),
         (f"{SITE}/bside/", "monthly", "0.6"),
+        (f"{SITE}/radio/", "monthly", "0.7"),
         (f"{SITE}/curator/ilpostino/", "monthly", "0.7"),
         (f"{SITE}/curator/minorppong/", "monthly", "0.7"),
         (f"{SITE}/curator/professionnel/", "monthly", "0.7"),
