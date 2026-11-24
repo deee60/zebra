@@ -48,6 +48,7 @@ input[type=date]{border:1px solid var(--line);border-radius:999px;padding:5px 10
   <button class="btn" id="csv">CSV 내려받기</button>
   <button class="btn" id="out">로그아웃</button>
   <span class="muted" id="me">이 기기는 기록에서 빠져 있습니다</span>
+  <span class="muted" id="vault"></span>
 </header>
 <main>
   <div class="tiles" id="tiles"></div>
@@ -91,7 +92,7 @@ input[type=date]{border:1px solid var(--line);border-radius:999px;padding:5px 10
   }
 
   function load(keep) {
-    drawRanges(); cache = {};
+    drawRanges(); cache = {}; vault();
     get('summary').then(function (s) {
       var bounce = s.visits ? Math.round(s.bounce_visits / s.visits * 100) : 0;
       var tiles = [['live', '지금 보는 사람 (5분)', num(s.live)], ['', '방문자', num(s.visitors)], ['', '처음 온 사람', num(s.new_visitors)], ['', '방문 수', num(s.visits)],
@@ -230,6 +231,17 @@ input[type=date]{border:1px solid var(--line);border-radius:999px;padding:5px 10
       var mine = localStorage.getItem('zv');
       if (mine) fetch('/_z/forget', { method: 'POST', body: JSON.stringify({ vid: mine }), headers: { 'content-type': 'text/plain' } }).catch(function () {});
     } catch (e) {}
+  }
+  // the vault keeper (every 3 hours): fine / pages missing / no word for a while
+  function vault() {
+    get('vault').then(function (v) {
+      var el = $('#vault'), late = Date.now() - (v.ts || 0) > 8 * 3600e3;
+      el.style.color = (v.missing && v.missing.length) || late ? 'var(--pink)' : '';
+      el.textContent = !v.ts ? '· 볼트 소식 아직 없음'
+        : v.missing && v.missing.length ? '· 볼트에 빠진 지면: ' + v.missing.join(', ')
+        : late ? '· 볼트 소식 없음 (마지막 ' + kst(v.ts) + ')'
+        : '· 볼트 보관 정상 (' + kst(v.ts) + ')';
+    }).catch(function () {});
   }
   function start() { leaveOut(); $('#login').hidden = true; $('#app').hidden = false; drawTabs(); load(); }
   $('#go').onclick = function () { tok = $('#tok').value.trim(); fetch('/_z/api/summary?from=0&to=1', { headers: { authorization: 'Bearer ' + tok } }).then(function (r) {

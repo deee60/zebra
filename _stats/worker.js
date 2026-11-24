@@ -20,6 +20,8 @@ const SCHEMA = [
   'CREATE INDEX IF NOT EXISTS pv_sid ON pv(sid, ts)',
   // the curator's own browsers: their visits are thrown away
   'CREATE TABLE IF NOT EXISTS me (vid TEXT PRIMARY KEY, ts INTEGER NOT NULL)',
+  // small notes kept by the site's own jobs (vault keeper status)
+  'CREATE TABLE IF NOT EXISTS kv (k TEXT PRIMARY KEY, v TEXT NOT NULL, ts INTEGER NOT NULL)',
 ];
 const isMe = async (env, vid) => !!(await env.DB.prepare('SELECT 1 FROM me WHERE vid = ?').bind(vid).first());
 async function leaveOut(env, vid) {
@@ -112,6 +114,25 @@ async function forget(req, env) {
   return ok();
 }
 
+// the private vault (deee60/zebra-vault) reports every 3 hours which full pages it keeps.
+// The site's 3 a.m. job reads /_z/vault-held and only turns a page into a preview once the vault holds that exact version.
+const SLUG = /^[a-z0-9-]{2,40}$/;
+async function vaultIn(req, env) {
+  let b; try { const t = await req.text(); if (t.length > 200000) return ok(); b = JSON.parse(t); } catch { return ok(); }
+  if (!b || typeof b.held !== 'object' || !Array.isArray(b.missing)) return ok();
+  const held = {}; for (const [k, v] of Object.entries(b.held)) if (SLUG.test(k) && /^[0-9a-f]{40}$/.test(String(v))) held[k] = v;
+  const missing = b.missing.filter((x) => SLUG.test(String(x))).slice(0, 200);
+  await ensure(env);
+  await env.DB.prepare('INSERT OR REPLACE INTO kv (k, v, ts) VALUES (?, ?, ?)').bind('vault', JSON.stringify({ held, missing }), Date.now()).run();
+  return ok();
+}
+async function vaultState(env) {
+  await ensure(env);
+  const r = await env.DB.prepare("SELECT v, ts FROM kv WHERE k = 'vault'").first();
+  if (!r) return { held: {}, missing: [], ts: 0 };
+  const o = JSON.parse(r.v); return { held: o.held || {}, missing: o.missing || [], ts: r.ts };
+}
+
 // ---------- admin ----------
 function authed(req, env) {
   const t = (req.headers.get('authorization') || '').replace(/^Bearer\s+/i, '');
@@ -201,6 +222,7 @@ async function api(path, url, env) {
     const vid = url.searchParams.get('vid') || ''; if (!ID.test(vid)) return { ok: false };
     await leaveOut(env, vid); return { ok: true };
   }
+  if (path === 'vault') { const v = await vaultState(env); return { count: Object.keys(v.held).length, missing: v.missing, ts: v.ts }; }
   if (path === 'export') return all(env, `SELECT * FROM pv WHERE ${W} ORDER BY ts LIMIT 50000`, from, to);
   return null;
 }
@@ -213,6 +235,8 @@ export default {
       if (p === '/_z/hit' && req.method === 'POST') return await hit(req, env);
       if (p === '/_z/beat' && req.method === 'POST') return await beat(req, env);
       if (p === '/_z/forget' && req.method === 'POST') return await forget(req, env);
+      if (p === '/_z/vault' && req.method === 'POST') return await vaultIn(req, env);
+      if (p === '/_z/vault-held') { const v = await vaultState(env); return json({ held: v.held, ts: v.ts }); }
       if (p === '/_z/admin' || p === '/_z/admin/') return new Response(ADMIN_HTML, { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'x-robots-tag': 'noindex', 'referrer-policy': 'no-referrer' } });
       if (p.startsWith('/_z/api/')) {
         if (!authed(req, env)) return json({ error: 'auth' }, 401);
