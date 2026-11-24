@@ -15,7 +15,7 @@
 <!-- ZEBRA BETA 큐레이터 데스크 · build_essay.py 자동 생성 · issues/*.json 을 고칠 것 -->
 <title>어느 연약한 짐승의 죽음 | Zebra Beta</title>
 <link rel="canonical" href="https://zebrabeta.kr/curator/professionnel/">
-<meta name="description" content="zebra beta movement 2.">
+<meta name="description" content="어느 연약한 짐승의 죽음 — Le vent, le cri">
 <meta property="og:title" content="어느 연약한 짐승의 죽음">
 <meta property="og:description" content="어느 연약한 짐승의 죽음 — Le vent, le cri">
 <meta property="og:image" content="https://zebrabeta.kr/zebra-og-v2.png">
@@ -94,7 +94,6 @@ figcaption{margin-top:14px;text-align:center;font-family:"Cormorant Garamond",se
 <body>
 <div class="wrap" id="sheet">
 
-  <p class="notice">이 글은 8월 9일 자정에 아카이브로 이관됩니다</p>
 
   <header class="masthead"><p class="kicker">큐레이터 데스크</p></header>
 
@@ -132,24 +131,6 @@ figcaption{margin-top:14px;text-align:center;font-family:"Cormorant Garamond",se
   <p class="colophon">zebra beta · movement 2.</p>
 
 </div>
-<script>
-const EXPIRES = "2026-08-09T23:59:59+09:00";
-const isExpired = Date.now() > new Date(EXPIRES).getTime() || location.search.includes("preview=expired");
-const isArchive = location.search.includes("archive=1");
-if (isExpired && !isArchive) {
-  document.getElementById("sheet").innerHTML = `
-    <div class="spacer"></div>
-    <div class="moved">
-      <hr class="rule">
-      <p class="line">이 글은 아카이브로 이관되었습니다</p>
-      <p class="sub">지브라의 큐레이터 데스크는<br>발행 후 72시간 동안 열립니다.<br>이후 아카이브로 옮겨집니다.</p>
-      <p class="home"><a href="/latest/">최근 발행물 보기</a></p>
-    </div>
-    <div class="spacer"></div>
-    <p class="colophon">zebra beta · movement 2.</p>`;
-  document.body.classList.add("moved-mode");
-}
-</script>
 <script>
 (function(){
   var block=function(e){ e.preventDefault(); return false; };
