@@ -115,6 +115,14 @@ jobs:
           else:
               print(f"::warning::랜딩 최근 발행물 링크를 못 찾음({n3}건) — 랜딩은 손으로 확인")
 
+          # 만료 지면의 '최근 발행물 보기'가 가는 /latest/ 도 방금 발행한 지면으로 (2026-11-24)
+          lp = "latest/index.html"
+          if os.path.isfile(lp):
+              lt = open(lp, encoding="utf-8").read()
+              lt, n4 = re.subn(r"/issue/[^/'\"]+/", f"/issue/{slug}/", lt)
+              open(lp, "w", encoding="utf-8").write(lt)
+              print("/latest/ →", f"issue/{slug}/", f"({n4}곳)")
+
           # 발행 끝난 대기 폴더 비우기 (issue/ 가 원본이 된다)
           shutil.rmtree(src)
           print("대기열 정리:", src)
@@ -129,10 +137,10 @@ jobs:
 
       - name: Commit
         run: |
-          if [ -n "$(git status --porcelain issue _data/issue.json index.html _queue _covers_original)" ]; then
+          if [ -n "$(git status --porcelain issue _data/issue.json index.html latest _queue _covers_original)" ]; then
             git config user.name  "zebra-bot"
             git config user.email "bot@zebrabeta.kr"
-            git add -A issue _data/issue.json index.html _queue _covers_original
+            git add -A issue _data/issue.json index.html latest _queue _covers_original
             git commit -m "publish: $(cat /tmp/pub.txt)"
             git push
           else

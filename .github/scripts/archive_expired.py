@@ -15,14 +15,16 @@
 - 맛보기/안내 페이지는 절대 아카이브로 복사하지 않는다 (표식으로 구분)
 - 새 내용을 다 만든 뒤에 파일을 쓴다 (도중 실패해도 원본이 비지 않게)
 """
-import html as H, json, os, re, shutil
+import html as H, json, os, re, shutil, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from issue_head import fix_head
 from datetime import datetime, timezone, timedelta
 
 KST = timezone(timedelta(hours=9))
 SITE = "https://zebrabeta.kr"
 STUB = "<!-- ZEBRA_EXPIRED_STUB -->"
 TEASER_TAG = "ZEBRA_EXPIRED_TEASER"
-TEASER = "<!-- ZEBRA_EXPIRED_TEASER v3 -->"   # 모양을 바꾸면 v 숫자를 올린다 → 다음 실행 때 전부 아카이브 사본에서 다시 만듦
+TEASER = "<!-- ZEBRA_EXPIRED_TEASER v5 -->"   # 모양을 바꾸면 v 숫자를 올린다 → 다음 실행 때 전부 아카이브 사본에서 다시 만듦
 NOINDEX = '<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">'
 INDEX = '<meta name="robots" content="index, follow">'
 DEFAULT_MOVED = """
@@ -31,7 +33,7 @@ DEFAULT_MOVED = """
       <hr class="rule">
       <p class="line">이 큐레이션은<br>아카이브로 이관되었습니다</p>
       <p class="sub">지브라의 큐레이션은<br>발행 후 72시간 동안 열립니다.<br>이후 아카이브로 옮겨집니다.</p>
-      <p class="home"><a href="https://zebrabeta.kr">지브라 베타</a></p>
+      <p class="home"><a href="/latest/">최근 발행물 보기</a></p>
     </div>
     <div class="spacer"></div>
     <p class="colophon">zebra beta · movement 2.</p>"""
@@ -50,7 +52,7 @@ TEASER_CSS = """<style>
 TEASER_GATE = """<div class="gate">
   <hr class="g-rule">
   <p class="g-line">이 큐레이션은 아카이브로 이관되었습니다</p>
-  <p class="g-home"><a href="https://zebrabeta.kr">지브라 베타</a></p>
+  <p class="g-home"><a href="/latest/">최근 발행물 보기</a></p>
 </div>"""
 
 TEASER_JS = """<div class="tailfade" aria-hidden="true"></div>
@@ -177,6 +179,9 @@ def make_teaser(src_html, e):
     head = re.sub(r'<meta name="description" content="[^"]*">', '<meta name="description" content="' + H.escape(desc) + '">', head, count=1)
     head = re.sub(r'\s*<link rel="canonical"[^>]*>', "", head)
     head = head.replace("</head>", INDEX + '\n<link rel="canonical" href="' + url + '">\n' + TEASER_CSS + "\n</head>", 1)
+    # 아카이브 사본이 옛 틀이어도 맛보기에는 지금 기준 태그를 채운다 (2026-11-24): GA · 방문 기록 · 카톡 꼬리표 · 새 공유 그림
+    head = head.replace("/zebra-og.png", "/zebra-og-v2.png")
+    head = fix_head(head, url)[0]
     return head + body
 
 def main():
