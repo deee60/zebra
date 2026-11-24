@@ -202,6 +202,7 @@ WINTER_CSS = r'''  .cnav{display:flex;justify-content:center;gap:10px;margin:14p
   .header{padding-top:44px}
   .header h1{line-height:26.6px;margin:0}
   .cnav{margin-bottom:10px !important}
+  @media (max-width:480px){ .header{padding-top:12px} }
   /* 페이지 사이를 디졸브로 (랜딩 · 모두의 큐레이션 · B-SIDE · 취향의 발견 · 플레이리스트) */
   @view-transition{navigation:auto}
   ::view-transition-old(root),::view-transition-new(root){animation-duration:.9s;animation-timing-function:ease}
