@@ -187,19 +187,10 @@
   ::view-transition-old(root),::view-transition-new(root){animation-duration:.9s;animation-timing-function:ease}
   @supports not (view-transition-name:none){ body{animation:zbFadeIn .9s ease both} }
   @keyframes zbFadeIn{from{opacity:0}to{opacity:1}}
-  /* 다른 코너로 가는 조용한 길 — 제목 위 작은 한 줄 */
-  .corners{display:flex;justify-content:center;align-items:baseline;gap:12px;margin:-44px 0 40px;
-    font-family:'Cormorant Garamond','Noto Serif KR',serif;font-size:11px;letter-spacing:.14em;color:#a39d8f}
-  .corners a{color:#a39d8f;text-decoration:none;transition:color .25s}
-  .corners a:hover{color:#b89a5a}
-  .corners span{color:#c4beb2}
-  @media(max-width:600px){.corners{margin:-28px 0 30px}}
 </style>
 </head>
 <body>
   <main class="wrap">
-
-    <nav class="corners" aria-label="다른 코너"><a href="/bside/">B-SIDE</a><span aria-hidden="true">·</span><a href="/taste/">취향의 발견</a></nav>
 
     <h1>모 두 의 &nbsp;큐 레 이 션</h1>
 
