@@ -210,6 +210,14 @@
   /* copy guard (same as issue pages): block text selection; right-click/copy via script below */
   html,body{ -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; -webkit-touch-callout:none; }
   a,button,iframe,input,textarea{ -webkit-user-select:auto; user-select:auto; }
+  .cnav{display:flex;justify-content:center;gap:10px;margin:14px 0 -4px}
+  .cnav a,.cnav b{display:block;width:3px;height:3px;border-radius:50%;background:#c4beb2;opacity:.7;position:relative}
+  .cnav b{background:#8f897d;opacity:.8}
+  .cnav a::after{content:"";position:absolute;inset:-10px}
+  /* 코너 점 내비 — 제목·점 위치를 모두의 큐레이션·취향의 발견과 맞춘다 */
+  .header{padding-top:44px}
+  .header h1{line-height:26.6px;margin:0}
+  .cnav{margin-bottom:10px !important}
   /* 페이지 사이를 디졸브로 (랜딩 · 모두의 큐레이션 · B-SIDE · 취향의 발견 · 플레이리스트) */
   @view-transition{navigation:auto}
   ::view-transition-old(root),::view-transition-new(root){animation-duration:.9s;animation-timing-function:ease}
@@ -228,6 +236,7 @@
 <div class="page">
   <header class="header">
     <h1 style="font-family:'Cormorant SC',serif; font-weight:500; font-size:16px; letter-spacing:2.5px; color:rgb(139,135,124);">B-SIDE</h1>
+    <nav class="cnav" aria-label="코너"><a href="/everyone/" aria-label="모두의 큐레이션"></a><b aria-current="page"></b><a href="/taste/" aria-label="취향의 발견"></a></nav>
     <p class="updated" id="current-week">11월 18일 발행</p>
   </header>
   <div class="weeks">
