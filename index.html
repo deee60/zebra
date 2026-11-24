@@ -239,7 +239,7 @@
   .kicker{margin-top:clamp(160px,28vh,280px);font-size:19px;color:#9c8350;letter-spacing:.52em}
   @media(max-width:480px){.kicker{margin-top:clamp(120px,22vh,200px);font-size:16px;margin-bottom:68px}}
 
-  /* 금색 이퀄라이저 → 들어보기(radio/) (지브라 베타 위) */
+  /* 금색 이퀄라이저 → 라디오(radio/) (지브라 베타 위) */
   .hero .kicker{margin-top:0}
   .eq-link{display:flex;flex-direction:column;align-items:center;gap:10px;text-decoration:none;color:var(--gold);
     margin-top:clamp(154px,calc(25vh + 14px),274px);margin-bottom:52px;transition:color .3s}
@@ -283,7 +283,7 @@
   .menu-list a{font-family:'Cormorant Garamond','Noto Serif KR',serif;font-size:12px;letter-spacing:.14em;color:var(--soft);text-decoration:none;padding:7px 0;transition:color .25s}
   .menu-list a.bside{font-family:'Cormorant SC',serif;font-weight:500;letter-spacing:.2em;font-size:12px}
   .menu-list a:hover{color:var(--gold)}
-  /* 페이지 사이를 디졸브로 (랜딩 · 모두의 큐레이션 · B-SIDE · 취향의 발견 · 들어보기) */
+  /* 페이지 사이를 디졸브로 (랜딩 · 모두의 큐레이션 · B-SIDE · 취향의 발견 · 라디오) */
   @view-transition{navigation:auto}
   ::view-transition-old(root),::view-transition-new(root){animation-duration:.9s;animation-timing-function:ease}
   @supports not (view-transition-name:none){ body{animation:zbFadeIn .9s ease both} }
@@ -306,9 +306,9 @@
 
     <div class="hero">
 
-    <a class="eq-link" id="eqLink" href="radio/" title="들어보기" aria-label="들어보기">
+    <a class="eq-link" id="eqLink" href="radio/" title="라디오" aria-label="라디오">
       <span class="eq" id="eq"><i></i><i></i><i></i><i></i><i></i></span>
-      <span class="eq-label" id="eqLabel">들어보기</span>
+      <span class="eq-label" id="eqLabel">라디오</span>
     </a>
 
     <div class="kicker">Zebra Beta</div>
