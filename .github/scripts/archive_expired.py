@@ -24,7 +24,7 @@ KST = timezone(timedelta(hours=9))
 SITE = "https://zebrabeta.kr"
 STUB = "<!-- ZEBRA_EXPIRED_STUB -->"
 TEASER_TAG = "ZEBRA_EXPIRED_TEASER"
-TEASER = "<!-- ZEBRA_EXPIRED_TEASER v5 -->"   # 모양을 바꾸면 v 숫자를 올린다 → 다음 실행 때 전부 아카이브 사본에서 다시 만듦
+TEASER = "<!-- ZEBRA_EXPIRED_TEASER v6 -->"   # 모양을 바꾸면 v 숫자를 올린다 → 다음 실행 때 전부 아카이브 사본에서 다시 만듦
 NOINDEX = '<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">'
 INDEX = '<meta name="robots" content="index, follow">'
 DEFAULT_MOVED = """
@@ -44,8 +44,8 @@ TEASER_CSS = """<style>
   .gate{ text-align:center; margin:clamp(18px,3vh,26px) 0 clamp(40px,6vh,56px); }
   .gate .g-rule{ width:40px; margin:0 auto 22px; border:0; border-top:1px solid var(--rule, #cfc9bb); }
   .gate .g-line{ font-family:"Noto Serif KR",serif; font-size:15px; color:var(--ink,#2a2722); margin:0 0 22px; letter-spacing:.02em; }
-  .gate .g-home a{ display:inline-block; color:#6E5422; font-family:"Noto Serif KR",serif; font-weight:600; font-size:14px; letter-spacing:.06em;
-    text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:6px; text-decoration-color:#C8B07A; }
+  .gate .g-home a{ display:inline-block; color:#8b877c; font-family:"Noto Serif KR",serif; font-weight:400; font-size:15px; letter-spacing:.02em;
+    text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:6px; text-decoration-color:#c9c3b7; }
   .listen a, .note .credit a{ pointer-events:none; cursor:default; }
 </style>"""
 
