@@ -20,7 +20,7 @@
 """
 import hashlib, html as H, json, os, re, shutil, sys, urllib.request
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from issue_head import fix_head
+from issue_head import fix_head, add_jsonld
 from datetime import datetime, timezone, timedelta
 
 KST = timezone(timedelta(hours=9))
@@ -235,6 +235,7 @@ def main():
             out = make_stub(cur); kind = "stub"
         else:
             kind = "teaser"; teasers.append(e)
+            out = add_jsonld(out, SITE + "/issue/" + slug + "/", e)[0]   # 원본에서 이미 넘어왔으면 그대로
         with open(page, "w", encoding="utf-8") as fh:
             fh.write(out)
         log.append(f"{slug} {kind}")
