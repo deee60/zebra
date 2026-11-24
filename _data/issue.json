@@ -14,6 +14,20 @@
     "bg": "#D9D8D3"
   },
   {
+    "slug": "vol33",
+    "kind": "music",
+    "series": "지브라 베타 Vol.33",
+    "title": "Who Knows",
+    "romaji": "",
+    "artist": "Daniel Caesar",
+    "path": "issue/vol33/",
+    "cover": "issue/vol33/vol33.jpg",
+    "published": "2026-07-23",
+    "expires": "2026-07-26T23:59:59+09:00",
+    "layout": "lay-a",
+    "bg": "#D0DCDA"
+  },
+  {
     "slug": "summernight03",
     "kind": "music",
     "series": "여름밤 03",
