@@ -211,9 +211,10 @@
   .cta-main{margin-bottom:0}
   .notify .kakao{font-size:12px;color:var(--gold);letter-spacing:.06em;text-decoration:none;transition:color .25s}
   .notify .kakao:hover{opacity:.75}
-  /* 알림 줄 설명 — 평소엔 숨김. 들어온 직후 잠깐(폰 포함), PC는 커서를 가까이 대면 보인다 (이퀄라이저 라벨과 같은 규칙) */
+  /* 알림 줄 설명 — 평소엔 숨김. PC에서만 — 들어온 직후 잠깐, 커서를 가까이 대면 보인다. 폰에서는 안 나온다 (이퀄라이저 라벨과 같은 규칙) */
   .notify .kk-sub{display:block;margin-top:9px;font-family:'Noto Serif KR',serif;font-weight:300;font-size:10.5px;letter-spacing:.06em;color:#a9a297;opacity:0;transition:opacity .8s ease;pointer-events:none}
   .notify.near .kk-sub{opacity:1;transition:opacity 1.6s ease .15s}
+  @media (hover:none){ .notify .kk-sub{display:none} }
   .notify + .social{margin-top:-4px}
   .cta-main a{
     display:inline-block;background:var(--ink);color:var(--paper);border-radius:2px;
@@ -363,7 +364,7 @@
     var link=document.getElementById('eqLink');
     function paint(){ var live=intro||near; eq.classList.toggle('lively',live); link.classList.toggle('near',live); for(var j=0;j<5;j++) bars[j].style.transform='scaleY('+(live?F[j][f]:R[j])+')'; }
     paint(); setTimeout(function(){ intro=false; paint(); },2400);
-    (function(){ var nt=document.querySelector('.notify'), kk=nt&&nt.querySelector('.kakao'); if(!kk) return;
+    (function(){ var nt=document.querySelector('.notify'), kk=nt&&nt.querySelector('.kakao'); if(!kk || !matchMedia('(hover:hover)').matches) return;
       var on=true; nt.classList.add('near'); setTimeout(function(){ on=false; nt.classList.remove('near'); },2400);
       document.addEventListener('mousemove',function(e){ if(on) return; var r=kk.getBoundingClientRect(); var d=Math.hypot(e.clientX-(r.left+r.width/2),e.clientY-(r.top+r.height/2)); nt.classList.toggle('near', d<90); });
     })();
