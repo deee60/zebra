@@ -163,7 +163,7 @@ async function api(path, url, env) {
   }
   if (path === 'pages') return all(env, `SELECT path, MAX(title) title, COUNT(*) views, COUNT(DISTINCT vid) visitors, AVG(active_ms) avg_ms, AVG(scroll) avg_scroll,
     SUM(CASE WHEN scroll >= 90 THEN 1 ELSE 0 END) read_to_end FROM pv WHERE ${W} GROUP BY path ORDER BY views DESC LIMIT 200`, from, to);
-  if (path === 'sources') return all(env, `SELECT COALESCE(utm_source, ref_host, '(direct / app)') src, COUNT(DISTINCT sid) visits, COUNT(DISTINCT vid) visitors
+  if (path === 'sources') return all(env, `SELECT COALESCE(utm_source || COALESCE(' · ' || utm_campaign, ''), CASE WHEN ref_host LIKE '%brunch.co.kr' THEN 'brunch' ELSE ref_host END, '(direct / app)') src, COUNT(DISTINCT sid) visits, COUNT(DISTINCT vid) visitors
     FROM pv p WHERE ${W} AND ts = (SELECT MIN(ts) FROM pv q WHERE q.sid = p.sid) GROUP BY src ORDER BY visits DESC LIMIT 100`, from, to);
   if (path === 'places') return all(env, `SELECT country, region, city, COUNT(DISTINCT vid) visitors, COUNT(*) views, AVG(active_ms) avg_ms FROM pv WHERE ${W}
     GROUP BY country, region, city ORDER BY visitors DESC LIMIT 200`, from, to);
@@ -181,12 +181,12 @@ async function api(path, url, env) {
   }
   if (path === 'visitors') return all(env, `SELECT vid, MIN(ts) first_ts, MAX(COALESCE(left_ts, ts)) last_ts, COUNT(DISTINCT sid) visits, COUNT(*) views, SUM(active_ms) active,
     MAX(city) city, MAX(region) region, MAX(country) country, MAX(device) device, MAX(os) os, MAX(browser) browser,
-    (SELECT COALESCE(utm_source, ref_host, '(direct / app)') FROM pv f WHERE f.vid = pv.vid ORDER BY ts LIMIT 1) first_src,
+    (SELECT COALESCE(utm_source || COALESCE(' · ' || utm_campaign, ''), CASE WHEN ref_host LIKE '%brunch.co.kr' THEN 'brunch' ELSE ref_host END, '(direct / app)') FROM pv f WHERE f.vid = pv.vid ORDER BY ts LIMIT 1) first_src,
     (SELECT MIN(ts) FROM pv a WHERE a.vid = pv.vid) ever_first
     FROM pv WHERE ${W} GROUP BY vid ORDER BY last_ts DESC LIMIT 500`, from, to);
   if (path === 'people') {
     // one row per visitor (browser): everything about them in this window, merged
-    const rows = await all(env, `SELECT vid, sid, ts, left_ts, path, title, ref_host, ref_path, utm_source, utm_medium, country, region, city, isp, device, os, browser, lang, sw, sh,
+    const rows = await all(env, `SELECT vid, sid, ts, left_ts, path, title, ref_host, ref_path, utm_source, utm_medium, utm_campaign, country, region, city, isp, device, os, browser, lang, sw, sh,
       active_ms, scroll, clicks FROM pv WHERE ${W} ORDER BY ts LIMIT 30000`, from, to);
     const ef = await all(env, `SELECT vid, MIN(ts) ef FROM pv WHERE vid IN (SELECT DISTINCT vid FROM pv WHERE ${W}) GROUP BY vid`, from, to);
     const first = new Map(ef.map((r) => [r.vid, r.ef]));
@@ -201,7 +201,7 @@ async function api(path, url, env) {
       }
       const isStart = !p.sids.has(r.sid); p.sids.add(r.sid);
       if (isStart) {
-        const src = r.utm_source ? 'utm:' + r.utm_source : r.ref_host ? r.ref_host : r.ref_path ? null : '직접 · 앱';
+        const src = r.utm_source ? 'utm:' + r.utm_source + (r.utm_campaign ? ' · ' + r.utm_campaign : '') : r.ref_host ? (/brunch\.co\.kr$/.test(r.ref_host) ? 'brunch' : r.ref_host) : r.ref_path ? null : '직접 · 앱';
         if (src && !p.sources.includes(src)) p.sources.push(src);
       }
       p.last_ts = Math.max(p.last_ts, r.left_ts || r.ts); p.views++; p.active += r.active_ms || 0; p.scroll_sum += r.scroll || 0;
