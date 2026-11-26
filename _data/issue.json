@@ -516,5 +516,19 @@
     "expires": "2026-11-26T23:59:59+09:00",
     "layout": "lay-canon",
     "bg": "#E2DDD3"
+  },
+  {
+    "slug": "gayo05",
+    "kind": "music",
+    "series": "대한민국 대중음악 클래식 100",
+    "title": "공무도하가",
+    "romaji": "",
+    "artist": "이상은",
+    "path": "issue/gayo05/",
+    "cover": "issue/gayo05/gayo05.jpg",
+    "published": "2026-11-26",
+    "expires": "2026-11-29T23:59:59+09:00",
+    "layout": "lay-canon",
+    "bg": "#E3E0DA"
   }
 ]
