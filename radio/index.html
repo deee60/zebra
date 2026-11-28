@@ -52,6 +52,10 @@
   /* 재생해서 창으로 열리면 같은 색을 옅게 풀어 영상과 글씨를 편하게 */
   .sleeve.playing[data-theme=wine]{--jk-bg:#b9aba1;--jk-ink:#2b2a26;--jk-accent:#6b4636;--jk-soft:rgba(43,42,38,.62);--jk-faint:rgba(43,42,38,.42)}
   .sleeve.playing[data-theme=grey]{--jk-bg:#c2bcb2;--jk-ink:#2b2a26;--jk-accent:#7a6440;--jk-soft:rgba(43,42,38,.62);--jk-faint:rgba(43,42,38,.42)}
+  .sleeve[data-theme=sand]{--jk-bg:#86795f;--jk-ink:#f4efe5;--jk-accent:#ecd39c;--jk-soft:rgba(244,239,229,.7);--jk-faint:rgba(244,239,229,.5)}
+  .sleeve.playing[data-theme=sand]{--jk-bg:#cdc4b2;--jk-ink:#2b2a26;--jk-accent:#6f5a36;--jk-soft:rgba(43,42,38,.62);--jk-faint:rgba(43,42,38,.42)}
+  .info .t a{color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color .3s}
+  .info .t a:hover{border-bottom-color:currentColor}
   .sleeve .btn{color:var(--jk-soft,var(--mute))}
   .sleeve .btn:hover{color:var(--jk-ink,var(--ink))}
   .sleeve .sidelabel{color:var(--jk-accent,var(--wine))}
@@ -222,7 +226,7 @@
 (function(){
   /* ── 면 데이터 ─────────────────────────────── */
   var SIDES = [
-    { side:'A', name:'발라디즘 · 겨울', corner:'', theme:'wine', songs:[
+    { name:'발라디즘 · 겨울', corner:'', theme:'wine', songs:[
       { title:'나의 겨울 여행', artist:'스텔라장', yt:'PPS0mI6BOU4' },
       { title:'Melody', artist:'안전지대', yt:'3eqPoV1lJa4' },
       { title:'1994년 어느 늦은 밤', artist:'장혜진', yt:'LZEggT36REM' },
@@ -237,7 +241,19 @@
       { title:'사랑의 시', artist:'엠씨 더 맥스', yt:'N3WGZPdJtCM' },
       { title:'Chocolate', artist:'안전지대', yt:'5LGjnCpUG30' }
     ]},
-    { side:'B', name:'모두의 큐레이션', corner:'', theme:'grey', auto:true, songs:[
+    /* 계절 시리즈 판: from~until 동안만 걸린다(한국 날짜). 순서는 형님이 짠 순서. 곡 제목을 누르면 그 곡의 지면으로 */
+    { name:'건조주의보', corner:'', theme:'sand', from:'2026-11-30', until:'2027-02-28', songs:[
+      { title:'홍제천의 그믐달', artist:'고상지', yt:'4UMkTMJrvf8', href:'/issue/dryadvisory08/' },
+      { title:'어떤 사람 A', artist:'윤상', yt:'fB82JLvg0B4', href:'/issue/dryadvisory10/' },
+      { title:'긴 꿈', artist:'새소년', yt:'tzL4A8hyXc8', href:'/issue/dryadvisory03/' },
+      { title:'On the Square', artist:'Mac DeMarco', yt:'B4QmMK9Qpws', href:'/issue/dryadvisory09/' },
+      { title:'LOVE YA!', artist:'혁오', yt:'gxbGIUSW-Ho', href:'/issue/dryadvisory04/' },
+      { title:'한시 오분 (1:05)', artist:'검정치마', yt:'-_r_Y5nuHlo', href:'/issue/dryadvisory02/' },
+      { title:'Mrs Magic', artist:'Strawberry Guy', yt:'m4SyfrcsE0Q', href:'/issue/dryadvisory01/' },
+      { title:'U & I (With Crush & 빈지노)', artist:'토이', yt:'2YKFLgQY12o', href:'/issue/dryadvisory06/' },
+      { title:'방랑자 (Feat. 최백호)', artist:'박주원', yt:'6mPIKrNQojo', href:'/issue/dryadvisory07/' }
+    ]},
+    { name:'모두의 큐레이션', corner:'', theme:'grey', auto:true, songs:[
       { title:'백야', artist:'짙은', by:'앙', yt:'pyYsTmGJEWY' },
       { title:'You Must Believe in Spring', artist:'Bill Evans', by:'박준규', yt:'koSoQRfG3wI' },
       { title:'황금가면', artist:'김동률', by:'캔디', yt:'nbueu_IoIH4' },
@@ -245,13 +261,18 @@
     ]}
   ];
 
-  /* 모두의 큐레이션에 발행되면 B면에 저절로 올라간다 (사이트 안에서만 동작) */
+  /* 걸 기간이 정해진 판은 그 기간에만. 면 글자(A, B, C…)는 걸린 순서대로 붙인다 */
+  var today = new Date(Date.now() + 9*3600*1000).toISOString().slice(0,10);
+  SIDES = SIDES.filter(function(sd){ return (!sd.from || today >= sd.from) && (!sd.until || today <= sd.until); });
+  SIDES.forEach(function(sd, i){ sd.side = 'ABCDEFGH'.charAt(i); });
+  var autoIdx = -1; SIDES.forEach(function(sd, i){ if (sd.auto) autoIdx = i; });
+  /* 모두의 큐레이션에 발행되면 그 면에 저절로 올라간다 (사이트 안에서만 동작) */
   try {
     fetch('/everyone/everyone.json', { cache:'no-store' }).then(function(r){ return r.ok ? r.json() : null; }).then(function(list){
       if (!Array.isArray(list)) return;
       var songs = list.filter(function(x){ return x.published !== false && x.youtube; })
         .map(function(x){ return { title:x.title, artist:x.artist, by:x.by, yt:x.youtube }; });
-      if (songs.length) { SIDES[1].songs = songs; if (st.s === 1) renderInfo(); }
+      if (songs.length && autoIdx >= 0) { SIDES[autoIdx].songs = songs; if (st.s === autoIdx) renderInfo(); }
     }).catch(function(){});
   } catch(e){}
 
@@ -346,7 +367,9 @@
 
   function renderInfo(){
     var song = SIDES[st.s].songs[st.cur % SIDES[st.s].songs.length];
-    $('songTitle').textContent = song.title;
+    var tt = $('songTitle'); tt.textContent = '';
+    if (song.href) { var a = document.createElement('a'); a.href = song.href; a.textContent = song.title; a.title = '이 곡의 지면'; tt.appendChild(a); }
+    else tt.textContent = song.title;
     $('songArtist').textContent = song.artist;
     $('songBy').textContent = song.by ? 'curated by '+song.by : '';
     $('toggleBtn').innerHTML = st.playing
