@@ -53,7 +53,12 @@
   .sleeve.playing[data-theme=wine]{--jk-bg:#b9aba1;--jk-ink:#2b2a26;--jk-accent:#6b4636;--jk-soft:rgba(43,42,38,.62);--jk-faint:rgba(43,42,38,.42)}
   .sleeve.playing[data-theme=grey]{--jk-bg:#c2bcb2;--jk-ink:#2b2a26;--jk-accent:#7a6440;--jk-soft:rgba(43,42,38,.62);--jk-faint:rgba(43,42,38,.42)}
   .sleeve[data-theme=sand]{--jk-bg:#86795f;--jk-ink:#f4efe5;--jk-accent:#ecd39c;--jk-soft:rgba(244,239,229,.7);--jk-faint:rgba(244,239,229,.5)}
-  .sleeve.playing[data-theme=sand]{--jk-bg:#cdc4b2;--jk-ink:#2b2a26;--jk-accent:#6f5a36;--jk-soft:rgba(43,42,38,.62);--jk-faint:rgba(43,42,38,.42)}
+  .sleeve.playing[data-theme=sand]{--jk-bg:#c4c3be;--jk-ink:#2b2a26;--jk-accent:#6f5a36;--jk-soft:rgba(43,42,38,.62);--jk-faint:rgba(43,42,38,.42)}
+  .sleeve::before,.sleeve::after{content:'';position:absolute;opacity:0;pointer-events:none;transition:opacity 1.6s ease}
+  .sleeve::after{inset:0;z-index:-2;background:center/cover no-repeat}
+  .sleeve::before{left:50%;top:50%;width:140px;height:140px;margin:-70px 0 0 -70px;z-index:-1;background:rgba(28,26,20,.5)}
+  .sleeve[data-theme=sand]::after{background-image:url(/radio/jacket-dryadvisory.jpg)}
+  .sleeve[data-theme=sand]:not(.playing)::before,.sleeve[data-theme=sand]:not(.playing)::after{opacity:1}
   .info .t a{color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color .3s}
   .info .t a:hover{border-bottom-color:currentColor}
   .sleeve .btn{color:var(--jk-soft,var(--mute))}
